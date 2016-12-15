@@ -1,0 +1,28 @@
+//
+//  PrefixHeader.pch
+//  XianZhiFengShui
+//
+//  Created by 李清娟 on 2016/10/8.
+//  Copyright © 2016年 XianZhiFengShui. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "XZConfig.h"
+#import "MJRefresh.h"
+#import "UIView+Additions.h"
+#import "UILabel+Tools.h"
+#import "UIView+Toast.h"
+#import "YYKit/YYKit.h"
+#import "SDAutoLayout.h"
+#import "StringToColor.h"
+#import "ToastManager.h"
+#import "Tool.h"
+#import "Masonry.h"
+#import "MBProgressHUD+Add.h"
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* PrefixHeader_pch */

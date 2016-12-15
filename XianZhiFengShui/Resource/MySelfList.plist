@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<array>
+		<dict>
+			<key>className</key>
+			<string>XZMyMasterVC</string>
+			<key>title</key>
+			<string>我的大师</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>XZMyLectureVC</string>
+			<key>title</key>
+			<string>我的讲座</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>XZMyThemeVC</string>
+			<key>title</key>
+			<string>我的话题</string>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>className</key>
+			<string>XZMyAccountVC</string>
+			<key>title</key>
+			<string>我的账户</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>XZMyCouponVC</string>
+			<key>title</key>
+			<string>我的优惠券</string>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>className</key>
+			<string>XZRegistMasterVC</string>
+			<key>title</key>
+			<string>成为大师</string>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>className</key>
+			<string>XZHelpAndFeedbackVC</string>
+			<key>title</key>
+			<string>帮助与反馈</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>XZSettingVC</string>
+			<key>title</key>
+			<string>设置</string>
+		</dict>
+	</array>
+</array>
+</plist>

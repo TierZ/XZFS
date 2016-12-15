@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>商务风水</string>
+	<string>家居风水</string>
+	<string>流年运势</string>
+	<string>手相面相</string>
+	<string>婚恋情感</string>
+	<string>良辰吉日</string>
+	<string>周公解梦</string>
+	<string>阴宅风水</string>
+</array>
+</plist>
