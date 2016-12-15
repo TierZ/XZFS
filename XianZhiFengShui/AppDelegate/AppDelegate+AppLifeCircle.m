@@ -10,4 +10,6 @@
 
 @implementation AppDelegate (AppLifeCircle)
 
+
+
 @end
