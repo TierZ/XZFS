@@ -111,6 +111,7 @@
     NSLog(@"star1 = %.2ld  star2 = %.2ld  comment = %@",(long)self.starCount1,(long)self.starCount2,self.comment.text);
     if (self.comment.text.length>0) {
         [self evaluateMaster];
+        NSLog(@"上传评价");
     }else{
         [ToastManager showToastOnView:self.mainView position:CSToastPositionCenter flag:NO message:@"评价内容不能为空"];
     }
