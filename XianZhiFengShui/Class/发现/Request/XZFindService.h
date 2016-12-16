@@ -49,9 +49,11 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
  @param userCode   用户编号
  @param content    内容
  @param cityCode   城市
- @param view       。。
+ @param masterOrderCode   大师订单编号
+ @param star       评分
+  @param view       。。
  */
--(void)evaluateMasterWithMasterCode:(NSString*)masterCode userCode:(NSString*)userCode content:(NSString*)content cityCode:(NSString*)cityCode view:(id)view;
+-(void)evaluateMasterWithMasterCode:(NSString*)masterCode userCode:(NSString*)userCode content:(NSString*)content cityCode:(NSString*)cityCode masterOrderCode:(NSString *)masterOrderCode star:(NSInteger)star view:(id)view;
 
 
 /**

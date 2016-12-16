@@ -13,10 +13,11 @@ static NSString * feedbackService = @"/feedback/feedback";
 @implementation XZUserCenterService
 
 #pragma mark 用户反馈
--(void)feedbackWithUid:(NSString*)uid content:(NSString*)content view:(id)view{
+-(void)feedbackWithUid:(NSString*)usercode email:(NSString*)email content:(NSString*)content view:(id)view{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
-    [dic setObject:uid forKey:@"uid"];
+    [dic setObject:usercode forKey:@"usercode"];
     [dic setObject:content forKey:@"content"];
+    [dic setObject:email forKey:@"email"];
     
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     

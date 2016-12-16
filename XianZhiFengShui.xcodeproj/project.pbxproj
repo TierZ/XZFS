@@ -579,6 +579,7 @@
 		D1D6A29D1E027ED100215CEA /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2911E027ED100215CEA /* openssl_wrapper.m */; };
 		D1D6A29E1E027ED100215CEA /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2931E027ED100215CEA /* RSADataSigner.m */; };
 		D1D6A29F1E027ED100215CEA /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2951E027ED100215CEA /* RSADataVerifier.m */; };
+		D1D6A2A21E0389CB00215CEA /* XZMallService.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2A11E0389CB00215CEA /* XZMallService.m */; };
 		D1F2FB361DEE85F700EFC19B /* JCHATConversationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB351DEE85F700EFC19B /* JCHATConversationController.m */; };
 		D1F2FB391DEFE9A500EFC19B /* XZResetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB381DEFE9A500EFC19B /* XZResetPwdVC.m */; };
 		D1F2FB3C1DF02C1F00EFC19B /* UIButton+XZImageTitleSpacing.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB3B1DF02C1F00EFC19B /* UIButton+XZImageTitleSpacing.m */; };
@@ -1529,6 +1530,8 @@
 		D1D6A2931E027ED100215CEA /* RSADataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataSigner.m; sourceTree = "<group>"; };
 		D1D6A2941E027ED100215CEA /* RSADataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataVerifier.h; sourceTree = "<group>"; };
 		D1D6A2951E027ED100215CEA /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
+		D1D6A2A01E0389CB00215CEA /* XZMallService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMallService.h; sourceTree = "<group>"; };
+		D1D6A2A11E0389CB00215CEA /* XZMallService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMallService.m; sourceTree = "<group>"; };
 		D1F2FB341DEE85F700EFC19B /* JCHATConversationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATConversationController.h; sourceTree = "<group>"; };
 		D1F2FB351DEE85F700EFC19B /* JCHATConversationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATConversationController.m; sourceTree = "<group>"; };
 		D1F2FB371DEFE9A500EFC19B /* XZResetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZResetPwdVC.h; sourceTree = "<group>"; };
@@ -2492,6 +2495,8 @@
 		D191C7991DAB3FD000496906 /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				D1D6A2A01E0389CB00215CEA /* XZMallService.h */,
+				D1D6A2A11E0389CB00215CEA /* XZMallService.m */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -4045,6 +4050,7 @@
 				D1315B451DB9FE21006254ED /* XZImageContainerView.m in Sources */,
 				D195902D1DE3FFF100C06A05 /* MJPhotoView.m in Sources */,
 				D128ACAB1DC0A249002392E0 /* LQImgPickerActionSheet.m in Sources */,
+				D1D6A2A21E0389CB00215CEA /* XZMallService.m in Sources */,
 				84F9C4251DD81179000EF201 /* BasicService.m in Sources */,
 				D19590A11DE40E6200C06A05 /* MASCompositeConstraint.m in Sources */,
 				D1958FFF1DE3F81600C06A05 /* JCHATMessageTableView.m in Sources */,

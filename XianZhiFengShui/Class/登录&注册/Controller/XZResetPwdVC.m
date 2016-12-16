@@ -129,6 +129,8 @@
     XZLoginRegistService * sendCodeService = [[XZLoginRegistService alloc]initWithServiceTag:XZGetResetSecurityTag];
     sendCodeService.delegate = self;
     [sendCodeService requestSecurityCodeWithPhoneNo:self.phoneTf.text cityCode:@"110000" type:@"2" view:self.view];
+    
+    
 }
 
 -(void)requestResetPwd{

@@ -57,12 +57,14 @@ static NSString * XZGetMasterDetail = @"/master/detail";
 }
 
 #pragma mark 评价大师
--(void)evaluateMasterWithMasterCode:(NSString*)masterCode userCode:(NSString*)userCode content:(NSString*)content cityCode:(NSString*)cityCode view:(id)view{
+-(void)evaluateMasterWithMasterCode:(NSString*)masterCode userCode:(NSString*)userCode content:(NSString*)content cityCode:(NSString*)cityCode masterOrderCode:(NSString *)masterOrderCode star:(NSInteger)star view:(id)view{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:cityCode forKey:@"cityCode"];
     [dic setObject:masterCode forKey:@"masterCode"];
     [dic setObject:userCode forKey:@"userCode"];
     [dic setObject:content forKey:@"content"];
+    [dic setObject:masterOrderCode forKey:@"masterOrderCode"];
+    [dic setObject:[NSNumber numberWithInteger:star] forKey:@"star"];
     
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     

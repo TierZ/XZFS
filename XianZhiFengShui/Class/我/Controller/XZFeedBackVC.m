@@ -145,7 +145,7 @@
 
     XZUserCenterService * feedbackService = [[XZUserCenterService alloc]initWithServiceTag:XZFeedBackTag];
     feedbackService.delegate = self;
-   [ feedbackService feedbackWithUid:userCode content:feedBackTv.text  view:self.mainView];
+    [feedbackService feedbackWithUid:userCode email:emailTf.text content:feedBackTv.text view:self.mainView];
 }
 
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{

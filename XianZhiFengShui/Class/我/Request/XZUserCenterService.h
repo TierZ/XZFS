@@ -7,7 +7,7 @@
 //
 
 
-typedef NS_ENUM(NSUInteger, XZHomeServiceTag) {
+typedef NS_ENUM(NSUInteger, XZUserCenterServiceTag) {
     XZFeedBackTag = 400,
 };
 #import "BasicService.h"
@@ -17,9 +17,10 @@ typedef NS_ENUM(NSUInteger, XZHomeServiceTag) {
 /**
  用户反馈
 
- @param uid     用户id
+ @param usercode     用户id
  @param content 内容
+ @param email 邮箱
  @param view    。。
  */
--(void)feedbackWithUid:(NSString*)uid content:(NSString*)content view:(id)view;
+-(void)feedbackWithUid:(NSString*)usercode email:(NSString*)email content:(NSString*)content view:(id)view;
 @end

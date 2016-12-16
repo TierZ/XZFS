@@ -15,8 +15,8 @@
 @property (nonatomic,strong)LPLevelView * mark2;//专业水平
 @property (nonatomic,strong)YYTextView * comment;//评价
 @property (nonatomic,strong)UIButton * submit;//提交
-@property (nonatomic,assign) float starCount1;//星星 数量
-@property (nonatomic,assign) float starCount2;//
+@property (nonatomic,assign) NSInteger starCount1;//星星 数量
+@property (nonatomic,assign) NSInteger starCount2;//
 
 @end
 
@@ -108,7 +108,7 @@
 }
 
 -(void)submitComment:(UIButton*)sender{
-    NSLog(@"star1 = %.2f  star2 = %.2f  comment = %@",self.starCount1,self.starCount2,self.comment.text);
+    NSLog(@"star1 = %.2ld  star2 = %.2ld  comment = %@",(long)self.starCount1,(long)self.starCount2,self.comment.text);
     if (self.comment.text.length>0) {
         [self evaluateMaster];
     }else{
@@ -124,7 +124,7 @@
     NSString * userCode = [userInfo objectForKey:@"bizCode"];
     XZFindService * evaluateService = [[XZFindService alloc]initWithServiceTag:XZEvaluateMaster];
     evaluateService.delegate = self;
-    [evaluateService evaluateMasterWithMasterCode:_masterCode userCode:userCode content:self.comment.text cityCode:@"110000" view:self.mainView];
+    [evaluateService evaluateMasterWithMasterCode:_masterCode userCode:userCode content:self.comment.text cityCode:@"110000" masterOrderCode:@"123123" star:(self.starCount1+self.starCount2) view:self.mainView];
 }
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
     NSLog(@"successhandle = %@",succeedHandle);
