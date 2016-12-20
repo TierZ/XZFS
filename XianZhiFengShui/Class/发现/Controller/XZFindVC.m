@@ -86,7 +86,7 @@
 -(void)requestLectureListWithPage:(int)page{
     XZFindService * lectureService = [[XZFindService alloc]initWithServiceTag:XZLectureList];
     lectureService.delegate = self;
-    [lectureService masterListWithPageNum:page PageSize:10 cityCode:@"110000" view: self.mastView];
+    [lectureService lectureListWithPageNum:page PageSize:10 cityCode:@"110000" view: self.mastView];
 }
 
 
@@ -103,7 +103,24 @@
 
 
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
-    NSLog(@"successHandle= %@",succeedHandle);
+    XZFindService * findService = (XZFindService*)service;
+    switch (findService.serviceTag) {
+        case XZLectureList:{
+            NSLog(@"successHandle= %@",succeedHandle);
+            NSArray * lectures = (NSArray*)succeedHandle;
+            [self.lectureView.data addObjectsFromArray:lectures];
+            [self.lectureView.table reloadData];
+            [self.lectureView.table endRefreshFooter];
+            [self.lectureView.table endRefreshHeader];
+            if (lectures.count<=0) {
+                self.lectureView.table.mj_footer.hidden = YES;
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 
@@ -119,13 +136,13 @@
     frame.origin.x = self.lineView.width*self.titleSeg.selectedSegmentIndex;
     self.lineView.frame = frame;
     
-    if (self.titleSeg.selectedSegmentIndex==1) {
+    if (scrollView.contentOffset.x==SCREENWIDTH) {
         NSLog(@"请求讲座")
         if (self.lectureView.data.count>0) {
         }else{
             [self requestLectureListWithPage:1];
         }
-    }else if (self.titleSeg.selectedSegmentIndex==2){
+    }else if (scrollView.contentOffset.x==SCREENWIDTH*2){
         NSLog(@"请求话题");
         if (self.themeView.data.count>0) {
         }else{

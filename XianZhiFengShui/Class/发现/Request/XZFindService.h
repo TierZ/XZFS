@@ -9,14 +9,15 @@
 #import "BasicService.h"
 
 typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
-    XZMasterListHot = 200,
-     XZMasterListLocal,
-     XZMasterListAll,
-    XZLectureList,
-    XZThemeList,
-    XZMasterDetail,
-    XZEvaluateMaster,
-    XZCollectionMaster
+    XZMasterListHot = 200,//热门大师
+    XZMasterListLocal,//本地大师
+    XZMasterListAll,//全部大师
+    XZLectureList,//讲座列表
+    XZThemeList,//话题列表
+    XZMasterDetail,//大师详情
+    XZLectureDetail,//讲座详情
+    XZEvaluateMaster,//评价大师
+    XZCollectionMaster,//收藏／取消大师
 };
 
 @interface XZFindService : BasicService
@@ -66,4 +67,28 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
  @param view       。。
  */
 -(void)collectMasterWithMasterCode:(NSString*)masterCode userCode:(NSString*)userCode type:(NSInteger)type cityCode:(NSString*)cityCode view:(id)view;
+
+
+
+/**
+ 讲座列表
+
+ @param pageNum 页码
+ @param pageSize 每页个数
+ @param cityCode 城市代码
+ @param view 。。
+ */
+-(void)lectureListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode view:(id)view;
+
+
+/**
+ 讲座详情
+
+ @param masterCode 大师编号
+ @param userCode 用户编号
+ @param cityCode 城市代码
+ @param view ，，
+ */
+-(void)lectureDetailWithMasterCode:(NSString*)masterCode UserCode:(NSString*)userCode cityCode:(NSString*)cityCode view:(id)view;
+
 @end

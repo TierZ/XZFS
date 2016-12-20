@@ -32,6 +32,14 @@
 @property (nonatomic,copy)NSString * remian;//剩余
 @property (nonatomic,copy)NSString * time;//时间
 @property (nonatomic,copy)NSString * price;//价格
+@property (nonatomic,copy)NSString * lecturesCode;//讲座编码
+@property (nonatomic,copy)NSString * desc;//大师详细介绍
+@property (nonatomic,copy)NSString * appoint;//预约数
+@property (nonatomic,copy)NSString * address;//大师地址
+@property (nonatomic,strong)NSArray * serviceType;//客户评价：客户头像、昵称、简介、日期、评价内容	
+
+
+
 @property (nonatomic,assign)BOOL isCollected;//收藏
 
 // 话题
