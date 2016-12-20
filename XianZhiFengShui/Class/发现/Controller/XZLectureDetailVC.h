@@ -11,8 +11,8 @@
  */
 
 #import "BaseContentController.h"
-
+#import "XZTheMasterModel.h"
 
 @interface XZLectureDetailVC : BaseContentController
-
+- (instancetype)initWithModel:(XZTheMasterModel*)model;
 @end

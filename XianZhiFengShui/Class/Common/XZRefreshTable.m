@@ -25,12 +25,13 @@
 {
     
     self.mj_header = [MJRefreshGifHeader headerWithRefreshingBlock:^{
-        [self.mj_header beginRefreshing];
+       [self.mj_header beginRefreshing];
         self.row = 1;
         if (self.block) {
             self.block(1,YES);
         }
     }];
+    
     
     self.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         [self.mj_footer beginRefreshing];

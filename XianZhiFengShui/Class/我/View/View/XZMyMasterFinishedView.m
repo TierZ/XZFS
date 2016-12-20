@@ -31,10 +31,10 @@
     for (int i = 0; i<10; i++) {
         XZTheMasterModel * model = [[XZTheMasterModel alloc]init];
         model.icon = @"http://navatar.shagualicai.cn/uid/150922010117012662";
-        model.name = @"张三丰";
+        model.masterName = @"张三丰";
         model.level = @"V1";
         model.isFinished = NO;
-        model.time = @"2016-10-11 11:30";
+        model.startTime = @"2016-10-11 11:30";
         model.service = @"服务项目：按时大大人家阿萨德v";
         if (i%3==0) {
             model.isFinished = YES;

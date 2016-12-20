@@ -52,17 +52,24 @@
     [self.titleScroll addSubview:self.mastView];
     
     self.lectureView = [[XZFindTable alloc]initWithFrame:CGRectMake(self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height) style:XZFindLecture];
-    self.lectureView.backgroundColor = RandomColor(1);
     self.lectureView.currentVC = self;
     [self.titleScroll addSubview:self.lectureView];
     
     self.themeView = [[XZFindTable alloc]initWithFrame:CGRectMake(2*self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height) style:XZFindTheme];
-    self.themeView.backgroundColor = RandomColor(1);
     self.themeView.currentVC = self;
     [self.titleScroll addSubview:self.themeView];
+    [self refreshList];
 }
 
-
+-(void)refreshList{
+    __weak typeof(self)weakSelf = self;
+    [self.lectureView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
+        [weakSelf requestLectureListWithPage:page];
+    }];
+    [self.themeView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
+        [weakSelf requestThemeListWithPage:page];
+    }];
+}
 
 #pragma mark 网络
 

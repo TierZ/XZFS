@@ -162,6 +162,12 @@
 
 }
 
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+     XZFindService * masterService = (XZFindService*)service;
+   XZFindTable * masterTable = [self selectTableWithTag:masterService.serviceTag];
+    [masterTable.table endRefreshHeader];
+    [masterTable.table endRefreshFooter];
+}
 
 #pragma mark action
 

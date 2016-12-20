@@ -580,6 +580,8 @@
 		D1D6A29E1E027ED100215CEA /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2931E027ED100215CEA /* RSADataSigner.m */; };
 		D1D6A29F1E027ED100215CEA /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2951E027ED100215CEA /* RSADataVerifier.m */; };
 		D1D6A2A21E0389CB00215CEA /* XZMallService.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2A11E0389CB00215CEA /* XZMallService.m */; };
+		D1D6A2A51E0904D000215CEA /* dashiweizhi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1D6A2A31E0904D000215CEA /* dashiweizhi@2x.png */; };
+		D1D6A2A61E0904D000215CEA /* dashiweizhi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1D6A2A41E0904D000215CEA /* dashiweizhi@3x.png */; };
 		D1F2FB361DEE85F700EFC19B /* JCHATConversationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB351DEE85F700EFC19B /* JCHATConversationController.m */; };
 		D1F2FB391DEFE9A500EFC19B /* XZResetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB381DEFE9A500EFC19B /* XZResetPwdVC.m */; };
 		D1F2FB3C1DF02C1F00EFC19B /* UIButton+XZImageTitleSpacing.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB3B1DF02C1F00EFC19B /* UIButton+XZImageTitleSpacing.m */; };
@@ -1532,6 +1534,8 @@
 		D1D6A2951E027ED100215CEA /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
 		D1D6A2A01E0389CB00215CEA /* XZMallService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMallService.h; sourceTree = "<group>"; };
 		D1D6A2A11E0389CB00215CEA /* XZMallService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMallService.m; sourceTree = "<group>"; };
+		D1D6A2A31E0904D000215CEA /* dashiweizhi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dashiweizhi@2x.png"; sourceTree = "<group>"; };
+		D1D6A2A41E0904D000215CEA /* dashiweizhi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dashiweizhi@3x.png"; sourceTree = "<group>"; };
 		D1F2FB341DEE85F700EFC19B /* JCHATConversationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATConversationController.h; sourceTree = "<group>"; };
 		D1F2FB351DEE85F700EFC19B /* JCHATConversationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATConversationController.m; sourceTree = "<group>"; };
 		D1F2FB371DEFE9A500EFC19B /* XZResetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZResetPwdVC.h; sourceTree = "<group>"; };
@@ -3121,6 +3125,8 @@
 		D1A26AE71DF554080092BADB /* 发现 */ = {
 			isa = PBXGroup;
 			children = (
+				D1D6A2A31E0904D000215CEA /* dashiweizhi@2x.png */,
+				D1D6A2A41E0904D000215CEA /* dashiweizhi@3x.png */,
 				D1A26AE81DF554080092BADB /* fatie@2x.png */,
 				D1A26AE91DF554080092BADB /* fatie@3x.png */,
 				D1A26AEA1DF554080092BADB /* fenxiang@2x.png */,
@@ -3678,6 +3684,7 @@
 				D1A26AC31DF514750092BADB /* xingxing_empty@2x.png in Resources */,
 				D1A26AB71DF514750092BADB /* weidianzan@2x.png in Resources */,
 				D1A26BCC1DF9678A0092BADB /* weixuanzhong@2x.png in Resources */,
+				D1D6A2A61E0904D000215CEA /* dashiweizhi@3x.png in Resources */,
 				D19591311DE4191C00C06A05 /* userDetail@2x.png in Resources */,
 				D1315BB21DBA1A50006254ED /* picon.jpg in Resources */,
 				D1131A2B1DEE83BE00E1398D /* JCHATPhotoPickerViewController.xib in Resources */,
@@ -3688,6 +3695,7 @@
 				D1A26BC91DF9678A0092BADB /* plus@3x.png in Resources */,
 				D1315B8E1DBA1A50006254ED /* 13.jpg in Resources */,
 				D1A26AA41DF514750092BADB /* guanyuxianzhi@3x.png in Resources */,
+				D1D6A2A51E0904D000215CEA /* dashiweizhi@2x.png in Resources */,
 				D1A26AA81DF514750092BADB /* huatishanchu@3x.png in Resources */,
 				D1A26AD41DF514750092BADB /* zhifubaochongzhi@3x.png in Resources */,
 				D19591051DE4191B00C06A05 /* card_39@3x.png in Resources */,

@@ -7,12 +7,16 @@
 //
 
 #import "XZLectureDetailVC.h"
+#import "XZFindService.h"
+#import "XZMasterDetailInfo.h"
 
 CGFloat maxContentLabelHeight = 150; // 讲座介绍 高度
 CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
 @interface XZLectureDetailVC ()
 @property (nonatomic,strong)UIScrollView * mainScroll;
 @property (nonatomic,strong)UIView * baseInfo;//基本信息
+@property (nonatomic,strong)UIImageView * headView;//头部图片
+@property (nonatomic,strong)XZMasterDetailInfo * headInfo;//头部
 @property (nonatomic,strong)UIView * lectureInfo;//讲座详情
 @property (nonatomic,strong)UILabel * lectureTitle;//讲座标题
 @property (nonatomic,strong)UIView * smallInfo;//时间，地点
@@ -27,9 +31,20 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
 @property (nonatomic,strong)UIView * firstLine;//第一条线
 
 @property (nonatomic,strong)UIView * secondLine;//第二条线
+
+@property (nonatomic,strong)XZTheMasterModel * model;//
 @end
 
 @implementation XZLectureDetailVC
+
+- (instancetype)initWithModel:(XZTheMasterModel*)model
+{
+    self = [super init];
+    if (self) {
+        _model = model;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,7 +56,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     [self setupBottomBtn];
     
 //    [self layoutView];
-    
+    [self requestLectureInfo];
     [self updateData];
     // Do any additional setup after loading the view.
 }
@@ -60,8 +75,18 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
 }
 -(void)setupBaseView{
     _baseInfo = [[UIView alloc]init];
-    _baseInfo.backgroundColor = RandomColor(1);
     [_mainScroll addSubview:_baseInfo];
+    
+    _headView = [[UIImageView alloc]init];
+    _headView.backgroundColor = [UIColor redColor];
+    _headView.tag = 10;
+    [_baseInfo addSubview:_headView];
+    
+    self.headInfo = [[XZMasterDetailInfo alloc]init];
+//    WithFrame:CGRectMake(headView.width-95-15, 18, 95, headView.height-18*2)
+    self.headInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
+    [_baseInfo addSubview:self.headInfo];
+
 
     _firstLine = [[UIView alloc]init];
     _firstLine.backgroundColor = XZFS_HEX_RGB(@"#F1EEEF");
@@ -155,8 +180,20 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     .leftSpaceToView(_mainScroll,0)
     .rightSpaceToView(_mainScroll,0)
     .topSpaceToView(_mainScroll,0)
+    .heightIs(202);
+    
+    _headView.sd_layout
+    .leftEqualToView(_baseInfo)
+    .widthIs(_baseInfo.width)
+    .topSpaceToView(_baseInfo,0)
     .heightIs(165);
     
+    _headInfo.sd_layout
+    .rightSpaceToView(_baseInfo,15)
+    .widthIs(95)
+    .topSpaceToView(_baseInfo,18)
+    .heightIs(_headView.height-18*2);
+
     _firstLine.sd_layout
     .leftEqualToView(self.mainScroll)
     .rightEqualToView(self.mainScroll)
@@ -222,6 +259,28 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
 }
 
 #pragma mark update
+
+-(void)requestLectureInfo{
+    NSDictionary * userInfoDic = GETUserdefault(@"userInfo");
+    NSString * userCode = [userInfoDic objectForKey:@"bizCode"]?[userInfoDic objectForKey:@"bizCode"]:@"";
+    XZFindService * lectureInfoService = [[XZFindService alloc]initWithServiceTag:XZLectureDetail];
+    lectureInfoService.delegate = self;
+    [lectureInfoService lectureDetailWithMasterCode:self.model.lecturesCode UserCode:userCode cityCode:@"110000" view:self.mainScroll];
+}
+
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    NSLog(@"successhandl = %@",succeedHandle);
+    if ([service isKindOfClass:[XZFindService class]]) {
+        XZFindService * lectureInfoService = (XZFindService*)service;
+        NSDictionary * dic = (NSDictionary*)succeedHandle;
+        [_headInfo refreshInfoWithDic:dic];
+    }
+}
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+    NSLog(@"");
+}
+
+
 -(void)updateData{
     self.lectureTitle.text = @"聊聊买房的那些事";
     self.lectureDetail.text = @"MVC（Model-View-Controller）是最老牌的的思想，老牌到4人帮的书里把它归成了一种模式，其中Model就是作为数据管理者，View作为数据展示者，Controller作为数据加工者，Model和View又都是由Controller来根据业务需求调配，所以Controller还负担了一个数据流调配的功能。正在我写这篇文章的时候，我看到InfoQ发了这篇文章，里面提到了一个移动开发中的痛点是：对MVC架构划分的理解。我当时没能够去参加这个座谈会，也没办法发表个人意见，所以就只能在这里写写了。    在iOS开发领域，我们应当如何进行MVC的划分？    这里面其实有两个问题：    为什么我们会纠结于iOS开发领域中MVC的划分问题？在iOS开发领域中，怎样才算是划分的正确姿势？为什么我们会纠结于iOS开发领域中MVC的划分问题？关于这个，每个人纠结的点可能不太一样，我也不知道当时座谈会上大家的观点。但请允许我猜一下：是不是因为UIViewController中自带了一个View，且控制了View的整个生命周期（viewDidLoad,viewWillAppear...），而在常识中我们都知道Controller不应该和View有如此紧密的联系，所以才导致大家对划分产生困惑？，下面我会针对这个猜测来给出我的意见。";

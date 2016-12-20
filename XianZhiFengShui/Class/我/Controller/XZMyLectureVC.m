@@ -64,18 +64,19 @@
 -(void)showData{
     for (int i = 0; i<20; i++) {
         XZTheMasterModel * lecture = [[XZTheMasterModel alloc]init];
-        lecture.icon = @"http://file.shagualicai.cn/201610/09/pic/pic_14759978965900.jpg";
-        lecture.name = @"张三丰  中国道教协会会长，武当创始人，太极";
+        lecture.masterIcon = @"http://file.shagualicai.cn/201610/09/pic/pic_14759978965900.jpg";
+        lecture.masterName = @"张三丰";
+        lecture.masterDesc = @"中国道教协会会长，武当创始人，太极";
         lecture.title = @"聊聊买房买车开公司那些事";
         lecture.isCollected = NO;
         if (i%5==0) {
-            lecture.name  =@"老子  道家创始人，...";
+            lecture.masterName  =@"老子 ";
             lecture.title  =@"做梦解梦，你了不了解你梦到的东西";
             lecture.isCollected = YES;
         }
         lecture.price = @"￥99";
-        lecture.time = @"9月18日  9:00";
-        lecture.remian = @"余10席";
+        lecture.startTime = @"9月18日  9:00";
+        lecture.remainSeats = @"余10席";
         
         [self.wantJoinLecture.data addObject:lecture];
         [self.joinedLecture.data addObject:lecture];

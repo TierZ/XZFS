@@ -46,26 +46,30 @@
     .leftSpaceToView(self,6)
     .rightSpaceToView(self,6)
     .topSpaceToView(self.nameLab,12)
-    .heightIs(self.height-6-7-32);
+    .autoHeightRatio(0);
     
     self.locationIv.sd_layout
     .leftSpaceToView(self,6)
     .topSpaceToView(self.infoLab,2)
-    .widthIs(18)
-    .heightIs(17);
+    .widthIs(15)
+    .heightIs(15);
     
     self.locationLab.sd_layout
     .leftSpaceToView(self.locationIv,6)
     .topSpaceToView(self.infoLab,6)
-    .heightIs(10.5);
-    [self.locationLab setSingleLineAutoResizeWithMaxWidth:(self.width-self.locationIv.right-6)];
+    .heightIs(10.5)
+    .autoHeightRatio(0);
     
 }
 
 
 -(void)refreshInfoWithDic:(NSDictionary*)dic{
     if (dic) {
-        
+        self.nameLab.text = [dic objectForKey:@"masterName"];
+        self.infoLab.text = [dic objectForKey:@"desc"];
+        self.locationLab.text = [dic objectForKey:@"address"];
+        [self setupAutoHeightWithBottomView:_locationLab bottomMargin:10];
+        NSLog(@"self.frame = %@",NSStringFromCGRect(self.frame));
     }
 }
 
@@ -90,6 +94,7 @@
         _infoLab.textAlignment =NSTextAlignmentLeft;
         _infoLab.font = XZFS_S_FONT(10.5);
          _infoLab.text = @"--";
+        _infoLab.numberOfLines = 0;
     }
     return _infoLab;
 }
@@ -97,7 +102,7 @@
 -(UIImageView *)locationIv{
     if (!_locationIv) {
         _locationIv = [[UIImageView alloc]init];
-        _locationIv.backgroundColor = [UIColor redColor];
+        _locationIv.image = XZFS_IMAGE_NAMED(@"dashiweizhi");
     }
     return _locationIv;
 }
@@ -110,6 +115,7 @@
         _locationLab.textAlignment =NSTextAlignmentLeft;
         _locationLab.font = XZFS_S_FONT(10.5);
         _locationLab.text = @"--";
+          _locationLab.numberOfLines = 0;
     }
     return _locationLab;
 }

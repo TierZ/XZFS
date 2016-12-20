@@ -10,35 +10,45 @@
 #import "XZMyMasterWantedView.h"
 #import "XZMyMasterFinishedView.h"
 #import "XZFindService.h"
-@interface XZMyMasterVC ()
-@property (nonatomic,strong)UISegmentedControl * selectSeg;
-@property (nonatomic,strong)NSArray * selectArray;
+#import "UIButton+XZImageTitleSpacing.h"
+@interface XZMyMasterVC ()<UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic,strong)UIButton*wantBtn;//想参加的
+@property (nonatomic,strong)UIButton * finishedBtn;//完成的
+@property (nonatomic,strong)NSArray * listArray;
 @property (nonatomic,strong)UIView * lineView;
 @property (nonatomic,strong)UIScrollView * selectScroll;
 @property (nonatomic,strong)XZMyMasterWantedView * wantView;
 @property (nonatomic,strong)XZMyMasterFinishedView * finishView;
 @end
 
-@implementation XZMyMasterVC
+@implementation XZMyMasterVC{
+    BOOL isShowSelectList;//是否显示 筛选列表
+    int tmpTag;//计算是否显示列表的 临时数字
+    UITableView * selectList;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.mainView.backgroundColor = RandomColor(1);
     [self setupSeg];
     [self setupScroll];
+    isShowSelectList = NO;
+    tmpTag = 1;
+    [self setupSelectList];
 }
 -(void)setupSeg{
-    self.selectSeg.frame = CGRectMake(0, 0, SCREENWIDTH, 32);
-    [self.mainView addSubview:self.selectSeg];
-    float lineWidth = (SCREENWIDTH-20*2)/(int)self.selectArray.count;
-    self.lineView.frame = CGRectMake(20, self.selectSeg.bottom-0.5, lineWidth, 1);
+    self.finishedBtn.frame = CGRectMake(0, 0, SCREENWIDTH/2, 32);
+    self.wantBtn.frame = CGRectMake(SCREENWIDTH/2, 0, SCREENWIDTH/2, 32);
+    [self.mainView addSubview:self.finishedBtn];
+    [self.mainView addSubview:self.wantBtn];
+    float lineWidth = (SCREENWIDTH-20*2)/2;
+    self.lineView.frame = CGRectMake(20, self.finishedBtn.bottom-0.5, lineWidth, 1);
     [self.mainView addSubview:self.lineView];
 
 }
 -(void)setupScroll{
     self.selectScroll.frame = CGRectMake(0, self.lineView.bottom, SCREENWIDTH, XZFS_MainView_H-self.lineView.bottom);
     [self.mainView addSubview:self.selectScroll];
-    self.selectScroll.contentSize = CGSizeMake(self.selectScroll.width*(int)self.selectArray.count, self.selectScroll.height);
+    self.selectScroll.contentSize = CGSizeMake(self.selectScroll.width*2, self.selectScroll.height);
     
     self.finishView = [[XZMyMasterFinishedView alloc]initWithFrame:CGRectMake(0, 0, self.selectScroll.width, self.selectScroll.height)];
     self.finishView.weakSelfVC = self;
@@ -50,47 +60,132 @@
 
 }
 
--(void)selectSegChanged:(UISegmentedControl*)seg{
-    self.selectScroll.contentOffset = CGPointMake(seg.selectedSegmentIndex*self.selectScroll.width, 0);
+-(void)setupSelectList{
+   selectList = [[UITableView alloc]initWithFrame:CGRectMake(0, self.finishedBtn.bottom, SCREENWIDTH, XZFS_MainView_H-self.finishedBtn.height) style:UITableViewStylePlain];
+    selectList.delegate = self;
+    selectList.dataSource = self;
+    selectList.hidden = YES;
+    selectList.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+    
+    UIView * footV = [UIView new];
+    selectList.tableFooterView = footV;
+    [self.mainView addSubview:selectList];
+}
+
+
+
+-(void)selectWant{
+    isShowSelectList = NO;
+    selectList.hidden = !isShowSelectList;
+    tmpTag = 0;
+      [self.finishedBtn setImage:XZFS_IMAGE_NAMED(@"xiangxia") forState:UIControlStateNormal];
+    self.finishedBtn.selected = NO;
+    self.wantBtn.selected = YES;
+    [self.selectScroll setContentOffset:CGPointMake(self.selectScroll.width, 0) animated:YES];
+}
+-(void)selectFinished{
+    tmpTag++;
+    
+    NSLog(@"tmptag = %d",tmpTag);
+    if (tmpTag>1) {
+        isShowSelectList = tmpTag%2==0?YES:NO;
+        selectList.hidden = !isShowSelectList;
+        if (isShowSelectList) {
+            [self.finishedBtn setImage:XZFS_IMAGE_NAMED(@"xiangshang") forState:UIControlStateNormal];
+        }else{
+             [self.finishedBtn setImage:XZFS_IMAGE_NAMED(@"xiangxia") forState:UIControlStateNormal];
+        }
+    }
+    self.finishedBtn.selected = YES;
+    self.wantBtn.selected = NO;
+     [self.selectScroll setContentOffset:CGPointMake(0, 0) animated:YES];
+    
 }
 
 #pragma mark delegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    self.selectSeg.selectedSegmentIndex = scrollView.contentOffset.x/SCREENWIDTH;
+    int offsetX = scrollView.contentOffset.x;
+    if (offsetX==0) {
+        self.finishedBtn.selected = YES;
+        self.wantBtn.selected = NO;
+    }else if (offsetX==SCREENWIDTH){
+        self.finishedBtn.selected = NO;
+        self.wantBtn.selected = YES;
+    }
+    
     CGRect frame = self.lineView.frame;
-    frame.origin.x = 20+self.lineView.width*self.selectSeg.selectedSegmentIndex;
+    frame.origin.x = 20+self.lineView.width*(offsetX/SCREENWIDTH);
     self.lineView.frame = frame;
 }
 
 
+#pragma mark table 代理
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.listArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString * cellId = @"selectListCellId";
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+    }
+    cell.backgroundColor = XZFS_HEX_RGB(@"#FAF9F9");
+    cell.textLabel.text = self.listArray[indexPath.row];
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    return cell;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 37;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"点击--%@",self.listArray[indexPath.row]);
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.finishedBtn setImage:XZFS_IMAGE_NAMED(@"xiangxia") forState:UIControlStateNormal];
+    isShowSelectList = NO;
+    selectList.hidden = !isShowSelectList;
+    tmpTag = 1;
+
+}
 
 
 #pragma mark getter
--(NSArray *)selectArray{
-    if (!_selectArray) {
-        _selectArray = @[@"我约过的大师",@"我想约的大师"];
+-(NSArray *)listArray{
+    if (!_listArray) {
+        _listArray = @[@"进行中",@"已约见"];
     }
-    return _selectArray;
-    
+    return _listArray;
 }
 
--(UISegmentedControl *)selectSeg{
-    if (!_selectSeg) {
-        _selectSeg =[[UISegmentedControl alloc]initWithItems:self.selectArray];
-        [_selectSeg addTarget:self action:@selector(selectSegChanged:) forControlEvents:UIControlEventValueChanged];
-        //        _selectSeg.frame =  CGRectMake(0, 20, SCREENWIDTH, XZFS_STATUS_BAR_H-22);
-        _selectSeg.tintColor=XZFS_NAVICOLOR;
-        _selectSeg.backgroundColor = XZFS_NAVICOLOR;
-        NSDictionary* selectedTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:12],
-                                                 NSForegroundColorAttributeName: XZFS_HEX_RGB(@"#eb6000")};
-        
-        [_selectSeg setTitleTextAttributes:selectedTextAttributes forState:UIControlStateSelected];
-        NSDictionary* unselectedTextAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:12],
-                                                   NSForegroundColorAttributeName: [UIColor blackColor]};
-        [_selectSeg setTitleTextAttributes:unselectedTextAttributes forState:UIControlStateNormal];
-        _selectSeg.selectedSegmentIndex=0;
+-(UIButton *)wantBtn{
+    if (!_wantBtn) {
+        _wantBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_wantBtn setTitle:@"我想约的大师" forState:UIControlStateNormal];
+        [_wantBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+         [_wantBtn setTitleColor:XZFS_HEX_RGB(@"#eb6000") forState:UIControlStateSelected];
+//        [_wantBtn setImage:XZFS_IMAGE_NAMED(@"xiangxia") forState:UIControlStateNormal];
+//         [_wantBtn setImage:XZFS_IMAGE_NAMED(@"xiangshang") forState:UIControlStateNormal];
+        _wantBtn.titleLabel.font = XZFS_S_FONT(12);
+//        [_wantBtn layoutButtonWithEdgeInsetsStyle:XZButtonEdgeInsetsStyleRight imageTitleSpace:5];
+        [_wantBtn addTarget:self action:@selector(selectWant) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _selectSeg;
+    return _wantBtn;
+}
+
+-(UIButton *)finishedBtn{
+    if (!_finishedBtn) {
+        _finishedBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_finishedBtn setTitle:@"我约过的大师" forState:UIControlStateNormal];
+        [_finishedBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_finishedBtn setTitleColor:XZFS_HEX_RGB(@"#eb6000") forState:UIControlStateSelected];
+        _finishedBtn.selected = YES;
+        [_finishedBtn setImage:XZFS_IMAGE_NAMED(@"xiangxia") forState:UIControlStateNormal];
+        _finishedBtn.titleLabel.font = XZFS_S_FONT(12);
+        [_finishedBtn layoutButtonWithEdgeInsetsStyle:XZButtonEdgeInsetsStyleRight imageTitleSpace:10];
+        [_finishedBtn addTarget:self action:@selector(selectFinished) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _finishedBtn;
 }
 
 -(UIView *)lineView{

@@ -70,13 +70,13 @@
     NSMutableArray * lectures = [NSMutableArray array];
     for (int i = 0; i<3; i++) {
         XZTheMasterModel * lecture = [[XZTheMasterModel alloc]init];
-        lecture.icon = @"http://file.shagualicai.cn/201610/09/pic/pic_14759978965900.jpg";
-        lecture.name = @"张三丰  中国道教协会会长，武当创始人，太极";
+        lecture.masterIcon = @"http://file.shagualicai.cn/201610/09/pic/pic_14759978965900.jpg";
+        lecture.masterName = @"张三丰  中国道教协会会长，武当创始人，太极";
         lecture.title = @"聊聊买房买车开公司那些事";
         lecture.isCollected = NO;
         lecture.price = @"￥99";
-        lecture.time = @"9月18日  9:00";
-        lecture.remian = @"余10席";
+        lecture.startTime = @"9月18日  9:00";
+        lecture.remainSeats = @"余10席";
         
         [lectures addObject:lecture];
     }

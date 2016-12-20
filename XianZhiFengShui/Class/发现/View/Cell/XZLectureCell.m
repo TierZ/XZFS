@@ -64,7 +64,7 @@
 #pragma mark refresh
 -(void)refreshLectureCellWithModel:(XZTheMasterModel*)model{
     if (model) {
-        [self.photo setImageWithURL:[NSURL URLWithString:model.icon] placeholder:[UIImage imageNamed:@""] ];
+        [self.photo setImageWithURL:[NSURL URLWithString:model.masterIcon] placeholder:[UIImage imageNamed:@""] ];
         
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.photo.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:self.photo.bounds.size];
         
@@ -77,10 +77,10 @@
         
         
         self.title.text = model.title;
-        self.name.text = model.name;
-        self.remain.text = model.remian;
+        self.name.text = [NSString stringWithFormat:@"%@  %@",model.masterName,model.masterDesc];
+        self.remain.text = model.remainSeats;
         self.price.text = model.price;
-        self.time.text = model.time;
+        self.time.text = model.startTime;
         self.collection.selected = model.isCollected;
     }
 }

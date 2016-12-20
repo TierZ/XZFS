@@ -77,9 +77,9 @@
 -(void)setModel:(XZTheMasterModel *)model{
     _model = model;
     [self.photo setImageWithURL:[NSURL URLWithString:model.icon] placeholder:[UIImage imageNamed:@""] ];
-    self.name.text = model.name;
+    self.name.text = model.masterName;
     self.levelLab.text = model.level;
-    self.timeLab.text = model.time;
+    self.timeLab.text = model.startTime;
     self.service.text = model.service;
     self.price.text = model.price;
 
