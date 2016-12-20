@@ -9,6 +9,9 @@
 #import "XZGoodsDetailVC.h"
 #import "UIButton+XZImageTitleSpacing.h"
 #import "XZOrderDetailVC.h"
+#import "WTShareManager.h"
+#import "WTShareContentItem.h"
+
 
 @interface XZGoodsDetailVC ()
 @property (nonatomic,strong)NSString * goodsId;
@@ -86,6 +89,36 @@
 
 -(void)clickRightButton{
     NSLog(@"分享");
+    UIButton * sender;
+    if (sender.tag == WTShareTypeWeiBo) {
+        
+        [WTShareManager wt_shareWithContent:[WTShareContentItem shareWTShareContentItem] shareType:WTShareTypeWeiBo shareResult:^(NSString *shareResult) {
+            NSLog(@"🐒🐒🐒🐒🐒🐒---%@", shareResult);
+        }];
+        
+    }else if (sender.tag == WTShareTypeQQ){
+        [WTShareManager wt_shareWithContent:[WTShareContentItem shareWTShareContentItem] shareType:WTShareTypeQQ shareResult:^(NSString *shareResult) {
+            NSLog(@"🐒🐒🐒🐒🐒🐒---%@", shareResult);
+        }];
+    }else if (sender.tag == WTShareTypeQQZone){
+        [WTShareManager wt_shareWithContent:[WTShareContentItem shareWTShareContentItem] shareType:WTShareTypeQQZone shareResult:^(NSString *shareResult) {
+            NSLog(@"🐒🐒🐒🐒🐒🐒---%@", shareResult);
+        }];
+    }else if (sender.tag == WTShareTypeWeiXinTimeline){
+        [WTShareManager wt_shareWithContent:[WTShareContentItem shareWTShareContentItem] shareType:WTShareTypeWeiXinTimeline shareResult:^(NSString *shareResult) {
+            NSLog(@"🐒🐒🐒🐒🐒🐒---%@", shareResult);
+        }];
+    }else if (sender.tag == WTShareTypeWeiXinSession){
+        [WTShareManager wt_shareWithContent:[WTShareContentItem shareWTShareContentItem] shareType:WTShareTypeWeiXinSession shareResult:^(NSString *shareResult) {
+            NSLog(@"🐒🐒🐒🐒🐒🐒---%@", shareResult);
+        }];
+    }else if (sender.tag == WTShareTypeWeiXinFavorite){
+        [WTShareManager wt_shareWithContent:[WTShareContentItem shareWTShareContentItem] shareType:WTShareTypeWeiXinFavorite shareResult:^(NSString *shareResult) {
+            NSLog(@"🐒🐒🐒🐒🐒🐒---%@", shareResult);
+        }];
+    }
+
+    
 }
 
 -(void)clickBottomBtn:(UIButton*)sender{

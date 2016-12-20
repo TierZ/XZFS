@@ -12,6 +12,7 @@
 #import "AppDelegate+AppService.h"
 #import "IQKeyboardManager.h"
 #import "WTThirdPartyLoginManager.h"
+#import "WTShareManager.h"
 #define kDBMigrateFinishNotification @"DBMigrateFinishNotification"
 
 @interface AppDelegate ()
@@ -52,8 +53,8 @@
         return [WXApi handleOpenURL:url delegate:[WTThirdPartyLoginManager shareWTThirdPartyLoginManager]];
     }else if ([options[UIApplicationOpenURLOptionsSourceApplicationKey] isEqualToString:@"com.tencent.mqq"]){
         
-        //        [WTThirdPartyLoginManager didReceiveTencentUrl:url];
-//        return [TencentOAuth HandleOpenURL:url];
+                [WTShareManager didReceiveTencentUrl:url];
+        return [TencentOAuth HandleOpenURL:url];
     }
     return YES;
 }
@@ -73,8 +74,8 @@
         
     }else if ([sourceApplication isEqualToString:@"com.tencent.mqq"]){
         
-        //        [WTShareManager didReceiveTencentUrl:url];
-//        return [TencentOAuth HandleOpenURL:url];
+                [WTShareManager didReceiveTencentUrl:url];
+        return [TencentOAuth HandleOpenURL:url];
     }
     
     

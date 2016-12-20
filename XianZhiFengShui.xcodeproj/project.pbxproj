@@ -582,6 +582,11 @@
 		D1D6A2A21E0389CB00215CEA /* XZMallService.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2A11E0389CB00215CEA /* XZMallService.m */; };
 		D1D6A2A51E0904D000215CEA /* dashiweizhi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1D6A2A31E0904D000215CEA /* dashiweizhi@2x.png */; };
 		D1D6A2A61E0904D000215CEA /* dashiweizhi@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1D6A2A41E0904D000215CEA /* dashiweizhi@3x.png */; };
+		D1D6A2AE1E0935CC00215CEA /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D6A2AD1E0935CC00215CEA /* libiconv.tbd */; };
+		D1D6A2B01E0935F600215CEA /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D6A2AF1E0935F600215CEA /* libstdc++.tbd */; };
+		D1D6A2B81E093A1E00215CEA /* WTShareContentItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2B31E093A1E00215CEA /* WTShareContentItem.m */; };
+		D1D6A2B91E093A1E00215CEA /* WTShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2B51E093A1E00215CEA /* WTShareManager.m */; };
+		D1D6A2BA1E093A1E00215CEA /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1D6A2B71E093A1E00215CEA /* TencentOpenAPI.framework */; };
 		D1F2FB361DEE85F700EFC19B /* JCHATConversationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB351DEE85F700EFC19B /* JCHATConversationController.m */; };
 		D1F2FB391DEFE9A500EFC19B /* XZResetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB381DEFE9A500EFC19B /* XZResetPwdVC.m */; };
 		D1F2FB3C1DF02C1F00EFC19B /* UIButton+XZImageTitleSpacing.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB3B1DF02C1F00EFC19B /* UIButton+XZImageTitleSpacing.m */; };
@@ -1536,6 +1541,13 @@
 		D1D6A2A11E0389CB00215CEA /* XZMallService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMallService.m; sourceTree = "<group>"; };
 		D1D6A2A31E0904D000215CEA /* dashiweizhi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dashiweizhi@2x.png"; sourceTree = "<group>"; };
 		D1D6A2A41E0904D000215CEA /* dashiweizhi@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dashiweizhi@3x.png"; sourceTree = "<group>"; };
+		D1D6A2AD1E0935CC00215CEA /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		D1D6A2AF1E0935F600215CEA /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		D1D6A2B21E093A1E00215CEA /* WTShareContentItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTShareContentItem.h; sourceTree = "<group>"; };
+		D1D6A2B31E093A1E00215CEA /* WTShareContentItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTShareContentItem.m; sourceTree = "<group>"; };
+		D1D6A2B41E093A1E00215CEA /* WTShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTShareManager.h; sourceTree = "<group>"; };
+		D1D6A2B51E093A1E00215CEA /* WTShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTShareManager.m; sourceTree = "<group>"; };
+		D1D6A2B71E093A1E00215CEA /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		D1F2FB341DEE85F700EFC19B /* JCHATConversationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATConversationController.h; sourceTree = "<group>"; };
 		D1F2FB351DEE85F700EFC19B /* JCHATConversationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATConversationController.m; sourceTree = "<group>"; };
 		D1F2FB371DEFE9A500EFC19B /* XZResetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZResetPwdVC.h; sourceTree = "<group>"; };
@@ -1553,6 +1565,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1D6A2B01E0935F600215CEA /* libstdc++.tbd in Frameworks */,
+				D1D6A2AE1E0935CC00215CEA /* libiconv.tbd in Frameworks */,
 				D1A26B831DF6B6970092BADB /* CoreText.framework in Frameworks */,
 				D1A26B811DF6B6840092BADB /* QuartzCore.framework in Frameworks */,
 				D1D6A2971E027ED100215CEA /* libssl.a in Frameworks */,
@@ -1576,6 +1590,7 @@
 				D1958D821DE3F2E200C06A05 /* Foundation.framework in Frameworks */,
 				D1958D801DE3F2C500C06A05 /* CoreAudio.framework in Frameworks */,
 				D1958D7C1DE3F2AA00C06A05 /* CoreFoundation.framework in Frameworks */,
+				D1D6A2BA1E093A1E00215CEA /* TencentOpenAPI.framework in Frameworks */,
 				D128ACBE1DC0A27A002392E0 /* CoreGraphics.framework in Frameworks */,
 				D128ACBC1DC0A26A002392E0 /* ImageIO.framework in Frameworks */,
 				D128ACBA1DC0A25A002392E0 /* AssetsLibrary.framework in Frameworks */,
@@ -1898,11 +1913,13 @@
 		D11592BF1DA8CF1E004A7B86 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				D1D6A2B11E093A1E00215CEA /* 三方分享 */,
 				D1D6A2241E027C3000215CEA /* 三方支付 */,
-				D1D6A2181E026F7000215CEA /* AliPay */,
-				D180ADB71E0110F80043FB61 /* PickView */,
-				D1A26B841DF6B7A90092BADB /* OpenSDK1.7.5 */,
 				D1F2FB3D1DF14B6E00EFC19B /* 三方登录 */,
+				D1D6A2B61E093A1E00215CEA /* QQSdk */,
+				D1D6A2181E026F7000215CEA /* AliPay */,
+				D1A26B841DF6B7A90092BADB /* OpenSDK1.7.5 */,
+				D180ADB71E0110F80043FB61 /* PickView */,
 				D19590AB1DE40ECD00C06A05 /* Utils */,
 				D19590851DE40E6200C06A05 /* Masonry */,
 				D195900B1DE3FA2200C06A05 /* JMessage */,
@@ -3355,6 +3372,25 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		D1D6A2B11E093A1E00215CEA /* 三方分享 */ = {
+			isa = PBXGroup;
+			children = (
+				D1D6A2B21E093A1E00215CEA /* WTShareContentItem.h */,
+				D1D6A2B31E093A1E00215CEA /* WTShareContentItem.m */,
+				D1D6A2B41E093A1E00215CEA /* WTShareManager.h */,
+				D1D6A2B51E093A1E00215CEA /* WTShareManager.m */,
+			);
+			path = "三方分享";
+			sourceTree = "<group>";
+		};
+		D1D6A2B61E093A1E00215CEA /* QQSdk */ = {
+			isa = PBXGroup;
+			children = (
+				D1D6A2B71E093A1E00215CEA /* TencentOpenAPI.framework */,
+			);
+			path = QQSdk;
+			sourceTree = "<group>";
+		};
 		D1F2FB3D1DF14B6E00EFC19B /* 三方登录 */ = {
 			isa = PBXGroup;
 			children = (
@@ -3367,6 +3403,8 @@
 		EDF627DEC855C3D5A2810A5F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D1D6A2AF1E0935F600215CEA /* libstdc++.tbd */,
+				D1D6A2AD1E0935CC00215CEA /* libiconv.tbd */,
 				D1A26B821DF6B6970092BADB /* CoreText.framework */,
 				D1A26B801DF6B6840092BADB /* QuartzCore.framework */,
 				D1A26B7E1DF6B5900092BADB /* CoreMotion.framework */,
@@ -4025,6 +4063,7 @@
 				D12F5BCD1DC1AE2D0035335E /* XZTextView.m in Sources */,
 				D1958FDF1DE3F81600C06A05 /* JCHATChatModel.m in Sources */,
 				D128ACB61DC0A249002392E0 /* LQPhotoPickerViewController.m in Sources */,
+				D1D6A2B81E093A1E00215CEA /* WTShareContentItem.m in Sources */,
 				D11593191DA8E181004A7B86 /* AFShareClass.m in Sources */,
 				D1958FE61DE3F81600C06A05 /* JCHATFrIendDetailMessgeCell.m in Sources */,
 				D1131A2F1DEE83BE00E1398D /* JCHATPhotoModel.m in Sources */,
@@ -4044,6 +4083,7 @@
 				D1D6A29B1E027ED100215CEA /* MD5DataSigner.m in Sources */,
 				D1F2FB401DF14B6E00EFC19B /* WTThirdPartyLoginManager.m in Sources */,
 				D1958FDA1DE3F81600C06A05 /* JCHATGroupDetailViewController.m in Sources */,
+				D1D6A2B91E093A1E00215CEA /* WTShareManager.m in Sources */,
 				D1C2A8841DAB2DA200ADDAF1 /* ToastManager.m in Sources */,
 				D10110731DDC4B1A00F435AF /* XZMyMasterCell.m in Sources */,
 				D11592FE1DA8E0D1004A7B86 /* AppPushShowView.m in Sources */,
@@ -4284,6 +4324,8 @@
 					"$(PROJECT_DIR)/XianZhiFengShui/Libs/JMessage",
 					"$(PROJECT_DIR)/XianZhiFengShui/Libs/Alipay",
 					"$(PROJECT_DIR)/XianZhiFengShui/Libs/AliPay",
+					"$(PROJECT_DIR)/XianZhiFengShui/Libs/三方分享",
+					"$(PROJECT_DIR)/XianZhiFengShui/Libs/QQSdk",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/XianZhiFengShui/Config/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -4378,6 +4420,8 @@
 					"$(PROJECT_DIR)/XianZhiFengShui/Libs/JMessage",
 					"$(PROJECT_DIR)/XianZhiFengShui/Libs/Alipay",
 					"$(PROJECT_DIR)/XianZhiFengShui/Libs/AliPay",
+					"$(PROJECT_DIR)/XianZhiFengShui/Libs/三方分享",
+					"$(PROJECT_DIR)/XianZhiFengShui/Libs/QQSdk",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/XianZhiFengShui/Config/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
