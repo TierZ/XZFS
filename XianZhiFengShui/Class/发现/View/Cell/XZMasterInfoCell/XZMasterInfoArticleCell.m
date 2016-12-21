@@ -36,6 +36,13 @@
     .rightSpaceToView(self.contentView,22)
     .autoHeightRatio(0);
     
+    
+}
+
+-(void)setModel:(XZMasterInfoArticleModel *)model{
+    _model = model;
+    self.articleTitle.text = model.articleTitle;
+    self.articleDetail.text = model.articleDetail;
     [self setupAutoHeightWithBottomView:self.articleDetail bottomMargin:8];
 }
 

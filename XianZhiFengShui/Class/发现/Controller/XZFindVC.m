@@ -122,14 +122,45 @@
             if (lectures.count<=0) {
                 self.lectureView.table.mj_footer.hidden = YES;
             }
+            if (self.lectureView.data.count<=0) {
+                [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
+                    [self requestLectureListWithPage:1];
+                }];
+            }else{
+                [self.mainView hideNoDataView];
+            }
         }
             break;
+        case XZThemeList:{
+            NSLog(@"successHandle= %@",succeedHandle);
+            NSArray * lectures = (NSArray*)succeedHandle;
+            [self.themeView.data addObjectsFromArray:lectures];
+            [self.themeView.table reloadData];
+            [self.themeView.table endRefreshFooter];
+            [self.themeView.table endRefreshHeader];
+            if (lectures.count<=0) {
+                self.themeView.table.mj_footer.hidden = YES;
+            }
+            if (self.themeView.data.count<=0) {
+                [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
+                    [self requestThemeListWithPage:1];
+                }];
+            }else{
+                [self.mainView hideNoDataView];
+            }
+        }
+            break;
+
             
         default:
             break;
     }
 }
 
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+    [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:nil];
+    
+}
 
 #pragma mark action
 -(void)titleSegChanged:(UISegmentedControl*)seg{
@@ -138,7 +169,7 @@
 
 #pragma mark delegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-     self.titleSeg.selectedSegmentIndex = scrollView.contentOffset.x/SCREENWIDTH;
+    self.titleSeg.selectedSegmentIndex = scrollView.contentOffset.x/SCREENWIDTH;
   CGRect frame = self.lineView.frame;
     frame.origin.x = self.lineView.width*self.titleSeg.selectedSegmentIndex;
     self.lineView.frame = frame;
@@ -153,7 +184,7 @@
         NSLog(@"请求话题");
         if (self.themeView.data.count>0) {
         }else{
-            [self requestThemeListWithPage:1];
+//            [self requestThemeListWithPage:1];
         }
     }
     

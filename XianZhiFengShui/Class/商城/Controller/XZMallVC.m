@@ -78,25 +78,25 @@
 }
 
 -(void)clickRightButton{
-    [self.navigationController pushViewController:[[XZAddressListVC alloc]init] animated:YES];
+//    [self.navigationController pushViewController:[[XZAddressListVC alloc]init] animated:YES];
     
-//    __block JCHATConversationController *sendMessageCtl = [[JCHATConversationController alloc] init];
-//    sendMessageCtl.superViewController = self;
-//    
-//    //    sendMessageCtl.hidesBottomBarWhenPushed = YES;
-//    __weak __typeof(self)weakSelf = self;
-//    [JMSGConversation createSingleConversationWithUsername:@"asdfg" appKey:JMESSAGE_APPKEY completionHandler:^(id resultObject, NSError *error) {
-//        
-//        if (error == nil) {
-//            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//            __strong __typeof(weakSelf) strongSelf = weakSelf;
-//            sendMessageCtl.conversation = resultObject;
-//            [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
-//        } else {
-//            [MBProgressHUD showMessage:@"添加的用户不存在" view:self.mainView];
-//        }
-//        
-//    }];
+    __block JCHATConversationController *sendMessageCtl = [[JCHATConversationController alloc] init];
+    sendMessageCtl.superViewController = self;
+    
+    //    sendMessageCtl.hidesBottomBarWhenPushed = YES;
+    __weak __typeof(self)weakSelf = self;
+    [JMSGConversation createSingleConversationWithUsername:@"asdfg" appKey:JMESSAGE_APPKEY completionHandler:^(id resultObject, NSError *error) {
+        
+        if (error == nil) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            sendMessageCtl.conversation = resultObject;
+            [strongSelf.navigationController pushViewController:sendMessageCtl animated:YES];
+        } else {
+            [MBProgressHUD showMessage:[error.userInfo objectForKey:@"NSLocalizedDescription" ] view:self.mainView];
+        }
+        
+    }];
 }
 
 #pragma mark action

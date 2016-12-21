@@ -64,8 +64,16 @@
  @param strokeColor 边框颜色
  @param fillColor   填充颜色
 
- @return 返回 控件的layer  view.layer.mask = 
+ @return 返回 控件的layer  view.layer addSublayer:
  */
 +(CAShapeLayer*)drawCornerWithRect:(CGRect)rect  byRoundingCorners:(UIRectCorner)corners cornerRadii:(CGSize)cornerRadii borderWidth:(CGFloat)borderWidth strokeColor:(UIColor*)strokeColor fillColor:(UIColor *)fillColor;
 
+
+/**
+ 获取ip地址
+
+ @return <#return value description#>
+ */
+- (NSDictionary *)getIPAddresses;
+- (NSString *)getIPAddress:(BOOL)preferIPv4;
 @end

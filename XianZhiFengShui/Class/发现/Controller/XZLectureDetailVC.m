@@ -9,6 +9,7 @@
 #import "XZLectureDetailVC.h"
 #import "XZFindService.h"
 #import "XZMasterDetailInfo.h"
+#import "XZLectureDetailMiddleBar.h"
 
 CGFloat maxContentLabelHeight = 150; // 讲座介绍 高度
 CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
@@ -17,6 +18,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
 @property (nonatomic,strong)UIView * baseInfo;//基本信息
 @property (nonatomic,strong)UIImageView * headView;//头部图片
 @property (nonatomic,strong)XZMasterDetailInfo * headInfo;//头部
+@property (nonatomic,strong)XZLectureDetailMiddleBar * middleBar;//中间信息
 @property (nonatomic,strong)UIView * lectureInfo;//讲座详情
 @property (nonatomic,strong)UILabel * lectureTitle;//讲座标题
 @property (nonatomic,strong)UIView * smallInfo;//时间，地点
@@ -83,10 +85,12 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     [_baseInfo addSubview:_headView];
     
     self.headInfo = [[XZMasterDetailInfo alloc]init];
-//    WithFrame:CGRectMake(headView.width-95-15, 18, 95, headView.height-18*2)
-    self.headInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
+    self.headInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
     [_baseInfo addSubview:self.headInfo];
 
+    self.middleBar = [[XZLectureDetailMiddleBar alloc]initWithFrame:CGRectMake(0, 165, SCREENWIDTH, 35)];
+    self.middleBar.backgroundColor = [UIColor yellowColor];
+    [_baseInfo addSubview:self.middleBar];
 
     _firstLine = [[UIView alloc]init];
     _firstLine.backgroundColor = XZFS_HEX_RGB(@"#F1EEEF");
@@ -184,7 +188,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     
     _headView.sd_layout
     .leftEqualToView(_baseInfo)
-    .widthIs(_baseInfo.width)
+    .rightEqualToView(_baseInfo)
     .topSpaceToView(_baseInfo,0)
     .heightIs(165);
     
@@ -193,6 +197,13 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     .widthIs(95)
     .topSpaceToView(_baseInfo,18)
     .heightIs(_headView.height-18*2);
+    
+//    _middleBar.sd_layout
+//    .leftEqualToView(_baseInfo)
+//    .rightEqualToView(_baseInfo)
+//    .topSpaceToView(_baseInfo,165)
+//    .widthIs(SCREENWIDTH)
+//    .heightIs(35);
 
     _firstLine.sd_layout
     .leftEqualToView(self.mainScroll)
@@ -274,6 +285,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
         XZFindService * lectureInfoService = (XZFindService*)service;
         NSDictionary * dic = (NSDictionary*)succeedHandle;
         [_headInfo refreshInfoWithDic:dic];
+        [_headInfo updateLayout];
     }
 }
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{

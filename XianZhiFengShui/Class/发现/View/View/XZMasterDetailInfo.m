@@ -37,10 +37,10 @@
     [self sd_addSubviews:@[self.nameLab,self.infoLab,self.locationIv,self.locationLab]];
     
     self.nameLab.sd_layout
-    .leftSpaceToView(self,0)
-    .rightSpaceToView(self,0)
+    .leftSpaceToView(self,6)
+    .rightSpaceToView(self,6)
     .topSpaceToView(self,7)
-    .widthIs(self.width);
+    .heightIs(18);
     
     self.infoLab.sd_layout
     .leftSpaceToView(self,6)
@@ -50,14 +50,14 @@
     
     self.locationIv.sd_layout
     .leftSpaceToView(self,6)
-    .topSpaceToView(self.infoLab,2)
+    .topSpaceToView(self.infoLab,12)
     .widthIs(15)
     .heightIs(15);
     
     self.locationLab.sd_layout
     .leftSpaceToView(self.locationIv,6)
-    .topSpaceToView(self.infoLab,6)
-    .heightIs(10.5)
+    .topSpaceToView(self.infoLab,12)
+    .rightSpaceToView(self,6)
     .autoHeightRatio(0);
     
 }
@@ -66,10 +66,11 @@
 -(void)refreshInfoWithDic:(NSDictionary*)dic{
     if (dic) {
         self.nameLab.text = [dic objectForKey:@"masterName"];
+        self.nameLab.text = @"张三丰";
         self.infoLab.text = [dic objectForKey:@"desc"];
         self.locationLab.text = [dic objectForKey:@"address"];
+        self.locationLab.text = @"北京 东直门大街 xx路 xx号";
         [self setupAutoHeightWithBottomView:_locationLab bottomMargin:10];
-        NSLog(@"self.frame = %@",NSStringFromCGRect(self.frame));
     }
 }
 
@@ -77,7 +78,6 @@
 -(UILabel *)nameLab{
     if (!_nameLab) {
         _nameLab = [[UILabel alloc]init];
-        _nameLab.backgroundColor = [UIColor clearColor];
         _nameLab.textColor =  [UIColor whiteColor];
         _nameLab.textAlignment =NSTextAlignmentCenter;
         _nameLab.font = XZFS_S_BOLD_FONT(18);
@@ -110,12 +110,12 @@
 -(UILabel *)locationLab{
     if (!_locationLab) {
         _locationLab = [[UILabel alloc]init];
-        _locationLab.backgroundColor = [UIColor clearColor];
+        _locationLab.backgroundColor = [UIColor yellowColor];
         _locationLab.textColor =  XZFS_TEXTBLACKCOLOR;
         _locationLab.textAlignment =NSTextAlignmentLeft;
         _locationLab.font = XZFS_S_FONT(10.5);
         _locationLab.text = @"--";
-          _locationLab.numberOfLines = 0;
+        _locationLab.numberOfLines = 0;
     }
     return _locationLab;
 }

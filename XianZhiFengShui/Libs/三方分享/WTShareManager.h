@@ -13,7 +13,7 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <TencentOpenAPI/QQApiInterfaceObject.h>
 #import <TencentOpenAPI/QQApiInterface.h>
-
+#import <TencentOpenAPI/TencentApiInterface.h>
 @class WTShareContentItem;
 
 typedef NS_ENUM(NSInteger, WTShareType) {

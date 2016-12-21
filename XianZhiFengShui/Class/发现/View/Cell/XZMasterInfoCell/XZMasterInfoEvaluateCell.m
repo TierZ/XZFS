@@ -36,9 +36,9 @@
     
     self.evaluateName.sd_layout
     .leftSpaceToView(self.evaluateAvatar,10)
-    .topSpaceToView(self.evaluateAvatar,18)
+    .topSpaceToView(self.contentView,16)
     .heightIs(13);
-    [self.evaluateTime setSingleLineAutoResizeWithMaxWidth:200];
+    [self.evaluateName setSingleLineAutoResizeWithMaxWidth:200];
     
     self.evaluateTime.sd_layout
     .rightSpaceToView(self.contentView,20)
@@ -79,6 +79,7 @@
 -(UIImageView *)evaluateAvatar{
     if (!_evaluateAvatar) {
         _evaluateAvatar = [[UIImageView alloc]init];
+        _evaluateAvatar.backgroundColor = [UIColor redColor];
     }
     return _evaluateAvatar;
 }
@@ -99,7 +100,7 @@
         _evaluateTime = [[UILabel alloc]init];
         _evaluateTime.backgroundColor = [UIColor clearColor];
         _evaluateTime.textColor =  XZFS_TEXTBLACKCOLOR;
-        _evaluateTime.textAlignment =NSTextAlignmentLeft;
+        _evaluateTime.textAlignment =NSTextAlignmentRight;
         _evaluateTime.font = XZFS_S_FONT(12);
     }
     return _evaluateTime;

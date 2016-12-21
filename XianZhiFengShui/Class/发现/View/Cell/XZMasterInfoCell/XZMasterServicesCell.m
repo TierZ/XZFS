@@ -56,6 +56,14 @@
     .topSpaceToView(self.titleLab,8)
     .rightSpaceToView(self.priceIv,22)
     .autoHeightRatio(0);
+    
+    self.appointmentBtn.sd_layout
+    .rightSpaceToView(self.contentView,28)
+    .topSpaceToView(self.priceLab,11)
+    .widthIs(40)
+    .heightIs(14);
+    
+     [self.appointmentBtn.layer addSublayer:[Tool drawCornerWithRect:self.appointmentBtn.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(2, 2) borderWidth:0.5 strokeColor:XZFS_TEXTORANGECOLOR fillColor:[UIColor clearColor]]];
 }
 
 -(void)setModel:(XZMasterInfoServiceModel *)model{
@@ -65,7 +73,7 @@
     self.priceLab.text = [NSString stringWithFormat:@"%@知币",model.servicePrice];
     self.appointmentBtn.selected = model.isAppointment;
     
-    [self setupAutoHeightWithBottomView:self.detailLab bottomMargin:6];
+    [self setupAutoHeightWithBottomViewsArray:@[self.appointmentBtn,self.detailLab] bottomMargin:6];
 }
 
 
@@ -138,6 +146,7 @@
         
         _appointmentBtn.titleLabel.font = XZFS_S_FONT(12);
         [_appointmentBtn addTarget:self action:@selector(appointMaster:) forControlEvents:UIControlEventTouchUpInside];
+       
     }
     return _appointmentBtn;
 }

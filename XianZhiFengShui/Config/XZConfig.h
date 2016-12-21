@@ -11,6 +11,7 @@
 
 #define JMESSAGE_APPKEY @"7c8666f2ef5f47318e23f87f"
 #define WEIBO_APPKEY @"1823207424"
+#define WEIBO_Secret @"2191e9f59de27f12fe2ab59288e07aa5"
 #define kSinaRedirectURI    @"https://api.weibo.com/oauth2/default.html"
 #define AppScheme @"XianZhiFengShui"
 #define kWeixinAppId    @"wxe208d293e5353bf4"

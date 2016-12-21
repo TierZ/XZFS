@@ -11,6 +11,9 @@
 #import "XZMessagesVC.h"
 #import "XZMessageListCell.h"
 #import "XZMessageListVC.h"
+
+
+
 @interface XZMessagesVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView * messageList;
 @property (nonatomic,strong)NSMutableArray * messages;
@@ -24,7 +27,11 @@
     self.messageList.frame = CGRectMake(0,0, SCREENWIDTH, SCREENHEIGHT-XZFS_STATUS_BAR_H);
     [self.mainView addSubview:self.messageList];
     [self loadData];
+
 }
+
+
+
 
 -(void)loadData{
     for (int i = 0; i<3; i++) {

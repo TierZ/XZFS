@@ -8,6 +8,7 @@
 
 #import "XZMasterDetailInfo3.h"
 #import "XZMasterDetailTable.h"
+#import "XZMasterInfoModel.h"
 
 @implementation XZMasterDetailInfo3{
     XZMasterDetailTable * _masterService;//服务项目
@@ -29,7 +30,7 @@
         _segArray = @[@"服务项目",@"关于大师",@"客户评价",@"大师文章"];
         [self drawSeg];
         [self drawTable];
-//        [self loadDataWithStyle:MasterHot];
+        [self setupData];
     }
     return self;
 }
@@ -65,17 +66,48 @@
     _masterService.backgroundColor = RandomColor(1);
     [_masterInfoScroll addSubview:_masterService];
     
-    _aboutMaster = [[YYTextView alloc]initWithFrame:CGRectMake(0, _masterInfoScroll.width, _masterInfoScroll.width, _masterInfoScroll.height)];
+    _aboutMaster = [[YYTextView alloc]initWithFrame:CGRectMake(_masterInfoScroll.width,0, _masterInfoScroll.width, _masterInfoScroll.height)];
     _aboutMaster.backgroundColor = RandomColor(1);
     [_masterInfoScroll addSubview:_aboutMaster];
     
-    _masterEvaluate = [[XZMasterDetailTable alloc]initWithFrame:CGRectMake(0, _masterInfoScroll.width*2, _masterInfoScroll.width, _masterInfoScroll.height) style:MasterInfoEvaluate];
+    _masterEvaluate = [[XZMasterDetailTable alloc]initWithFrame:CGRectMake(_masterInfoScroll.width*2,0, _masterInfoScroll.width, _masterInfoScroll.height) style:MasterInfoEvaluate];
     _masterEvaluate.backgroundColor = RandomColor(1);
     [_masterInfoScroll addSubview:_masterEvaluate];
     
-    _masterArticle = [[XZMasterDetailTable alloc]initWithFrame:CGRectMake(0, _masterInfoScroll.width*3, _masterInfoScroll.width, _masterInfoScroll.height) style:MasterInfoArticle];
+    _masterArticle = [[XZMasterDetailTable alloc]initWithFrame:CGRectMake( _masterInfoScroll.width*3,0, _masterInfoScroll.width, _masterInfoScroll.height) style:MasterInfoArticle];
     _masterArticle.backgroundColor = RandomColor(1);
     [_masterInfoScroll addSubview:_masterArticle];
+}
+
+-(void)setupData{
+    for ( int i = 0; i<10; i++) {
+        XZMasterInfoServiceModel * model =[[XZMasterInfoServiceModel alloc]init];
+        model.serviceName = @"买房选址";
+        model.serviceContent = @"爱多亏了你们爱傻傻的你女，你空间和我去交通工具哈嘎是的你个，那是的你空间海滩上的那个啊阿打算发领军人物";
+        model.servicePrice = @"999";
+        model.isAppointment = i%3==0?YES:NO;
+        [_masterService.data addObject:model];
+    }
+    
+    for (int i=  0; i<10; i++) {
+        XZMasterInfoEvaluateModel * model = [[XZMasterInfoEvaluateModel alloc]init];
+        model.evaluateName = @"小米粒";
+        model.evaluateTime = @"2016-9-9";
+        model.evaluateContent =@"咋着垃圾少打卡上脚后跟阿萨德年痛苦煎熬塑料袋三大师的健康嘎哈";
+        [_masterEvaluate.data addObject:model];
+    }
+
+    for (int i=0; i<10; i++) {
+        XZMasterInfoArticleModel * model = [[XZMasterInfoArticleModel alloc]init];
+        model.articleTitle = @"奥斯卡大管卡送的嘛干";
+        model.articleDetail = @"昂克赛拉单那个路口见阿斯顿今天就安东尼女，你自己阿尔及全网通阿萨德个垃圾的 干你管卡";
+        [_masterArticle.data addObject:model];
+    }
+    
+    [_masterArticle.table reloadData];
+    [_masterEvaluate.table reloadData];
+    [_masterService.table reloadData];
+    
 }
 
 #pragma mark action

@@ -41,6 +41,7 @@ NSString * const MasterArticleCellId = @"MasterArticleCellId";
 
 #pragma mark tableDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSLog(@"self.data = %@",self.data);
     return self.data.count;
 }
 

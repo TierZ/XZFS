@@ -11,9 +11,7 @@
 
 
 
-#define kAppKey         @"2045436852"
-#define kRedirectURI    @"http://www.sina.com"
-#define kWeixinAppId    @"wxd930ea5d5a258f4f"
+
 #define kTencentAppId   @"222222"
 
 #define kWTShareQQSuccess @"0"
@@ -58,7 +56,7 @@ static WTShareManager * _instence;
 - (void)setRegisterApps
 {
     // 注册Sina微博
-    [WeiboSDK registerApp:kAppKey];
+    [WeiboSDK registerApp:WEIBO_APPKEY];
     // 微信注册
     [WXApi registerApp:kWeixinAppId];
     
