@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
     XZThemeList,//话题列表
     XZMasterDetail,//大师详情
     XZLectureDetail,//讲座详情
+    XZThemeDetail,//话题详情
     XZEvaluateMaster,//评价大师
     XZCollectionMaster,//收藏／取消大师
 };
@@ -91,4 +92,25 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
  */
 -(void)lectureDetailWithMasterCode:(NSString*)masterCode UserCode:(NSString*)userCode cityCode:(NSString*)cityCode view:(id)view;
 
+
+/**
+ 话题列表
+
+ @param pageNum  页码
+ @param pageSize 个数
+ @param cityCode 城市代码
+ @param view     。。
+ */
+-(void)themeListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode view:(id)view;
+
+
+/**
+ 话题详情
+
+ @param topicCode 话题id
+ @param userCode  用户id
+ @param cityCode  城市id
+ @param view      。。
+ */
+-(void)themeDetailWithTopicCode:(NSString*)topicCode userCode:(NSString*)userCode cityCode:(NSString*)cityCode view:(id)view;
 @end

@@ -189,18 +189,18 @@
 
 -(void)setModel:(XZThemeListModel *)model{
     _model = model;
-    [_photoView setImageWithURL:[NSURL URLWithString:model.photo] placeholder:[UIImage imageNamed:@""]];
-    _nameLable.text = model.name;
-    _timeLabel.text = model.time;
+    [_photoView setImageWithURL:[NSURL URLWithString:model.icon] placeholder:[UIImage imageNamed:@""]];
+    _nameLable.text = model.issuer;
+    _timeLabel.text = model.issueTime;
     
     _commentLab.text = model.comments;
     _titleLabel.text = model.title;
     _contentLabel.text = model.content;
-    _picContainerView.picPathStringsArray = model.picArray;
+    _picContainerView.picPathStringsArray = model.photo;
     
     
     CGFloat picContainerTopMargin = 0;
-    if (model.picArray.count) {
+    if (model.photo.count) {
         picContainerTopMargin = 10;
     }
     _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerTopMargin);

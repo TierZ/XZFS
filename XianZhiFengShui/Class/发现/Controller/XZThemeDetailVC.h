@@ -14,5 +14,5 @@
 
 
 @interface XZThemeDetailVC : BaseContentController
-
+- (instancetype)initWithTopicCode:(NSString*)topicCode;
 @end

@@ -10,13 +10,16 @@
 #import <Foundation/Foundation.h>
 
 @interface XZThemeListModel : NSObject
-@property (nonatomic, copy) NSString *photo;//头像链接
-@property (nonatomic, copy) NSString *name;//名字
-@property (nonatomic, copy) NSString *time;//时间（xx前）
+@property (nonatomic, copy) NSString *id;//话题id
+@property (nonatomic, copy) NSString *topicCode;//话题编号（唯一性）
+
+@property (nonatomic, copy) NSString *icon;//头像链接
+@property (nonatomic, copy) NSString *issuer;//昵称名字
+@property (nonatomic, copy) NSString *issueTime;//时间（xx前）
 @property (nonatomic, copy) NSString *title;//标题
 @property (nonatomic, copy) NSString *content;//内容
-@property (nonatomic,strong)NSArray * picArray;//图片数组
-@property (nonatomic, copy) NSString *agreeCount;//点赞数
+@property (nonatomic,strong)NSArray * photo;//图片数组
+@property (nonatomic, copy) NSString *pointOfPraise;//点赞数
 @property (nonatomic, copy) NSString *commentCount;//评论数
 @property (nonatomic, assign) BOOL isAgree;//是否点赞
 @property (nonatomic, assign) BOOL isComment;//是否评论

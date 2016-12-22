@@ -175,17 +175,17 @@
 
 -(void)setModel:(XZThemeListModel *)model{
     _model = model;
-    [_photoView setImageWithURL:[NSURL URLWithString:model.photo] placeholder:[UIImage imageNamed:@""]];
-    _nameLable.text = model.name;
-    _timeLabel.text = model.time;
+    [_photoView setImageWithURL:[NSURL URLWithString:model.icon] placeholder:[UIImage imageNamed:@""]];
+    _nameLable.text = model.issuer;
+    _timeLabel.text = model.issueTime;
     
     _titleLabel.text = model.title;
     _contentLabel.text = model.content;
-    _picContainerView.picPathStringsArray = model.picArray;
+    _picContainerView.picPathStringsArray = model.photo;
     
     
     CGFloat picContainerTopMargin = 0;
-    if (model.picArray.count) {
+    if (model.photo.count) {
         picContainerTopMargin = 10;
     }
     _picContainerView.sd_layout.topSpaceToView(_contentLabel, picContainerTopMargin);
@@ -193,7 +193,7 @@
     _agreeButton.sd_layout.topSpaceToView(_picContainerView,10);
     _commentButton.sd_layout.topSpaceToView(_picContainerView,10);
     
-    [_agreeButton setTitle:model.agreeCount forState:UIControlStateNormal];
+    [_agreeButton setTitle:model.pointOfPraise forState:UIControlStateNormal];
     [_commentButton setTitle:model.commentCount forState:UIControlStateNormal];
     _agreeButton.selected = model.isAgree;
     _commentButton.selected = model.isComment;

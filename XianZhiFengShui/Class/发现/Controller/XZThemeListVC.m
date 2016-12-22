@@ -10,11 +10,13 @@
 #import "XZThemeListCell.h"
 #import "XZPostTopicVC.h"
 #import "XZThemeDetailVC.h"
+#import "XZFindService.h"
+#import "XZRefreshTable.h"
 
 NSString * const ThemeListTableViewCellId = @"ThemeListId";
 
 @interface XZThemeListVC ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic,strong)UITableView * themeListTable;
+@property (nonatomic,strong)XZRefreshTable * themeListTable;
 @property (nonatomic,strong)NSMutableArray * themes;
 @end
 
@@ -25,7 +27,7 @@ NSString * const ThemeListTableViewCellId = @"ThemeListId";
     
     [self setupNavi];
     [self setupTable];
-//    self.themeListTable.frame = CGRectMake(0, XZFS_STATUS_BAR_H, SCREENWIDTH, SCREENHEIGHT-XZFS_STATUS_BAR_H);
+    [self requestThemeListWithPage:1];
 
 }
 
@@ -46,10 +48,27 @@ NSString * const ThemeListTableViewCellId = @"ThemeListId";
     
     [self.themeListTable registerClass:[XZThemeListCell class] forCellReuseIdentifier:ThemeListTableViewCellId];
     
-    [self.themes addObjectsFromArray:[self creatModelsWithCount:10]];
+//    [self.themes addObjectsFromArray:[self creatModelsWithCount:10]];
+//    [self.themeListTable reloadData];
+}
+
+#pragma mark 网络
+-(void)requestThemeListWithPage:(int)page{
+    XZFindService * themeListService = [[XZFindService alloc]initWithServiceTag:XZThemeList];
+    themeListService.delegate = self;
+    [themeListService themeListWithPageNum:page PageSize:10 cityCode:@"110000" view:self.mainView];
+}
+
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    NSLog(@"successhandle = %@",succeedHandle);
+    NSArray * array = (NSArray*)succeedHandle;
+    [self.themes addObjectsFromArray:array];
     [self.themeListTable reloadData];
 }
 
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+
+}
 #pragma mark 假数据
 - (NSArray *)creatModelsWithCount:(NSInteger)count
 {
@@ -93,10 +112,10 @@ NSString * const ThemeListTableViewCellId = @"ThemeListId";
         int contentRandomIndex = arc4random_uniform(5);
         
         XZThemeListModel *model = [XZThemeListModel new];
-        model.photo = iconImageNamesArray[iconRandomIndex];
-        model.name = namesArray[nameRandomIndex];
-        model.time = @"1小时前";
-        model.agreeCount  =@"99";
+        model.icon = iconImageNamesArray[iconRandomIndex];
+        model.issuer = namesArray[nameRandomIndex];
+        model.issueTime = @"1小时前";
+        model.pointOfPraise  =@"99";
         model.commentCount = @"111";
         model.isAgree = YES;
         model.isComment = NO;
@@ -115,7 +134,7 @@ NSString * const ThemeListTableViewCellId = @"ThemeListId";
             [temp addObject:picImageNamesArray[randomIndex]];
         }
         if (temp.count) {
-            model.picArray = [temp copy];
+            model.photo = [temp copy];
         }
         
         
@@ -151,15 +170,17 @@ NSString * const ThemeListTableViewCellId = @"ThemeListId";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.navigationController pushViewController:[[XZThemeDetailVC alloc]init] animated:YES];
+     XZThemeListModel * model = self.themes[indexPath.row];
+    
+    [self.navigationController pushViewController:[[XZThemeDetailVC alloc]initWithTopicCode:model.topicCode] animated:YES];
 
 }
 
 
 #pragma mark getter
--(UITableView *)themeListTable{
+-(XZRefreshTable *)themeListTable{
     if (!_themeListTable) {
-        _themeListTable = [[UITableView alloc] init];
+        _themeListTable = [[XZRefreshTable alloc] init];
         _themeListTable.backgroundColor = XZFS_HEX_RGB(@"#F0EDEE");
         _themeListTable.dataSource = self;
         _themeListTable.delegate = self;

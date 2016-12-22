@@ -64,6 +64,7 @@
     CGFloat itemW = [self itemWidthForPicPathArray:_picPathStringsArray];
     CGFloat itemH = 0;
     if (_picPathStringsArray.count == 1) {
+//        UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_picPathStringsArray.firstObject]]];
         UIImage *image = [UIImage imageNamed:_picPathStringsArray.firstObject];
         if (image.size.width) {
             itemH = image.size.height / image.size.width * itemW;
@@ -79,7 +80,7 @@
         long rowIndex = idx / perRowItemCount;
         UIImageView *imageView = [_imageViewsArray objectAtIndex:idx];
         imageView.hidden = NO;
-        imageView.image = [UIImage imageNamed:obj];
+        [imageView setImageWithURL:[NSURL URLWithString:obj] options:YYWebImageOptionProgressiveBlur];
         imageView.frame = CGRectMake(columnIndex * (itemW + margin), rowIndex * (itemH + margin), itemW, itemH);
     }];
     

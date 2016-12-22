@@ -62,7 +62,7 @@
 }
 
 -(void)setModel:(XZThemeListModel *)model{
-    self.title.text = [NSString stringWithFormat:@"%@  发表了新话题",model.name];
+    self.title.text = [NSString stringWithFormat:@"%@  发表了新话题",model.issuer];
     self.contentTitle.text = model.title;
     self.contentLab.text = model.content;
      [self setupAutoHeightWithBottomView:self.contentBg bottomMargin:0];

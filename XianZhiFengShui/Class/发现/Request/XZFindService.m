@@ -12,11 +12,12 @@ static NSString * XZGetMasterList = @"/master/list";
 static NSString * XZGetMasterDetail = @"/master/detail";
 static NSString * XZGetLectureList = @"/lectures/list";
 static NSString * XZGetLectureDetail = @"/lectures/detail";
-
-
+static NSString * XZGetThemeList = @"/topic/list";
+static NSString * XZGetThemeDetail = @"/topic/detail";
 
 #import "XZFindService.h"
 #import "XZTheMasterModel.h"
+#import "XZThemeListModel.h"
 
 @implementation XZFindService
 
@@ -151,6 +152,59 @@ static NSString * XZGetLectureDetail = @"/lectures/detail";
             [self.delegate netFailedWithHandle:error dataService:self];
         }
     }];
+}
+
+#pragma mark 话题列表
+
+-(void)themeListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:[NSNumber numberWithInt:pageNum] forKey:@"pageNum"];
+    [dic setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
+    
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:XZGetThemeList parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        NSArray * arr = [[data objectForKey:@"data"]objectForKey:@"list"];
+        NSMutableArray * dataArr = [NSMutableArray array];
+        for (int i = 0; i<arr.count; i++) {
+            XZThemeListModel * model = [XZThemeListModel modelWithDictionary:arr[i]];
+            [dataArr addObject:model];
+        }
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+            [self.delegate netSucceedWithHandle:dataArr dataService:self];
+        }
+    } failBlock:^(NSError *error) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+}
+
+#pragma mark 话题详情
+-(void)themeDetailWithTopicCode:(NSString*)topicCode userCode:(NSString*)userCode cityCode:(NSString*)cityCode view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:topicCode forKey:@"topicCode"];
+    if (userCode) {
+         [dic setObject:userCode forKey:@"userCode"];
+    }else{
+        [dic setObject:@"" forKey:@"userCode"];
+    }
+   
+    
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:XZGetThemeDetail parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+            [self.delegate netSucceedWithHandle:[data objectForKey:@"data"] dataService:self];
+        }
+    } failBlock:^(NSError *error) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+
 }
 
 

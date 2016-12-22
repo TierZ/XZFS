@@ -10,13 +10,26 @@
 #import "XZRefreshTable.h"
 #import "XZThemeListCell.h"
 #import "XZThemeCommentCell.h"
+#import "XZFindService.h"
 
 @interface XZThemeDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)XZRefreshTable * detailTable;
 @property (nonatomic,strong)NSMutableArray * data;
+@property (nonatomic,strong)NSString * topicCode;
+@property (nonatomic,strong)NSMutableArray * hotComments;//热门
+@property (nonatomic,strong)NSMutableArray * refreshComments;//新鲜
 @end
 
 @implementation XZThemeDetailVC
+
+- (instancetype)initWithTopicCode:(NSString*)topicCode
+{
+    self = [super init];
+    if (self) {
+        _topicCode = topicCode;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,16 +37,73 @@
     [self.view addSubview:self.detailTable];
     self.detailTable.frame = CGRectMake(0, XZFS_STATUS_BAR_H, SCREENWIDTH, SCREENHEIGHT-XZFS_STATUS_BAR_H);
     self.detailTable.backgroundColor = [UIColor clearColor];
-    
-    [self setupData];
+    NSLog(@"topiccode = %@",_topicCode);
+    [self requestThemeDetailWithTopicCode:self.topicCode];
+//    [self setupData];
 }
 
+#pragma mark 网络
+-(void)requestThemeDetailWithTopicCode:(NSString*)topicCode{
+    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSString * userCode = [dic objectForKey:@"bizCode"];
+    
+    XZFindService * themeDetailService = [[XZFindService alloc]initWithServiceTag:XZThemeDetail];
+    themeDetailService.delegate = self;
+    [themeDetailService themeDetailWithTopicCode:topicCode userCode:userCode cityCode:@"110000" view:self.mainView];
+
+}
+
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    NSLog(@"successhandle = %@",succeedHandle);
+    if ([service isKindOfClass:[XZFindService class]]) {
+        XZFindService * serv = (XZFindService*)service;
+        switch (serv.serviceTag) {
+            case XZThemeDetail:{
+                NSDictionary * dic = (NSDictionary*)succeedHandle;
+                NSArray * data1 = @[[XZThemeListModel modelWithJSON:dic]];
+                NSArray * data2 = [dic objectForKey:@"commentList"];
+                NSArray * data3 =  [dic objectForKey:@"commentList"];
+                for (int i = 0; i<data2.count; i++) {
+                    XZThemeCommentModel * model = [XZThemeCommentModel modelWithJSON:data2[i]];
+                    [self.hotComments addObject:model];
+                }
+
+                for (int i = 0; i<data3.count; i++) {
+                    XZThemeCommentModel * model = [XZThemeCommentModel modelWithJSON:data3[i]];
+                    [self.refreshComments addObject:model];
+                }
+                
+                [self.data addObjectsFromArray:@[ data1,self.hotComments,self.refreshComments ]];
+                [self.detailTable reloadData];
+
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+}
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+    
+}
 #pragma mark data
 -(void)setupData{
     NSArray * data1 = [self creatModelsWithCount:1];
     NSArray * data2 = [self createCommentDataWithCount:3];
+    for (int i = 0; i<data2.count; i++) {
+        XZThemeCommentModel * model = [XZThemeCommentModel modelWithJSON:data2[i]];
+        [self.hotComments addObject:model];
+    }
     NSArray * data3 = [self createCommentDataWithCount:2];
-    [self.data addObjectsFromArray:@[ data1,data2,data3 ]];
+    
+    for (int i = 0; i<data3.count; i++) {
+        XZThemeCommentModel * model = [XZThemeCommentModel modelWithJSON:data3[i]];
+        [self.refreshComments addObject:model];
+    }
+
+    [self.data addObjectsFromArray:@[ data1,self.hotComments,self.refreshComments ]];
     [self.detailTable reloadData];
     
 }
@@ -78,10 +148,10 @@
         int contentRandomIndex = arc4random_uniform(5);
         
         XZThemeListModel *model = [XZThemeListModel new];
-        model.photo = iconImageNamesArray[iconRandomIndex];
-        model.name = namesArray[nameRandomIndex];
-        model.time = @"1小时前";
-        model.agreeCount  =@"99";
+        model.icon = iconImageNamesArray[iconRandomIndex];
+        model.issuer = namesArray[nameRandomIndex];
+        model.issueTime = @"1小时前";
+        model.pointOfPraise  =@"99";
         model.commentCount = @"111";
         model.isAgree = YES;
         model.isComment = NO;
@@ -99,7 +169,7 @@
             [temp addObject:picImageNamesArray[randomIndex]];
         }
         if (temp.count) {
-            model.picArray = [temp copy];
+            model.photo = [temp copy];
         }
         
         
@@ -113,7 +183,7 @@
     for (int i = 0; i<count; i++) {
         XZThemeCommentModel * model = [[XZThemeCommentModel alloc]init];
         model. avatar = @"http://file.shagualicai.cn/201610/09/pic/pic_14759978965900.jpg";
-        model.name = @"过河不用拆桥";
+        model.commenter = @"过河不用拆桥";
         model.time = @"3小时前";
         model.agree = @"99";
         model.comment = @"99";
@@ -147,6 +217,7 @@
         if (!commentCell) {
             commentCell = [[XZThemeCommentCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commentCellId];
         }
+      
         commentCell.model = self.data[indexPath.section][indexPath.row];
         return commentCell;
     }
@@ -226,6 +297,19 @@
         _data = [NSMutableArray array];
     }
     return _data;
+}
+
+-(NSMutableArray *)hotComments{
+    if (!_hotComments) {
+        _hotComments = [NSMutableArray array];
+    }
+    return _hotComments;
+}
+-(NSMutableArray *)refreshComments{
+    if (!_refreshComments) {
+        _refreshComments = [NSMutableArray array];
+    }
+    return _refreshComments;
 }
 
 - (void)didReceiveMemoryWarning {

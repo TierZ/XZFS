@@ -14,7 +14,7 @@
 
 @interface XZThemeCommentModel : NSObject
 @property (nonatomic,copy)NSString * avatar;//头像
-@property (nonatomic,copy)NSString * name;//名称
+@property (nonatomic,copy)NSString * commenter;//名称
 @property (nonatomic,copy)NSString * time;//时间
 @property (nonatomic,copy)NSString * comment;//评论数
 @property (nonatomic,copy)NSString * agree;//点赞数

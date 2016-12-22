@@ -106,8 +106,10 @@ NSString * const FindThemeCellId = @"FindThemeCellId";
              [self.currentVC.navigationController pushViewController:[[XZMasterDetailVC alloc]initWithMasterCode:@"bd35193472fa43d6b6aa7cdcf96d4c33"] animated:YES];
             break;
         case XZFindLecture:{
-            XZTheMasterModel *model =  self.data [indexPath.row];
-             [self.currentVC.navigationController pushViewController:[[XZLectureDetailVC alloc]initWithModel:model] animated:YES];
+//            XZTheMasterModel *model =  self.data [indexPath.row];
+//             [self.currentVC.navigationController pushViewController:[[XZLectureDetailVC alloc]initWithModel:model] animated:YES];
+            [self.currentVC.navigationController pushViewController:[[XZThemeListVC alloc]init] animated:YES];
+
         }
             break;
         case XZFindTheme:{

@@ -126,10 +126,10 @@ NSString * const focusThemeCellId = @"focusThemeCellId";
         int contentRandomIndex = arc4random_uniform(5);
         
         XZThemeListModel *model = [XZThemeListModel new];
-        model.photo = iconImageNamesArray[iconRandomIndex];
-        model.name = namesArray[nameRandomIndex];
-        model.time = @"1小时前";
-        model.agreeCount  =@"99";
+        model.icon = iconImageNamesArray[iconRandomIndex];
+        model.issuer = namesArray[nameRandomIndex];
+        model.issueTime = @"1小时前";
+        model.pointOfPraise  =@"99";
         model.commentCount = @"111";
         model.isAgree = YES;
         model.isComment = NO;
@@ -148,7 +148,7 @@ NSString * const focusThemeCellId = @"focusThemeCellId";
             [temp addObject:picImageNamesArray[randomIndex]];
         }
         if (temp.count) {
-            model.picArray = [temp copy];
+            model.photo = [temp copy];
         }
         
         
