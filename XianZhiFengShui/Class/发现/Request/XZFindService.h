@@ -13,6 +13,7 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
     XZMasterListLocal,//本地大师
     XZMasterListAll,//全部大师
     XZLectureList,//讲座列表
+    XZThemeTypeList,//话题类型列表
     XZThemeList,//话题列表
     XZMasterDetail,//大师详情
     XZLectureDetail,//讲座详情
@@ -92,6 +93,14 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
  */
 -(void)lectureDetailWithMasterCode:(NSString*)masterCode UserCode:(NSString*)userCode cityCode:(NSString*)cityCode view:(id)view;
 
+
+/**
+ 话题类型列表
+
+ @param cityCode 城市代码
+ @param view ..
+ */
+-(void)themeTypeListWithCityCode:(NSString*)cityCode view:(id)view;
 
 /**
  话题列表

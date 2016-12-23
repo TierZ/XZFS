@@ -46,7 +46,9 @@
 @property (nonatomic,assign)BOOL isCollected;//收藏
 
 // 话题
-@property (nonatomic,copy)NSString * focusCount;//关注
-@property (nonatomic,copy)NSString * scanCount;//浏览
-@property (nonatomic,assign)BOOL isFocused;//关注
+@property (nonatomic,copy)NSString * onFocus;//关注
+@property (nonatomic,copy)NSString * browse;//浏览
+@property (nonatomic,assign)BOOL isFocused;//关注typeCode
+@property (nonatomic,copy)NSString * typeCode;//话题类型编号
+
 @end

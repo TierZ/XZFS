@@ -70,8 +70,8 @@
         
         
         self.title.text = model.title;
-        self.scanCount.text = [NSString stringWithFormat:@"%@人浏览",model.scanCount];
-        self.focusCount.text = [NSString stringWithFormat:@"%@人关注",model.focusCount];
+        self.scanCount.text = [NSString stringWithFormat:@"%@人浏览",model.browse];
+        self.focusCount.text = [NSString stringWithFormat:@"%@人关注",model.onFocus];
         self.focus.selected = model.isFocused;
     }
 }

@@ -103,9 +103,9 @@
  @param page <#page description#>
  */
 -(void)requestThemeListWithPage:(int)page{
-    XZFindService * themeService = [[XZFindService alloc]initWithServiceTag:XZThemeList];
+    XZFindService * themeService = [[XZFindService alloc]initWithServiceTag:XZThemeTypeList];
     themeService.delegate = self;
-    [themeService masterListWithPageNum:page PageSize:10 cityCode:@"110000" view: self.mastView];
+    [themeService themeTypeListWithCityCode:@"110000" view:self.mastView];
 }
 
 
@@ -131,14 +131,14 @@
             }
         }
             break;
-        case XZThemeList:{
-            NSLog(@"successHandle= %@",succeedHandle);
-            NSArray * lectures = (NSArray*)succeedHandle;
-            [self.themeView.data addObjectsFromArray:lectures];
+        case XZThemeTypeList:{
+            NSLog(@"successHandle2= %@",succeedHandle);
+            NSArray * themes = (NSArray*)succeedHandle;
+            [self.themeView.data addObjectsFromArray:themes];
             [self.themeView.table reloadData];
             [self.themeView.table endRefreshFooter];
             [self.themeView.table endRefreshHeader];
-            if (lectures.count<=0) {
+            if (themes.count<=0) {
                 self.themeView.table.mj_footer.hidden = YES;
             }
             if (self.themeView.data.count<=0) {
@@ -184,7 +184,7 @@
         NSLog(@"请求话题");
         if (self.themeView.data.count>0) {
         }else{
-//            [self requestThemeListWithPage:1];
+            [self requestThemeListWithPage:1];
         }
     }
     
