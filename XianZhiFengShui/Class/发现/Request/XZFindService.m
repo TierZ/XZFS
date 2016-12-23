@@ -160,9 +160,23 @@ static NSString * XZGetThemeDetail = @"/topic/detail";
 -(void)themeTypeListWithCityCode:(NSString*)cityCode view:(id)view{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:cityCode forKey:@"cityCode"];
-   
-    
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self getRequestWithUrl:@"/topic/typeList" parmater:lastDic view:view isOpenHUD:YES Block:^(NSData *data) {
+        NSError * error;
+        
+        NSStringEncoding enc = kCFStringEncodingUTF8;
+        
+        NSString* strdata = [[NSString alloc]initWithData:data encoding:enc];//在将NSString类型转为NSData
+        
+        NSData * data1 = [strdata dataUsingEncoding:NSUTF8StringEncoding];//这样解决的乱码问题。
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data1 options:kNilOptions error:&error ];
+        NSLog(@"dic 123= %@",json);
+    } failBlock:^(NSError *error) {
+        
+    }];
+    
     
     [self postRequestWithUrl:XZGetThemeTypeList parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         NSLog(@"data = %@",data);

@@ -12,6 +12,7 @@
 #import "XZFindTable.h"
 #import "XZTheMasterModel.h"
 #import "XZFindService.h"
+#import "AFHTTPSessionManager.h"
 
 @interface XZFindVC ()<UIScrollViewDelegate>
 @property (nonatomic,strong)NSArray * titleArray;
@@ -67,7 +68,7 @@
         [weakSelf requestLectureListWithPage:page];
     }];
     [self.themeView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
-        [weakSelf requestThemeListWithPage:page];
+        [weakSelf requestThemeList];
     }];
 }
 
@@ -98,14 +99,26 @@
 
 
 /**
- 请求话题列表
+ 请求话题类型列表
 
- @param page <#page description#>
  */
--(void)requestThemeListWithPage:(int)page{
+-(void)requestThemeList{
     XZFindService * themeService = [[XZFindService alloc]initWithServiceTag:XZThemeTypeList];
     themeService.delegate = self;
     [themeService themeTypeListWithCityCode:@"110000" view:self.mastView];
+    
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    [manager POST:@"http://api.xianzhifengshui.com/topic/typeList" parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"resonpsr = %@",responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error = %@",error);
+    }];
+
+    
 }
 
 
@@ -143,7 +156,7 @@
             }
             if (self.themeView.data.count<=0) {
                 [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-                    [self requestThemeListWithPage:1];
+                    [self requestThemeList];
                 }];
             }else{
                 [self.mainView hideNoDataView];
@@ -158,8 +171,12 @@
 }
 
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
-    [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:nil];
+//    [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:nil];
+    [self.lectureView.table endRefreshFooter];
+    [self.lectureView.table endRefreshHeader];
     
+    [self.themeView.table endRefreshHeader];
+    [self.themeView.table endRefreshFooter];
 }
 
 #pragma mark action
@@ -184,7 +201,7 @@
         NSLog(@"请求话题");
         if (self.themeView.data.count>0) {
         }else{
-            [self requestThemeListWithPage:1];
+            [self requestThemeList];
         }
     }
     
