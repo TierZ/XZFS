@@ -12,15 +12,20 @@
 #import "XZMasterInfoEvaluateCell.h"
 #import "XZMasterServicesCell.h"
 
+#import "XZArticleDetailVC.h"
+
 
 
 NSString * const MasterServiceCellId = @"MasterServiceCellId";
 NSString * const MasterEvaluateCellId = @"MasterEvaluateCellId";
 NSString * const MasterArticleCellId = @"MasterArticleCellId";
 
+@interface XZMasterDetailTable ()
+ @property (nonatomic,assign)MasterDetailType style;
+@end
 @implementation XZMasterDetailTable{
     NSIndexPath * tmpIndex;
-    MasterDetailType _style;
+   
 }
 
 - (instancetype)initWithFrame:(CGRect)frame style:(MasterDetailType)style
@@ -36,12 +41,25 @@ NSString * const MasterArticleCellId = @"MasterArticleCellId";
 -(void)drawTable{
     self.table.frame = CGRectMake(0, 0, self.width, self.height);
     [self addSubview:self.table];
+    [self setupRefresh];
+}
+
+-(void)setupRefresh{
     
+    __weak typeof(self)weakSelf = self;
+    [self.table refreshListWithBlock:^(int page, BOOL isRefresh) {
+        if (weakSelf.block) {
+            weakSelf.block(weakSelf.style,page,isRefresh);
+        }
+    }];
+
+}
+-(void)refreshDataWithBlock:(MasterDetailRefreshBlock)block{
+    self.block = block;
 }
 
 #pragma mark tableDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"self.data = %@",self.data);
     return self.data.count;
 }
 
@@ -102,7 +120,11 @@ NSString * const MasterArticleCellId = @"MasterArticleCellId";
         case MasterInfoEvaluate:
             
             break;
-        case MasterInfoArticle:
+        case MasterInfoArticle:{
+            XZMasterInfoArticleModel * model = self.data[indexPath.row];
+            [self.currentVC.navigationController pushViewController:[[XZArticleDetailVC alloc]initWithBizCode:model.bizCode] animated:YES];
+            NSLog(@"bizcode = %@",model.bizCode);
+        }
             break;
             
         default:
@@ -148,9 +170,9 @@ NSString * const MasterArticleCellId = @"MasterArticleCellId";
 
 #pragma mark getter
 
--(UITableView *)table{
+-(XZRefreshTable *)table{
     if (!_table) {
-        _table= [[UITableView alloc] init];
+        _table= [[XZRefreshTable alloc] init];
         _table.backgroundColor = [UIColor clearColor];
         _table.dataSource = self;
         _table.delegate = self;

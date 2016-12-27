@@ -239,6 +239,10 @@
 		D180ADB61E00F7B40043FB61 /* switch_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D180ADB41E00F7B40043FB61 /* switch_on@3x.png */; };
 		D180ADBA1E0110F80043FB61 /* ActionSheet_UIPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180ADB91E0110F80043FB61 /* ActionSheet_UIPickerView.m */; };
 		D18DD7071DF16780003A6E21 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D18DD7061DF16780003A6E21 /* libc++.tbd */; };
+		D18FF42A1E1248E900479E37 /* coin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4281E1248E900479E37 /* coin@2x.png */; };
+		D18FF42B1E1248E900479E37 /* coin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4291E1248E900479E37 /* coin@3x.png */; };
+		D18FF42E1E12505800479E37 /* XZMasterDetailListData.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF42D1E12505800479E37 /* XZMasterDetailListData.m */; };
+		D18FF4311E126ED000479E37 /* XZArticleDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF4301E126ED000479E37 /* XZArticleDetailVC.m */; };
 		D1912BC31DED20FE007050F6 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1912BC21DED20FE007050F6 /* UserNotifications.framework */; };
 		D191C7A91DAB3FD000496906 /* XZLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D191C7891DAB3FD000496906 /* XZLoginVC.m */; };
 		D191C7AA1DAB3FD000496906 /* XZFindVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D191C7901DAB3FD000496906 /* XZFindVC.m */; };
@@ -1007,6 +1011,12 @@
 		D180ADB81E0110F80043FB61 /* ActionSheet_UIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheet_UIPickerView.h; sourceTree = "<group>"; };
 		D180ADB91E0110F80043FB61 /* ActionSheet_UIPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheet_UIPickerView.m; sourceTree = "<group>"; };
 		D18DD7061DF16780003A6E21 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		D18FF4281E1248E900479E37 /* coin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@2x.png"; sourceTree = "<group>"; };
+		D18FF4291E1248E900479E37 /* coin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@3x.png"; sourceTree = "<group>"; };
+		D18FF42C1E12505800479E37 /* XZMasterDetailListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterDetailListData.h; sourceTree = "<group>"; };
+		D18FF42D1E12505800479E37 /* XZMasterDetailListData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterDetailListData.m; sourceTree = "<group>"; };
+		D18FF42F1E126ED000479E37 /* XZArticleDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZArticleDetailVC.h; sourceTree = "<group>"; };
+		D18FF4301E126ED000479E37 /* XZArticleDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZArticleDetailVC.m; sourceTree = "<group>"; };
 		D1912BC21DED20FE007050F6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		D191C7881DAB3FD000496906 /* XZLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZLoginVC.h; sourceTree = "<group>"; };
 		D191C7891DAB3FD000496906 /* XZLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZLoginVC.m; sourceTree = "<group>"; };
@@ -2442,6 +2452,8 @@
 				D12F5BCF1DC1D6490035335E /* XZThemeDetailVC.m */,
 				D11EAB201DC840320053B114 /* XZLectureDetailVC.h */,
 				D11EAB211DC840320053B114 /* XZLectureDetailVC.m */,
+				D18FF42F1E126ED000479E37 /* XZArticleDetailVC.h */,
+				D18FF4301E126ED000479E37 /* XZArticleDetailVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2466,6 +2478,8 @@
 			children = (
 				D19F5DC31DE58667001F5EB0 /* XZFindService.h */,
 				D19F5DC41DE58667001F5EB0 /* XZFindService.m */,
+				D18FF42C1E12505800479E37 /* XZMasterDetailListData.h */,
+				D18FF42D1E12505800479E37 /* XZMasterDetailListData.m */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -3151,6 +3165,8 @@
 		D1A26AE71DF554080092BADB /* 发现 */ = {
 			isa = PBXGroup;
 			children = (
+				D18FF4281E1248E900479E37 /* coin@2x.png */,
+				D18FF4291E1248E900479E37 /* coin@3x.png */,
 				D1D6A2C51E0A646D00215CEA /* star_yellow@2x.png */,
 				D1D6A2C61E0A646E00215CEA /* star_yellow@3x.png */,
 				D1D6A2A31E0904D000215CEA /* dashiweizhi@2x.png */,
@@ -3754,6 +3770,7 @@
 				D180ADA31DFFC08B0043FB61 /* miy.db in Resources */,
 				D1958FFD1DE3F81600C06A05 /* JCHATGroupPersonView.xib in Resources */,
 				D19590FB1DE4191B00C06A05 /* add01_pre@3x.png in Resources */,
+				D18FF42A1E1248E900479E37 /* coin@2x.png in Resources */,
 				D1A26A311DF5072B0092BADB /* faxian_select@2x.png in Resources */,
 				D19591301DE4191C00C06A05 /* unselect@3x.png in Resources */,
 				D1315B8A1DBA1A50006254ED /* 1.jpg in Resources */,
@@ -3777,6 +3794,7 @@
 				D128AC9B1DC0A249002392E0 /* close@2x.png in Resources */,
 				D1A26AB91DF514750092BADB /* weixinchongzhi@2x.png in Resources */,
 				D1A26AAB1DF514750092BADB /* kefu@2x.png in Resources */,
+				D18FF42B1E1248E900479E37 /* coin@3x.png in Resources */,
 				D1A26AA61DF514750092BADB /* huatibianji@3x.png in Resources */,
 				D1A26A521DF509CE0092BADB /* weixindenglu@2x.png in Resources */,
 				D1D6A21B1E026F7000215CEA /* AlipaySDK.bundle in Resources */,
@@ -4005,6 +4023,7 @@
 				D19590081DE3F81600C06A05 /* XHVoiceRecordHUD.m in Sources */,
 				D1D6A2271E027C3000215CEA /* WTPayManager.m in Sources */,
 				D1D6A29F1E027ED100215CEA /* RSADataVerifier.m in Sources */,
+				D18FF4311E126ED000479E37 /* XZArticleDetailVC.m in Sources */,
 				D129AAB01DBF583B00DA2A6D /* XZMasterDetailTable.m in Sources */,
 				D115931C1DA8E181004A7B86 /* NSDate+Category.m in Sources */,
 				D128ACB41DC0A249002392E0 /* SDLoopProgressView.m in Sources */,
@@ -4032,6 +4051,7 @@
 				D19590301DE4004C00C06A05 /* JCHATFileManager.m in Sources */,
 				D16921461DD3048300867011 /* XZMasterAudit.m in Sources */,
 				D19590A81DE40E6200C06A05 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				D18FF42E1E12505800479E37 /* XZMasterDetailListData.m in Sources */,
 				D195907E1DE40A2800C06A05 /* JCHATSendMsgManager.m in Sources */,
 				D113CC441DAF40050067A965 /* XZRegistMasterVC.m in Sources */,
 				D1A26BA21DF95E5A0092BADB /* XZMallGoodsVC.m in Sources */,

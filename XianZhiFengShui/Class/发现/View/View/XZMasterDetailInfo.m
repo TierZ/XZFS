@@ -65,12 +65,12 @@
 
 -(void)refreshInfoWithDic:(NSDictionary*)dic{
     if (dic) {
-        self.nameLab.text = [dic objectForKey:@"masterName"];
-        self.nameLab.text = @"张三丰";
+        self.nameLab.text = [dic objectForKey:@"name"];
+//        self.nameLab.text = @"张三丰";
         self.infoLab.text = [dic objectForKey:@"desc"];
         self.locationLab.text = [dic objectForKey:@"address"];
-        self.locationLab.text = @"北京 东直门大街 xx路 xx号";
-        [self setupAutoHeightWithBottomView:_locationLab bottomMargin:10];
+//        self.locationLab.text = @"北京 东直门大街 xx路 xx号";
+        [self setupAutoHeightWithBottomViewsArray:@[self.locationIv,self.locationLab] bottomMargin:10];
     }
 }
 

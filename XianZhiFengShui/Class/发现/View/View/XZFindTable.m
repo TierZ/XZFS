@@ -100,15 +100,15 @@ NSString * const FindThemeCellId = @"FindThemeCellId";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    XZTheMasterModel * model = self.data [indexPath.row];
     
     switch (_style) {
         case XZFindMaster:
-             [self.currentVC.navigationController pushViewController:[[XZMasterDetailVC alloc]initWithMasterCode:@"bd35193472fa43d6b6aa7cdcf96d4c33"] animated:YES];
+             [self.currentVC.navigationController pushViewController:[[XZMasterDetailVC alloc]initWithMasterCode:model.masterCode] animated:YES];
             break;
         case XZFindLecture:{
-//            XZTheMasterModel *model =  self.data [indexPath.row];
-//             [self.currentVC.navigationController pushViewController:[[XZLectureDetailVC alloc]initWithModel:model] animated:YES];
-            [self.currentVC.navigationController pushViewController:[[XZThemeListVC alloc]init] animated:YES];
+            XZTheMasterModel *model =  self.data [indexPath.row];
+             [self.currentVC.navigationController pushViewController:[[XZLectureDetailVC alloc]initWithModel:model] animated:YES];
 
         }
             break;

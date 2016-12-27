@@ -41,11 +41,11 @@
     self.priceIv.sd_layout
     .topSpaceToView(self.contentView,35)
     .leftSpaceToView(self.contentView,SCREENWIDTH-80)
-    .widthIs(11)
-    .heightIs(14);
+    .widthIs(10)
+    .heightIs(10);
     
     self.priceLab.sd_layout
-    .topSpaceToView(self.contentView,38)
+    .topSpaceToView(self.contentView,36)
     .leftSpaceToView(self.priceIv,5)
     .rightSpaceToView(self.contentView,10)
     .heightIs(9);
@@ -68,9 +68,9 @@
 
 -(void)setModel:(XZMasterInfoServiceModel *)model{
     _model = model;
-    self.titleLab.text = model.serviceName;
-    self.detailLab.text = model.serviceContent;
-    self.priceLab.text = [NSString stringWithFormat:@"%@知币",model.servicePrice];
+    self.titleLab.text = model.type;
+    self.detailLab.text = model.summary;
+    self.priceLab.text = [NSString stringWithFormat:@"%@知币",model.price];
     self.appointmentBtn.selected = model.isAppointment;
     
     [self setupAutoHeightWithBottomViewsArray:@[self.appointmentBtn,self.detailLab] bottomMargin:6];
@@ -111,7 +111,7 @@
         _priceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_priceBtn setTitle:@"--知币" forState:UIControlStateNormal];
         [_priceBtn setTitleColor:XZFS_TEXTORANGECOLOR forState:UIControlStateNormal];
-        [_priceBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        [_priceBtn setImage:[UIImage imageNamed:@"coin"] forState:UIControlStateNormal];
         _priceBtn.titleLabel.font = XZFS_S_FONT(9);
     }
     return _priceBtn;
@@ -120,7 +120,7 @@
 -(UIImageView *)priceIv{
     if (!_priceIv) {
         _priceIv = [[UIImageView alloc]init];
-        _priceIv.backgroundColor = [UIColor redColor];
+        _priceIv.image = XZFS_IMAGE_NAMED(@"coin");
     }
     return _priceIv;
 }

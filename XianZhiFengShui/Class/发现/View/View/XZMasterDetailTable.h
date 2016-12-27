@@ -16,10 +16,19 @@ typedef enum : NSUInteger {
 } MasterDetailType;
 
 #import <UIKit/UIKit.h>
+#import "XZRefreshTable.h"
+#import "XZMasterInfoModel.h"
+#import "XZMasterDetailVC.h"
+typedef void(^ClickCellBlock)(MasterDetailType type,id model);
 
+typedef void(^MasterDetailRefreshBlock)(MasterDetailType type,int page,BOOL isrefresh);
 @interface XZMasterDetailTable : UIView<UITableViewDelegate,UITableViewDataSource>
 - (instancetype)initWithFrame:(CGRect)frame style:(MasterDetailType)style;
-@property (nonatomic,strong)UITableView * table;
+@property (nonatomic,strong)XZRefreshTable * table;
 @property (nonatomic,strong)NSMutableArray * data;
-//@property (nonatomic,weak)XZFindVC * currentVC;
+@property (nonatomic,copy)MasterDetailRefreshBlock block;
+@property (nonatomic,copy)ClickCellBlock clickBlock;
+-(void)refreshDataWithBlock:(MasterDetailRefreshBlock)block;
+-(void)ClickCellWithBlock:(ClickCellBlock)block;
+@property (nonatomic,weak)XZMasterDetailVC * currentVC;
 @end

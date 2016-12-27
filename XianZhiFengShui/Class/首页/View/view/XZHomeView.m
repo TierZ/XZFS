@@ -122,9 +122,10 @@
     NSArray * picUrl = self.xzHomeData.count>0? [self.xzHomeData firstObject]:@[];
     NSMutableArray * imageUrlArr = [NSMutableArray array];
     NSMutableArray * jumpUrlArr = [NSMutableArray array];
+#warning 这个数据不对。。先不添加
     for (int i=0; i<picUrl.count; i++) {
-        [imageUrlArr addObject:[picUrl[i] objectForKey:@"picUrl"]];
-        [jumpUrlArr addObject:[picUrl[i] objectForKey:@"url"]];
+//        [imageUrlArr addObject:[picUrl[i] objectForKey:@"picUrl"]];
+//        [jumpUrlArr addObject:[picUrl[i] objectForKey:@"url"]];
     }
     
     scrollView.imageURLStringsGroup = imageUrlArr;;

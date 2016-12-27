@@ -41,8 +41,8 @@
 
 -(void)setModel:(XZMasterInfoArticleModel *)model{
     _model = model;
-    self.articleTitle.text = model.articleTitle;
-    self.articleDetail.text = model.articleDetail;
+    self.articleTitle.text = model.title;
+    self.articleDetail.text = model.content;
     [self setupAutoHeightWithBottomView:self.articleDetail bottomMargin:8];
 }
 

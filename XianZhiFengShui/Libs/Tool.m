@@ -164,9 +164,10 @@
     if (!timestamp) {
         return @"";
     }
+    double times = timestamp/1000;
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     df.dateFormat = format;
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:times];
     return [df stringFromDate:date];
 }
 

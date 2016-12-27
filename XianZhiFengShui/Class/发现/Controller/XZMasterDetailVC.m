@@ -48,7 +48,7 @@
 #pragma mark view
 -(void)setupHeader{
     UIImageView * headView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, headHeight)];
-    headView.backgroundColor = [UIColor redColor];
+    headView.backgroundColor = [UIColor whiteColor];
     headView.tag = 10;
     [self.mainView addSubview:headView];
     
@@ -58,12 +58,12 @@
 }
 
 -(void)setupMiddle{
-    self.middleInfo = [[XZMasterDetailInfo2 alloc]initWithFrame:CGRectMake(0, headHeight, SCREENWIDTH, 35) Titles:@[ @"v1",@"99",@"88人约过",@"99" ]];
-    self.middleInfo.backgroundColor = RandomColor(1);
+    self.middleInfo = [[XZMasterDetailInfo2 alloc]initWithFrame:CGRectMake(0, headHeight, SCREENWIDTH, 35) Titles:@[ @"-",@"-",@"-",@"-" ]];
+    self.middleInfo.backgroundColor = [UIColor whiteColor];
     [self.mainView addSubview:self.middleInfo];
 }
 -(void)setupMain{
-    self.mainInfo = [[XZMasterDetailInfo3 alloc]initWithFrame:CGRectMake(0, self.middleInfo.bottom+7, SCREENWIDTH, SCREENHEIGHT-XZFS_STATUS_BAR_H-45-self.middleInfo.bottom-7)];
+    self.mainInfo = [[XZMasterDetailInfo3 alloc]initWithFrame:CGRectMake(0, self.middleInfo.bottom+7, SCREENWIDTH, SCREENHEIGHT-XZFS_STATUS_BAR_H-45-self.middleInfo.bottom-7) masterCode:self.masterCode detailVC:self];
     [self.mainView addSubview:self.mainInfo];
 }
 
@@ -93,23 +93,34 @@
 
 #pragma mark 网络
 -(void)requestMasterInfo{
+    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSString * userCode = [dic objectForKey:@"bizCode"];
     XZFindService * masterInfo = [[XZFindService alloc]initWithServiceTag:XZMasterDetail];
     masterInfo.delegate = self;
-    [masterInfo masterDetailWithMasterCode:self.masterCode UserCode:@"9e41413d569b4f8f89ce70f572842917" cityCode:@"110000" view:self.mainView];
+    [masterInfo masterDetailWithMasterCode:self.masterCode UserCode:userCode cityCode:@"110000" view:self.mainView];
 }
 
 -(void)collectionMasterWithType:(NSInteger)type{
+    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSString * userCode = [dic objectForKey:@"bizCode"];
     XZFindService * collectMasterService = [[XZFindService alloc]initWithServiceTag:XZCollectionMaster];
     collectMasterService.delegate = self;
-    [collectMasterService collectMasterWithMasterCode:self.masterCode userCode:@"9e41413d569b4f8f89ce70f572842917" type:type cityCode:@"110000" view:self.mainView];
+    [collectMasterService collectMasterWithMasterCode:self.masterCode userCode:userCode type:type cityCode:@"110000" view:self.mainView];
    
 }
 
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
     XZFindService * masterService = (XZFindService*)service;
     switch (masterService.serviceTag) {
-        case XZMasterDetail:
+        case XZMasterDetail:{
+            NSDictionary * dic = (NSDictionary*)succeedHandle;
+            UIImageView * iv = (UIImageView*)[self.mainView viewWithTag:10];
+            [iv setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"icon"]] options:YYWebImageOptionProgressive];
+            [self.headInfo refreshInfoWithDic:dic];
+            [self.middleInfo refreshInfoWithDic:dic];
+            [self.mainInfo setupOriginData:dic];
             NSLog(@"XZMasterDetail = %@",succeedHandle);
+        }
             break;
         case XZCollectionMaster:
             NSLog(@"XZCollectionMaster = %@",succeedHandle);

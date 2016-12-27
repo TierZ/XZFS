@@ -68,8 +68,8 @@
     [self.evaluateAvatar setImageWithURL:[NSURL URLWithString:model.evaluateAvatar] placeholder:[UIImage imageNamed:@""]];
     
     self.evaluateName.text = model.evaluateName;
-    self.evaluateTime.text = model.evaluateTime;
-    self.evaluateContent.text = model.evaluateContent;
+    self.evaluateTime.text = [Tool timeWithTimestamp:model.createTime dateFormat:@"yyyy-MM-dd"];
+    self.evaluateContent.text = model.content;
     
     [self setupAutoHeightWithBottomView:self.evaluateContent bottomMargin:8];
  }

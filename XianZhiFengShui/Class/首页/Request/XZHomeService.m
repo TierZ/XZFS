@@ -7,8 +7,8 @@
 //
 
 
-#define XZHomeData @"/index/getDataList"
-#define XZHomeCityList @"/index/getCityList"
+#define XZHomeData @"/getDataList"
+#define XZHomeCityList @"/getCityList"
 
 #import "XZHomeService.h"
 

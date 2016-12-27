@@ -10,6 +10,8 @@ static NSString * evaluateMasterService = @"/master/evaluate/confirm";
 static NSString * collectionMasterService = @"/master/collection/confirm";
 static NSString * XZGetMasterList = @"/master/list";
 static NSString * XZGetMasterDetail = @"/master/detail";
+static NSString * XZGetMasterArticleList = @"/master/article/list";
+static NSString * XZGetMasterArticleDetail = @"/master/article/detail";
 static NSString * XZGetLectureList = @"/lectures/list";
 static NSString * XZGetLectureDetail = @"/lectures/detail";
 static NSString * XZGetThemeTypeList = @"/topic/typeList";
@@ -19,7 +21,7 @@ static NSString * XZGetThemeDetail = @"/topic/detail";
 #import "XZFindService.h"
 #import "XZTheMasterModel.h"
 #import "XZThemeListModel.h"
-
+#import "XZMasterInfoModel.h"
 @implementation XZFindService
 
 #pragma mark 大师列表
@@ -162,22 +164,6 @@ static NSString * XZGetThemeDetail = @"/topic/detail";
     [dic setObject:cityCode forKey:@"cityCode"];
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
-    [self getRequestWithUrl:@"/topic/typeList" parmater:lastDic view:view isOpenHUD:YES Block:^(NSData *data) {
-        NSError * error;
-        
-        NSStringEncoding enc = kCFStringEncodingUTF8;
-        
-        NSString* strdata = [[NSString alloc]initWithData:data encoding:enc];//在将NSString类型转为NSData
-        
-        NSData * data1 = [strdata dataUsingEncoding:NSUTF8StringEncoding];//这样解决的乱码问题。
-        
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data1 options:kNilOptions error:&error ];
-        NSLog(@"dic 123= %@",json);
-    } failBlock:^(NSError *error) {
-        
-    }];
-    
-    
     [self postRequestWithUrl:XZGetThemeTypeList parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         NSLog(@"data = %@",data);
         NSArray * arr = [[data objectForKey:@"data"]objectForKey:@"list"];
@@ -233,8 +219,7 @@ static NSString * XZGetThemeDetail = @"/topic/detail";
     }else{
         [dic setObject:@"" forKey:@"userCode"];
     }
-   
-    
+
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
     [self postRequestWithUrl:XZGetThemeDetail parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
@@ -248,6 +233,4 @@ static NSString * XZGetThemeDetail = @"/topic/detail";
     }];
 
 }
-
-
 @end

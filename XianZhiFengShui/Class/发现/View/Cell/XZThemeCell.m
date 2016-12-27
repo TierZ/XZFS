@@ -41,11 +41,12 @@
 
 -(void)layoutCell{
     self.photo.frame = CGRectMake(20, 8, 50, 50);
-    self.title.frame = CGRectMake(self.photo.right+8, 19, 150, 14);
-    self.scanCount.frame = CGRectMake(self.title.left, self.title.bottom+11, 150, 11);
-    self.focusCount.frame = CGRectMake(self.scanCount.right+27, self.title.bottom+11, 150, 11);
-    self.focus .frame = CGRectMake(self.title.right+60, self.title.top, 15, 13);
-    
+    self.title.frame = CGRectMake(self.photo.right+8, 19, 100, 14);
+    self.scanCount.frame = CGRectMake(self.title.left, self.title.bottom+11, 100, 11);
+    self.focusCount.frame = CGRectMake(self.scanCount.right+27, self.title.bottom+11, 100, 11);
+    self.focus .frame = CGRectMake(self.title.right+50, self.title.top, 15, 13);
+//    self.focusCount.backgroundColor = [UIColor yellowColor];
+//    self.scanCount.backgroundColor = [UIColor greenColor];
 }
 
 #pragma mark action
@@ -118,7 +119,7 @@
 -(UIButton *)focus{
     if (!_focus) {
         _focus = [UIButton buttonWithType:UIButtonTypeCustom];
-        _focus.backgroundColor = [UIColor redColor];
+        [_focus setImage:XZFS_IMAGE_NAMED(@"yishoucang") forState:UIControlStateNormal];
         [_focus addTarget:self action:@selector(focus:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _focus;

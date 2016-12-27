@@ -162,20 +162,14 @@ static BasicService * shareService;
         [afShare POST:url parameters:mDict progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//            NSError * error;
-//            
-//            NSStringEncoding enc = kCFStringEncodingUTF8;
-//            
-//            NSString* strdata = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];//在将NSString类型转为NSData
-//            
-//            NSData * data = [strdata dataUsingEncoding:NSUTF8StringEncoding];//这样解决的乱码问题。
-//            
-//            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error ];
             NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             NSDictionary * resultDic = [self dataDecryptionWithDic:dic];
            BOOL isSuccess =  [self showFailInfoWithDic:resultDic view:currentView];
             if (isSuccess) {
                 block(resultDic);
+            }else{
+                NSError *error;
+                errorBlock(error);
             }
             if (isOpenHUD == YES) {
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

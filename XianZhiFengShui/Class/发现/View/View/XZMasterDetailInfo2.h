@@ -11,4 +11,5 @@
 
 @interface XZMasterDetailInfo2 : UIView
 - (instancetype)initWithFrame:(CGRect)frame Titles:(NSArray*)titles;
+-(void)refreshInfoWithDic:(NSDictionary*)dic;
 @end

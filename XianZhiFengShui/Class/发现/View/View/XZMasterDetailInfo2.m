@@ -7,7 +7,7 @@
 //
 
 #import "XZMasterDetailInfo2.h"
-
+#import "UIButton+XZImageTitleSpacing.h"
 @implementation XZMasterDetailInfo2{
     NSArray * _titles;
 }
@@ -23,17 +23,34 @@
 }
 
 -(void)setupView{
-    NSArray * icons = @[ @"",@"",@"",@""];
+    NSArray * icons = @[ @"level1",@"yidianzan",@"chengdanshu",@"yishoucang"];
     for (int i = 0; i<icons.count; i++) {
         UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(i*self.width/icons.count, 0, self.width/icons.count, self.height);
-        [btn setTitle:_titles[i] forState:UIControlStateNormal];
+//        [btn setTitle:_titles[i] forState:UIControlStateNormal];
         [btn setTitleColor:XZFS_TEXTLIGHTGRAYCOLOR forState:UIControlStateNormal];
         btn.titleLabel.font = XZFS_S_FONT(12);
+        [btn setImage:XZFS_IMAGE_NAMED(icons[i]) forState:UIControlStateNormal];
+        [btn layoutButtonWithEdgeInsetsStyle:XZButtonEdgeInsetsStyleLeft imageTitleSpace:2];
         [self addSubview:btn];
-        btn.tag = i;
-        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tag = 10+i;
+//        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
+}
+
+-(void)refreshInfoWithDic:(NSDictionary*)dic{
+    UIButton * levelBtn = (UIButton*)[self viewWithTag:10];
+    UIButton * agreeBtn = (UIButton*)[self viewWithTag:11];
+    UIButton * appointBtn = (UIButton*)[self viewWithTag:12];
+    UIButton * collectBtn = (UIButton*)[self viewWithTag:13];
+    
+    int levelInt = [[dic objectForKey:@"level"]intValue];
+    NSString * levelStr = [NSString stringWithFormat:@"level%d",levelInt];
+    [levelBtn setImage:XZFS_IMAGE_NAMED(levelStr) forState:UIControlStateNormal];
+    
+    [agreeBtn setTitle:[NSString stringWithFormat:@"%@",[dic objectForKey:@"pointOfPraise"]] forState:UIControlStateNormal];
+    [appointBtn setTitle:[NSString stringWithFormat:@"%@人约过",[dic objectForKey:@"appoint"]] forState:UIControlStateNormal];
+    [collectBtn setTitle:[NSString stringWithFormat:@"%@",[dic objectForKey:@"collection"]] forState:UIControlStateNormal];
 }
 
 -(void)btnClick:(UIButton*)sender{
