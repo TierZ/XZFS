@@ -10,7 +10,7 @@
 #import "BasicService.h"
 
 typedef NS_ENUM(NSUInteger, XZMasterDetailListTag) {//大师详情内
-    XZMasterArticleDetail = 250,//大师文章详情
+    XZMasterArticleDetail = 230,//大师文章详情
     XZMasterArticleList,//大师文章列表
 };
 
