@@ -29,12 +29,12 @@
         btn.frame = CGRectMake(i*self.width/icons.count, 0, self.width/icons.count, self.height);
 //        [btn setTitle:_titles[i] forState:UIControlStateNormal];
         [btn setTitleColor:XZFS_TEXTLIGHTGRAYCOLOR forState:UIControlStateNormal];
-        btn.titleLabel.font = XZFS_S_FONT(12);
+        btn.titleLabel.font = XZFS_S_FONT(16);
         [btn setImage:XZFS_IMAGE_NAMED(icons[i]) forState:UIControlStateNormal];
-        [btn layoutButtonWithEdgeInsetsStyle:XZButtonEdgeInsetsStyleLeft imageTitleSpace:2];
+        [btn layoutButtonWithEdgeInsetsStyle:XZButtonEdgeInsetsStyleLeft imageTitleSpace:6];
         [self addSubview:btn];
         btn.tag = 10+i;
-//        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 
@@ -56,6 +56,14 @@
 -(void)btnClick:(UIButton*)sender{
     NSLog(@"sender.title = %@",sender.titleLabel.text);
     NSLog(@"sender.tag = %ld",(long)sender.tag);
+    if (sender.tag==11||sender.tag==13) {
+        if (self.block) {
+            self.block((int)sender.tag);
+        }
+    }
+}
+-(void)btnClickWithBlock:(MasterMiddleBtnClickBlock)block{
+    self.block = block;
 }
 
 @end

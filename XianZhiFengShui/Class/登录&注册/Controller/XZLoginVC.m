@@ -118,7 +118,7 @@
 
     }
     
-UIView * horiLine = [[UIView alloc]initWithFrame:CGRectMake(self.scroll.width/2-0.5, otherLoginLab.bottom+42, 1, 35)];
+    UIView * horiLine = [[UIView alloc]initWithFrame:CGRectMake(self.scroll.width/2-0.5, otherLoginLab.bottom+42, 1, 35)];
     horiLine.backgroundColor = XZFS_TEXTLIGHTGRAYCOLOR;
     [self.scroll addSubview:horiLine];
     

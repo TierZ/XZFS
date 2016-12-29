@@ -59,7 +59,7 @@
         model.icon = @"http://navatar.shagualicai.cn/uid/150922010117012662";
         model.name = @"张三丰";
         model.level = @"V1";
-        model.singleVolume = @"82单";
+        model.singleVolume = @"82";
         model.pointOfPraise = @"99";
         model.type  =@[@"上知天文",@"下晓地理",@"古往今来",@"无所不知"];
         model.summary  =@"我是张三丰，zhang。。。。。爱撒大声地阿萨德阿达";

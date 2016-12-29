@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
     XZThemeDetail,//话题详情
     XZEvaluateMaster,//评价大师
     XZCollectionMaster,//收藏／取消大师
+    XZPointOfPraiseMaster,//给大师点赞
 };
 
 @interface XZFindService : BasicService
@@ -53,10 +54,11 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
  @param content    内容
  @param cityCode   城市
  @param masterOrderCode   大师订单编号
- @param star       评分
+ @param serviceAttitude       服务态度
+ @param professionalLevel       专业水平
   @param view       。。
  */
--(void)evaluateMasterWithMasterCode:(NSString*)masterCode userCode:(NSString*)userCode content:(NSString*)content cityCode:(NSString*)cityCode masterOrderCode:(NSString *)masterOrderCode star:(NSInteger)star view:(id)view;
+-(void)evaluateMasterWithMasterCode:(NSString*)masterCode userCode:(NSString*)userCode content:(NSString*)content cityCode:(NSString*)cityCode masterOrderCode:(NSString *)masterOrderCode serviceAttitude:(NSInteger)serviceAttitude professionalLevel:(NSInteger)professionalLevel view:(id)view;
 
 
 /**
@@ -123,6 +125,17 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
  */
 -(void)themeDetailWithTopicCode:(NSString*)topicCode userCode:(NSString*)userCode cityCode:(NSString*)cityCode view:(id)view;
 
+
+
+/**
+ 给大师点赞
+
+ @param cityCode   城市代码
+ @param masterCode 大师id
+ @param userCode   用户id
+ @param view       。。
+ */
+-(void)pointOfPraiseMasterWithCityCode:(NSString*)cityCode masterCode:(NSString*)masterCode userCode:(NSString*)userCode view:(id)view;
 
 
 @end

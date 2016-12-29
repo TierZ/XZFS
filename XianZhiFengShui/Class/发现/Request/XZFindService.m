@@ -17,6 +17,7 @@ static NSString * XZGetLectureDetail = @"/lectures/detail";
 static NSString * XZGetThemeTypeList = @"/topic/typeList";
 static NSString * XZGetThemeList = @"/topic/list";
 static NSString * XZGetThemeDetail = @"/topic/detail";
+static NSString * XZPointOfPraiseService = @"/master/pointOfPraise";
 
 #import "XZFindService.h"
 #import "XZTheMasterModel.h"
@@ -50,7 +51,8 @@ static NSString * XZGetThemeDetail = @"/topic/detail";
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:cityCode forKey:@"cityCode"];
     [dic setObject:masterCode forKey:@"masterCode"];
-    [dic setObject:userCode forKey:@"userCode"];
+    NSString * userCodeStr = userCode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
     
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
@@ -66,14 +68,16 @@ static NSString * XZGetThemeDetail = @"/topic/detail";
 }
 
 #pragma mark 评价大师
--(void)evaluateMasterWithMasterCode:(NSString*)masterCode userCode:(NSString*)userCode content:(NSString*)content cityCode:(NSString*)cityCode masterOrderCode:(NSString *)masterOrderCode star:(NSInteger)star view:(id)view{
+-(void)evaluateMasterWithMasterCode:(NSString*)masterCode userCode:(NSString*)userCode content:(NSString*)content cityCode:(NSString*)cityCode masterOrderCode:(NSString *)masterOrderCode serviceAttitude:(NSInteger)serviceAttitude professionalLevel:(NSInteger)professionalLevel view:(id)view{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:cityCode forKey:@"cityCode"];
     [dic setObject:masterCode forKey:@"masterCode"];
-    [dic setObject:userCode forKey:@"userCode"];
+    NSString * userCodeStr = userCode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
     [dic setObject:content forKey:@"content"];
     [dic setObject:masterOrderCode forKey:@"masterOrderCode"];
-    [dic setObject:[NSNumber numberWithInteger:star] forKey:@"star"];
+    [dic setObject:[NSNumber numberWithInteger:serviceAttitude] forKey:@"serviceAttitude"];
+     [dic setObject:[NSNumber numberWithInteger:professionalLevel] forKey:@"professionalLevel"];
     
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
@@ -93,7 +97,8 @@ static NSString * XZGetThemeDetail = @"/topic/detail";
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:cityCode forKey:@"cityCode"];
     [dic setObject:masterCode forKey:@"masterCode"];
-    [dic setObject:userCode forKey:@"userCode"];
+    NSString * userCodeStr = userCode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
     [dic setObject:[NSNumber numberWithInteger:type] forKey:@"type"];
     
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
@@ -142,7 +147,8 @@ static NSString * XZGetThemeDetail = @"/topic/detail";
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:cityCode forKey:@"cityCode"];
     [dic setObject:masterCode forKey:@"lecturesCode"];
-    [dic setObject:userCode forKey:@"userCode"];
+    NSString * userCodeStr = userCode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
     
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
@@ -231,6 +237,33 @@ static NSString * XZGetThemeDetail = @"/topic/detail";
             [self.delegate netFailedWithHandle:error dataService:self];
         }
     }];
-
 }
+
+
+#pragma mark 给大师点赞
+-(void)pointOfPraiseMasterWithCityCode:(NSString*)cityCode masterCode:(NSString*)masterCode userCode:(NSString*)userCode view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:masterCode forKey:@"masterCode"];
+    if (userCode) {
+        [dic setObject:userCode forKey:@"userCode"];
+    }else{
+        [dic setObject:@"" forKey:@"userCode"];
+    }
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:XZPointOfPraiseService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+            [self.delegate netSucceedWithHandle:[data objectForKey:@"data"] dataService:self];
+        }
+    } failBlock:^(NSError *error) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+
+    
+    
+}
+
 @end

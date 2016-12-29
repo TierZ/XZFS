@@ -243,6 +243,7 @@
 		D18FF42B1E1248E900479E37 /* coin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4291E1248E900479E37 /* coin@3x.png */; };
 		D18FF42E1E12505800479E37 /* XZMasterDetailListData.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF42D1E12505800479E37 /* XZMasterDetailListData.m */; };
 		D18FF4311E126ED000479E37 /* XZArticleDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF4301E126ED000479E37 /* XZArticleDetailVC.m */; };
+		D18FF4341E14EF4C00479E37 /* XZLectureDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF4331E14EF4C00479E37 /* XZLectureDetailData.m */; };
 		D1912BC31DED20FE007050F6 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1912BC21DED20FE007050F6 /* UserNotifications.framework */; };
 		D191C7A91DAB3FD000496906 /* XZLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D191C7891DAB3FD000496906 /* XZLoginVC.m */; };
 		D191C7AA1DAB3FD000496906 /* XZFindVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D191C7901DAB3FD000496906 /* XZFindVC.m */; };
@@ -1017,6 +1018,8 @@
 		D18FF42D1E12505800479E37 /* XZMasterDetailListData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterDetailListData.m; sourceTree = "<group>"; };
 		D18FF42F1E126ED000479E37 /* XZArticleDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZArticleDetailVC.h; sourceTree = "<group>"; };
 		D18FF4301E126ED000479E37 /* XZArticleDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZArticleDetailVC.m; sourceTree = "<group>"; };
+		D18FF4321E14EF4C00479E37 /* XZLectureDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZLectureDetailData.h; sourceTree = "<group>"; };
+		D18FF4331E14EF4C00479E37 /* XZLectureDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZLectureDetailData.m; sourceTree = "<group>"; };
 		D1912BC21DED20FE007050F6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		D191C7881DAB3FD000496906 /* XZLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZLoginVC.h; sourceTree = "<group>"; };
 		D191C7891DAB3FD000496906 /* XZLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZLoginVC.m; sourceTree = "<group>"; };
@@ -2480,6 +2483,8 @@
 				D19F5DC41DE58667001F5EB0 /* XZFindService.m */,
 				D18FF42C1E12505800479E37 /* XZMasterDetailListData.h */,
 				D18FF42D1E12505800479E37 /* XZMasterDetailListData.m */,
+				D18FF4321E14EF4C00479E37 /* XZLectureDetailData.h */,
+				D18FF4331E14EF4C00479E37 /* XZLectureDetailData.m */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -4003,6 +4008,7 @@
 				D1131A3A1DEE83BE00E1398D /* JCHATSelectImgCollectionView.m in Sources */,
 				D11EAB221DC840320053B114 /* XZLectureDetailVC.m in Sources */,
 				D169213D1DD3038E00867011 /* XZMasterBasicInfo.m in Sources */,
+				D18FF4341E14EF4C00479E37 /* XZLectureDetailData.m in Sources */,
 				D19590291DE3FFF100C06A05 /* MJPhotoBrowser.m in Sources */,
 				D1315B501DB9FFDE006254ED /* SDWaitingView.m in Sources */,
 				D1A26BAA1DF961510092BADB /* XZGoodsModel.m in Sources */,

@@ -34,6 +34,7 @@
         [self drawTable];
         [self refreshList];
         [self loadDataWithStyle:MasterHot page:1 isRefresh:YES];
+        [self setupBlock];
     }
     return self;
 }
@@ -69,6 +70,8 @@
     _hotMaster.currentVC  = self.curVC;
     [_masterScroll addSubview:_hotMaster];
     
+  
+    
     _localMaster = [[XZFindTable alloc]initWithFrame:CGRectMake(_masterScroll.width, 0, _masterScroll.width, _masterScroll.height) style:XZFindMaster];
     _localMaster.currentVC  = self.curVC;
     [_masterScroll addSubview:_localMaster];
@@ -77,6 +80,22 @@
     _allMaster.currentVC  = self.curVC;
     [_masterScroll addSubview:_allMaster];
 }
+-(void)setupBlock{
+    __weak typeof(self)weakSelf = self;
+    [_hotMaster pointOfPraiseMasterWithBlock:^(NSString *masterCode) {
+        [weakSelf pointOfPraiseMasterWithMasterCode:masterCode];
+    }];
+    
+    [_localMaster pointOfPraiseMasterWithBlock:^(NSString *masterCode) {
+        [weakSelf pointOfPraiseMasterWithMasterCode:masterCode];
+    }];
+    
+    [_allMaster pointOfPraiseMasterWithBlock:^(NSString *masterCode) {
+        [weakSelf pointOfPraiseMasterWithMasterCode:masterCode];
+    }];
+}
+
+
 
 -(void)refreshList{
     __weak typeof(self)weakSelf = self;
@@ -105,6 +124,30 @@
 
 
 #pragma mark 网络
+
+
+/**
+ 给大师点赞
+
+ @param masterCode 。。
+ */
+-(void)pointOfPraiseMasterWithMasterCode:(NSString*)masterCode{
+    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSString * userCode = [dic objectForKey:@"bizCode"];
+    XZFindService * pointOfPraiseService = [[XZFindService alloc]initWithServiceTag:XZPointOfPraiseMaster];
+    pointOfPraiseService.delegate = self;
+    [pointOfPraiseService pointOfPraiseMasterWithCityCode:@"110000" masterCode:masterCode userCode:userCode view:self];
+
+}
+
+
+/**
+ 获取列表数据
+
+ @param style     类型（最火，本地，全部）
+ @param page      页码
+ @param isrefresh 是否刷新
+ */
 -(void)loadDataWithStyle:(MasterSelect)style page:(int)page isRefresh:(BOOL) isrefresh{
     int serviceTag;
     XZFindTable * masterTable;
@@ -138,28 +181,41 @@
 
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
     XZFindService * masterService = (XZFindService*)service;
-    NSDictionary * data = (NSDictionary*)succeedHandle;
-    NSArray * list = [data objectForKey:@"list"];
-    NSMutableArray * modelList = [NSMutableArray array];
-    for (int i = 0; i<list.count; i++) {
-        XZTheMasterModel * model = [XZTheMasterModel modelWithJSON:list[i]];
-        [modelList addObject:model];
+    switch (masterService.serviceTag) {
+        case XZMasterListLocal:
+        case XZMasterListHot:
+        case XZMasterListAll:{
+            NSDictionary * data = (NSDictionary*)succeedHandle;
+            NSArray * list = [data objectForKey:@"list"];
+            NSMutableArray * modelList = [NSMutableArray array];
+            for (int i = 0; i<list.count; i++) {
+                XZTheMasterModel * model = [XZTheMasterModel modelWithJSON:list[i]];
+                [modelList addObject:model];
+            }
+            XZFindTable * masterTable = [self selectTableWithTag:masterService.serviceTag];
+            NSLog(@"successHandle= %@",list);
+            if (masterTable.table.row==1) {
+                masterTable.data = [NSMutableArray arrayWithArray:modelList];
+            }else{
+                [masterTable.data addObjectsFromArray:modelList];
+            }
+            [masterTable.table endRefreshHeader];
+            [masterTable.table endRefreshFooter];
+            if (modelList.count<=0) {
+                masterTable.table.mj_footer.hidden = YES;
+            }
+            [masterTable.table reloadData];
+        }
+            break;
+        case XZPointOfPraiseMaster:{
+            NSLog(@"点赞  %@",succeedHandle);
+        }
+            break;
+        default:
+            break;
     }
-    XZFindTable * masterTable = [self selectTableWithTag:masterService.serviceTag];
-    NSLog(@"successHandle= %@",list);
-    if (masterTable.table.row==1) {
-        masterTable.data = [NSMutableArray arrayWithArray:modelList];
-    }else{
-        [masterTable.data addObjectsFromArray:modelList];
-    }
-    [masterTable.table endRefreshHeader];
-    [masterTable.table endRefreshFooter];
-    if (modelList.count<=0) {
-        masterTable.table.mj_footer.hidden = YES;
-    }
-   
-    [masterTable.table reloadData];
-
+    
+    
 }
 
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{

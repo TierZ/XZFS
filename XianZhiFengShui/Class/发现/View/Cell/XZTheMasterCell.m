@@ -17,9 +17,11 @@
 @property (nonatomic,strong)UIImageView * successIv;
 @property (nonatomic,strong)UILabel * successLab;
 @property (nonatomic,strong)UIButton * agreeBtn;
+@property (nonatomic,strong)UIButton * agreeBgBtn;
 @property (nonatomic,strong)UILabel * agreeLab;
 @property (nonatomic,strong)UILabel * introduce;
 @property (nonatomic,strong)XZTagView * tagView;
+@property (nonatomic,strong)XZTheMasterModel * model;
 @end
 @implementation XZTheMasterCell
 
@@ -52,36 +54,52 @@
     self.level.frame = CGRectMake(self.name.right+30, 12.5, 19, 12);
 //    self.levelLab.frame = CGRectMake(self.level.right+2, 13.5, 22, 11);
     self.successIv.frame = CGRectMake(self.level.right+20, 12.5, 12, 10);
-    self.successLab.frame = CGRectMake(self.successIv.right+2, 13.5, 33, 11);
-    self.agreeBtn.frame = CGRectMake(self.successLab.right+20, 12.5, 80, 12);
+    self.successLab.frame = CGRectMake(self.successIv.right+2, 12.5, 40, 11);
+    self.agreeBtn.frame = CGRectMake(self.successLab.right-33, 8, 100, 18);
+//    self.agreeBtn.backgroundColor = [UIColor redColor];
 //    self.agreeLab.frame = CGRectMake(self.agreeBtn.right+2, 13.5, 33, 11);
     self.tagView = [[XZTagView alloc]initWithFrame:CGRectMake(self.name.left, self.name.bottom+17.5, SCREENWIDTH-self.name.left-20 , 16) tagHeight:16];
     [self.contentView addSubview:self.tagView];
-    
     self.introduce.frame = CGRectMake(self.tagView.left, self.tagView.bottom+15, self.tagView.width, 9);
 }
 #pragma mark action
 -(void)agree:(UIButton*)sender{
-    sender.selected = !sender.selected;
+    if (self.agreeBlock) {
+        self.agreeBlock(self.model);
+    }
+//    sender.selected = !sender.selected;
+    sender.selected = YES;
 }
 
+-(void)agreeMasterWithBlock:(AgreeMasterBlock)block{
+    self.agreeBlock = block;
+}
 #pragma mark refresh
 -(void)refreshMasterCellWithModel:(XZTheMasterModel *)model{
     if (model) {
+        self.model = model;
         [self.photo setImageWithURL:[NSURL URLWithString:model.icon] placeholder:[UIImage imageNamed:@""] ];
         self.name.text = model.name;
-        self.successLab.text = model.singleVolume;
+        [self.name sizeToFit];
+        self.level.frame = CGRectMake(self.name.right+30, 12.5, 19, 12);
+        self.successIv.frame = CGRectMake(self.level.right+20, 12.5, 12, 10);
+        self.successLab.text = [NSString stringWithFormat:@"%@单",model.singleVolume];
+        [self.successLab sizeToFit];
+        CGRect frame = self.successLab.frame;
+        frame.origin.x = self.successIv.right+2;
+        self.successLab.frame = frame;
         [self.agreeBtn setTitle:model.pointOfPraise forState:UIControlStateNormal];
-        [self.agreeBtn sizeToFit];
+        self.agreeBtn.frame = CGRectMake(self.successLab.right-16, 8, 100, 18);
+        
         self.tagView.tagsArray = model.type;
         [self.tagView setupTags];
     
        
          self.introduce.text = model.summary;
         [self.introduce sizeToFitWidth:self.tagView.width];
-        CGRect frame = self.introduce.frame;
-        frame.origin.y = self.tagView.bottom+15;
-        self.introduce.frame = frame;
+        CGRect frame1 = self.introduce.frame;
+        frame1.origin.y = self.tagView.bottom+15;
+        self.introduce.frame = frame1;
         
         self.height = self.introduce.bottom>self.photo.bottom?self.introduce.bottom+10:self.photo.bottom+10;
     }
@@ -158,6 +176,14 @@
     return _agreeBtn;
 }
 
+
+-(UIButton *)agreeBgBtn{
+    if (!_agreeBgBtn) {
+        _agreeBgBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_agreeBgBtn addTarget:self action:@selector(agree:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _agreeBgBtn;
+}
 //-(UILabel *)agreeLab{
 //    if (!_agreeLab) {
 //        _agreeLab = [[UILabel alloc]init];

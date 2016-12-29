@@ -17,7 +17,8 @@ static NSString * XZAddAddressService = @"/shop/address/add";
 -(void)modifyAddressWithUsercode:(NSString*)usercode recvName:(NSString*)recvName mobile:(NSString*)mobile prov:(NSString*)prov city:(NSString*)city county:(NSString*)county detail:(NSString*)detail isDef:(NSString*)isDef acode:(NSString*)acode view:(id)view{
     
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
-    [dic setObject:usercode forKey:@"usercode"];
+    NSString * userCodeStr = usercode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
     [dic setObject:recvName forKey:@"recvName"];
     [dic setObject:mobile forKey:@"mobile"];
     [dic setObject:prov forKey:@"prov"];
@@ -43,7 +44,8 @@ static NSString * XZAddAddressService = @"/shop/address/add";
 -(void)addAddressWithUsercode:(NSString*)usercode recvName:(NSString*)recvName mobile:(NSString*)mobile prov:(NSString*)prov city:(NSString*)city county:(NSString*)county detail:(NSString*)detail isDef:(NSString*)isDef  view:(id)view{
     
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
-    [dic setObject:usercode forKey:@"usercode"];
+    NSString * userCodeStr = usercode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
     [dic setObject:recvName forKey:@"recvName"];
     [dic setObject:mobile forKey:@"mobile"];
     [dic setObject:prov forKey:@"prov"];
@@ -95,7 +97,8 @@ static NSString * XZAddAddressService = @"/shop/address/add";
 -(void)deleteAddressWithAcode:(NSString*)acode usercode:(NSString*)usercode  view:(id)view{
     
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
-    [dic setObject:usercode forKey:@"usercode"];
+    NSString * userCodeStr = usercode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
     [dic setObject:acode forKey:@"acode"];
     
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];

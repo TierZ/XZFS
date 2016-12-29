@@ -125,7 +125,7 @@
     NSString * userCode = [userInfo objectForKey:@"bizCode"];
     XZFindService * evaluateService = [[XZFindService alloc]initWithServiceTag:XZEvaluateMaster];
     evaluateService.delegate = self;
-    [evaluateService evaluateMasterWithMasterCode:_masterCode userCode:userCode content:self.comment.text cityCode:@"110000" masterOrderCode:@"123123" star:(self.starCount1+self.starCount2) view:self.mainView];
+    [evaluateService evaluateMasterWithMasterCode:_masterCode userCode:userCode content:self.comment.text cityCode:@"110000" masterOrderCode:@"123123" serviceAttitude:(long)self.starCount1 professionalLevel:(long)self.starCount2  view:self.mainView];
 }
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
     NSLog(@"successhandle = %@",succeedHandle);

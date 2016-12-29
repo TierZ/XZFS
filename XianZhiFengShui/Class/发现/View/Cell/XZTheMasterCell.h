@@ -8,8 +8,14 @@
 
 // 大师cell
 
+
 #import "XZFindCell.h"
 #import "XZTheMasterModel.h"
+
+typedef void(^AgreeMasterBlock)(XZTheMasterModel * model);
+
 @interface XZTheMasterCell : XZFindCell
 -(void)refreshMasterCellWithModel:(XZTheMasterModel*)model;
+@property (nonatomic,copy)AgreeMasterBlock agreeBlock;
+-(void)agreeMasterWithBlock:(AgreeMasterBlock)block;
 @end

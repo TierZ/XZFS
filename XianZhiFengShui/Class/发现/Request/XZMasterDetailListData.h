@@ -12,8 +12,12 @@
 typedef NS_ENUM(NSUInteger, XZMasterDetailListTag) {//大师详情内
     XZMasterArticleDetail = 230,//大师文章详情
     XZMasterArticleList,//大师文章列表
+ 
 };
 
+/**
+ 大师相关
+ */
 @interface XZMasterDetailListData : BasicService
 
 /**

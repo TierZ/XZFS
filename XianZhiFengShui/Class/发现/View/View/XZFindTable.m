@@ -43,6 +43,10 @@ NSString * const FindThemeCellId = @"FindThemeCellId";
     
 }
 
+-(void)pointOfPraiseMasterWithBlock:(PointOfPraiseMasterBlock)block{
+    self.block = block;
+}
+
 #pragma mark tableDelegatef
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.data.count;
@@ -56,8 +60,13 @@ NSString * const FindThemeCellId = @"FindThemeCellId";
             if (!cell) {
                 cell = [[XZTheMasterCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 }
-          
             [cell refreshMasterCellWithModel:self.data [indexPath.row]];
+            __weak typeof(self)weakSelf = self;
+            [cell agreeMasterWithBlock:^(XZTheMasterModel *model) {
+                if (weakSelf.block) {
+                    weakSelf.block(model.masterCode);
+                }
+            }];
             return cell;
         }
             break;

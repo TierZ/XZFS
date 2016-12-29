@@ -10,6 +10,8 @@
 #import "XZFindService.h"
 #import "XZMasterDetailInfo.h"
 #import "XZLectureDetailMiddleBar.h"
+#import "XZLectureDetailData.h"
+#import "XZLoginVC.h"
 
 CGFloat maxContentLabelHeight = 150; // 讲座介绍 高度
 CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
@@ -57,7 +59,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     [self setupMasterInfo];
     [self setupBottomBtn];
     
-//    [self layoutView];
+    //    [self layoutView];
     [self requestLectureInfo];
     [self updateData];
     // Do any additional setup after loading the view.
@@ -72,7 +74,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     _mainScroll.backgroundColor = [UIColor whiteColor];
     [self.mainView addSubview:_mainScroll];
     
-   
+    
     
 }
 -(void)setupBaseView{
@@ -87,18 +89,18 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     self.headInfo = [[XZMasterDetailInfo alloc]init];
     self.headInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
     [_baseInfo addSubview:self.headInfo];
-
+    
     self.middleBar = [[XZLectureDetailMiddleBar alloc]initWithFrame:CGRectMake(0, 165, SCREENWIDTH, 35)];
     self.middleBar.backgroundColor = [UIColor yellowColor];
     [_baseInfo addSubview:self.middleBar];
-
+    
     _firstLine = [[UIView alloc]init];
     _firstLine.backgroundColor = XZFS_HEX_RGB(@"#F1EEEF");
     [_mainScroll addSubview:_firstLine];
 }
 
 -(void)setupLectureInfo{
-
+    
     
     _lectureTitle = [[UILabel alloc]init];
     _lectureTitle.backgroundColor = [UIColor clearColor];
@@ -117,22 +119,22 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     _lectureDetail.numberOfLines  =4;
     
     
-     _showAllBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _showAllBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_showAllBtn setTitle:@"显示全部" forState:UIControlStateNormal];
     [_showAllBtn setTitleColor:XZFS_HEX_RGB(@"#C2A865") forState:UIControlStateNormal];
     [_showAllBtn addTarget:self action:@selector(showAll:) forControlEvents:UIControlEventTouchUpInside];
     _showAllBtn.titleLabel.font = XZFS_S_FONT(12);
     
-//    [self.mainScroll addSubview:_lectureInfo];
+    //    [self.mainScroll addSubview:_lectureInfo];
     [self.mainScroll sd_addSubviews:@[ _lectureTitle,_smallInfo,_lectureDetail,_showAllBtn ]];
- 
+    
 }
 
 -(void)setupMasterInfo{
     
     _secondLine = [[UIView alloc]init];
     _secondLine.backgroundColor = XZFS_HEX_RGB(@"#F1EEEF");
- 
+    
     
     _masterInfo = [[UIView alloc]init];
     _masterInfo.backgroundColor = [UIColor whiteColor];
@@ -152,7 +154,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     _masterDetail.numberOfLines  =0;
     [self.mainScroll sd_addSubviews:@[ _secondLine, _masterTitle,_masterDetail ]];
     
-  }
+}
 
 -(void)setupBottomBtn{
     _collectLecture = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -160,18 +162,20 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     [_collectLecture setTitle:@"收藏讲座" forState:UIControlStateNormal];
     [_collectLecture setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _collectLecture.titleLabel.font = XZFS_S_FONT(19);
+    [_collectLecture addTarget:self action:@selector(collectLecture:) forControlEvents:UIControlEventTouchUpInside];
     
     _enrollBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _enrollBtn.backgroundColor = XZFS_HEX_RGB(@"#FD0F00");
     [_enrollBtn setTitle:@"报名" forState:UIControlStateNormal];
     [_enrollBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _enrollBtn.titleLabel.font = XZFS_S_FONT(19);
+    [_enrollBtn addTarget:self action:@selector(enrollLecture:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.mainView sd_addSubviews:@[ _collectLecture,_enrollBtn]];
-
+    
     _collectLecture.frame = CGRectMake(0, SCREENHEIGHT-45-XZFS_STATUS_BAR_H, SCREENWIDTH*0.6, 45);
     _enrollBtn.frame = CGRectMake(_collectLecture.right_sd, SCREENHEIGHT-45-XZFS_STATUS_BAR_H, SCREENWIDTH*0.4, 45);
-  }
+}
 
 -(void)layoutView{
     _mainScroll.sd_layout
@@ -198,20 +202,20 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     .topSpaceToView(_baseInfo,18)
     .heightIs(_headView.height-18*2);
     
-//    _middleBar.sd_layout
-//    .leftEqualToView(_baseInfo)
-//    .rightEqualToView(_baseInfo)
-//    .topSpaceToView(_baseInfo,165)
-//    .widthIs(SCREENWIDTH)
-//    .heightIs(35);
-
+    //    _middleBar.sd_layout
+    //    .leftEqualToView(_baseInfo)
+    //    .rightEqualToView(_baseInfo)
+    //    .topSpaceToView(_baseInfo,165)
+    //    .widthIs(SCREENWIDTH)
+    //    .heightIs(35);
+    
     _firstLine.sd_layout
     .leftEqualToView(self.mainScroll)
     .rightEqualToView(self.mainScroll)
     .widthIs(SCREENWIDTH)
     .heightIs(7)
     .topSpaceToView(_baseInfo,0);
-
+    
     // 讲座详情
     
     _lectureTitle.sd_layout
@@ -225,14 +229,14 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     .rightEqualToView(self.mainScroll)
     .topSpaceToView(_lectureTitle,14)
     .heightIs(14);
-//
+    //
     _lectureDetail.sd_layout
     .leftSpaceToView(self.mainScroll,20)
     .rightSpaceToView(self.mainScroll,20)
     .topSpaceToView(_smallInfo,14)
     .autoHeightRatio(0)
     .maxHeightIs(maxContentLabelHeight);
-//
+    //
     _showAllBtn.sd_layout
     .leftEqualToView(self.mainScroll)
     .rightEqualToView(self.mainScroll)
@@ -241,7 +245,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     
     
     //关于大师
-
+    
     _secondLine.sd_layout
     .leftEqualToView(self.mainScroll)
     .rightEqualToView(self.mainScroll)
@@ -260,17 +264,15 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     .rightSpaceToView(_mainScroll,20)
     .topSpaceToView(_masterTitle,14)
     .autoHeightRatio(0);
-        
+    
     [_mainScroll setupAutoContentSizeWithBottomView:_masterDetail bottomMargin:20];
     
-
-
-
-
 }
 
-#pragma mark update
-
+#pragma mark network
+/**
+ 讲座详情
+ */
 -(void)requestLectureInfo{
     NSDictionary * userInfoDic = GETUserdefault(@"userInfo");
     NSString * userCode = [userInfoDic objectForKey:@"bizCode"]?[userInfoDic objectForKey:@"bizCode"]:@"";
@@ -279,14 +281,56 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     [lectureInfoService lectureDetailWithMasterCode:self.model.lecturesCode UserCode:userCode cityCode:@"110000" view:self.mainScroll];
 }
 
+
+/**
+ 报名/取消报名
+ 
+ @param type 1 报名 ， 0 取消报名
+ */
+-(void)signUpLectureWithType:(NSString*)type{
+    NSDictionary * userInfoDic = GETUserdefault(@"userInfo");
+    NSString * userCode = [userInfoDic objectForKey:@"bizCode"]?[userInfoDic objectForKey:@"bizCode"]:@"";
+    XZLectureDetailData * signupService = [[XZLectureDetailData alloc]initWithServiceTag:XZLectureSignUp];
+    signupService.delegate = self;
+    [signupService signupLectureWithUsercode:userCode lectCode:self.model.lecturesCode type:type view:self.mainView];
+}
+
+
+/**
+ 收藏/取消收藏讲座
+ 
+ @param type 1：收藏  0 ：取消收藏
+ */
+-(void)collectLectureWithType:(NSString*)type{
+    NSDictionary * userInfoDic = GETUserdefault(@"userInfo");
+    NSString * userCode = [userInfoDic objectForKey:@"bizCode"]?[userInfoDic objectForKey:@"bizCode"]:@"";
+    XZLectureDetailData * collectService = [[XZLectureDetailData alloc]initWithServiceTag:XZLectureCollection];
+    collectService.delegate = self;
+    [collectService collectLectureWithUsercode:userCode lectCode:self.model.lecturesCode type:type view:self.mainView];
+}
+
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
-    NSLog(@"successhandl = %@",succeedHandle);
     if ([service isKindOfClass:[XZFindService class]]) {
-        XZFindService * lectureInfoService = (XZFindService*)service;
         NSDictionary * dic = (NSDictionary*)succeedHandle;
         [_headInfo refreshInfoWithDic:dic];
         [_headInfo updateLayout];
+    }else if ([service isKindOfClass:[XZLectureDetailData class]]){
+        XZLectureDetailData * lectureData = (XZLectureDetailData*)service;
+        switch (lectureData.serviceTag) {
+            case XZLectureSignUp:{
+                NSLog(@"successhandle1 = %@",succeedHandle);
+            }
+                break;
+            case XZLectureCollection:{
+                NSLog(@"successhandle2 = %@",succeedHandle);
+            }
+                break;
+                
+            default:
+                break;
+        }
     }
+    
 }
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
     NSLog(@"");
@@ -306,29 +350,66 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
 #pragma mark private
 -(void)textlengthWithText:(NSString * )text{
     CGFloat contentW = SCREENWIDTH - 40;
-
-        CGRect textRect = [text boundingRectWithSize:CGSizeMake(contentW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12]} context:nil];
-        if (textRect.size.height > maxContentLabelHeight) {
-            _showAllBtn.hidden = NO;
-            showAllBtnHeight = 12;
-        } else {
-             _showAllBtn.hidden = YES;
-            showAllBtnHeight = 0;
-        }
-
+    
+    CGRect textRect = [text boundingRectWithSize:CGSizeMake(contentW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12]} context:nil];
+    if (textRect.size.height > maxContentLabelHeight) {
+        _showAllBtn.hidden = NO;
+        showAllBtnHeight = 12;
+    } else {
+        _showAllBtn.hidden = YES;
+        showAllBtnHeight = 0;
+    }
+    
 }
 
 #pragma mark action
 -(void)showAll:(UIButton*)sender{
     sender.selected = !sender.selected;
     maxContentLabelHeight = sender.selected?1000:100;
-//    [_lectureInfo setupAutoHeightWithBottomView:_showAllBtn bottomMargin:showAllBtnHeight];
+    //    [_lectureInfo setupAutoHeightWithBottomView:_showAllBtn bottomMargin:showAllBtnHeight];
     
-//    [_mainScroll layoutSubviews];
+    //    [_mainScroll layoutSubviews];
     _lectureDetail.sd_layout.maxHeightIs(maxContentLabelHeight);
     [_lectureDetail updateLayout];
     [_mainScroll updateLayout];
-//    [self layoutView];
+    //    [self layoutView];
+}
+
+-(void)collectLecture:(UIButton*)sender{
+    
+    BOOL islogin = [self certifyUserLogIn];
+    if (islogin) {
+        sender.selected = !sender.selected;
+        NSString * type = sender.selected?@"1":@"0";
+        [self collectLectureWithType:type];
+    }
+}
+
+-(void)enrollLecture:(UIButton*)sender{
+    BOOL islogin =  [self certifyUserLogIn];
+    if (islogin) {
+        sender.selected = !sender.selected;
+        NSString * type = sender.selected?@"1":@"0";
+        [self signUpLectureWithType:type];
+    }
+    
+}
+
+#pragma mark private
+
+-(BOOL)certifyUserLogIn{
+    NSDictionary * userInfoDic = GETUserdefault(@"userInfo");
+    BOOL isLogin = [userInfoDic objectForKey:@"isLogin"];
+    if (!isLogin) {
+        [ToastManager showToastOnView:self.mainView position:CSToastPositionCenter flag:NO message:@"还未登录，请先登录"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];
+            nav.navigationBar.hidden = YES;
+            [self.navigationController presentViewController:nav animated:YES completion:nil];
+        });
+        return NO;
+    }else  return YES;
+    
 }
 
 
