@@ -13,6 +13,7 @@
 #import "XZTheMasterModel.h"
 #import "XZFindService.h"
 #import "AFHTTPSessionManager.h"
+#import "AFShareClass.h"
 
 @interface XZFindVC ()<UIScrollViewDelegate>
 @property (nonatomic,strong)NSArray * titleArray;
@@ -106,19 +107,6 @@
     XZFindService * themeService = [[XZFindService alloc]initWithServiceTag:XZThemeTypeList];
     themeService.delegate = self;
     [themeService themeTypeListWithCityCode:@"110000" view:self.mastView];
-    
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    [manager POST:@"http://api.xianzhifengshui.com/topic/typeList" parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"resonpsr = %@",responseObject);
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"error = %@",error);
-    }];
-
-    
 }
 
 

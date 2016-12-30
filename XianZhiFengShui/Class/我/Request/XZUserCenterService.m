@@ -37,16 +37,18 @@ static NSString * MyCollectionLectureService = @"/lectures/collection/list";
 }
 
 #pragma mark 我报名的讲座
--(void)mySignUpLectureWithUserCode:(NSString*)userCode view:(id)view{
+-(void)mySignUpLectureWithUserCode:(NSString*)userCode pageNum:(int)pageNum pageSize:(int)pageSize view:(id)view{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     NSString * userCodeStr = userCode?:@"";
     [dic setObject:userCodeStr forKey:@"userCode"];
+    [dic setObject:[NSNumber numberWithInt:pageNum] forKey:@"pageNum"];
+    [dic setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
     [self postRequestWithUrl:MySignUpLectureService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         NSLog(@"MySignUpLectureService-------%@",data)
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
-            [self.delegate netSucceedWithHandle:[data objectForKey:@"data"] dataService:self];
+            [self.delegate netSucceedWithHandle:[[data objectForKey:@"data"] objectForKey:@"list"]dataService:self];
         }
     } failBlock:^(NSError *error) {
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
@@ -56,16 +58,18 @@ static NSString * MyCollectionLectureService = @"/lectures/collection/list";
 }
 
 #pragma mark 我收藏的讲座
--(void)myCollectionLectureWithUserCode:(NSString*)userCode view:(id)view{
+-(void)myCollectionLectureWithUserCode:(NSString*)userCode pageNum:(int)pageNum pageSize:(int)pageSize view:(id)view{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     NSString * userCodeStr = userCode?:@"";
     [dic setObject:userCodeStr forKey:@"userCode"];
+    [dic setObject:[NSNumber numberWithInt:pageNum] forKey:@"pageNum"];
+    [dic setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
     [self postRequestWithUrl:MyCollectionLectureService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         NSLog(@"MyCollectionLectureService-------%@",data)
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
-            [self.delegate netSucceedWithHandle:[data objectForKey:@"data"] dataService:self];
+            [self.delegate netSucceedWithHandle:[[data objectForKey:@"data"] objectForKey:@"list"] dataService:self];
         }
     } failBlock:^(NSError *error) {
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {

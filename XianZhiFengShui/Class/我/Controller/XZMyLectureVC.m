@@ -9,6 +9,7 @@
 #import "XZMyLectureVC.h"
 #import "XZFindTable.h"
 #import "XZTheMasterModel.h"
+#import "XZUserCenterService.h"
 
 
 @interface XZMyLectureVC ()<UIScrollViewDelegate>
@@ -20,12 +21,17 @@
 @property (nonatomic,strong)XZFindTable * joinedLecture;//参加的
 @end
 
-@implementation XZMyLectureVC
+@implementation XZMyLectureVC{
+    NSString * _userCode;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSDictionary * dic = GETUserdefault(@"userInfo");
+    _userCode = [dic objectForKey:@"bizCode"]?:@"";
     [self drawMainSeg];
     [self drawMainScroll];
+    [self requestMySignUpLecture];
     [self showData];
     // Do any additional setup after loading the view.
 }
@@ -60,7 +66,7 @@
     [self.selectScroll addSubview:self.wantJoinLecture];
  
 }
-#pragma mark data
+//#pragma mark data
 -(void)showData{
     for (int i = 0; i<20; i++) {
         XZTheMasterModel * lecture = [[XZTheMasterModel alloc]init];
@@ -84,9 +90,9 @@
     }
     [self.wantJoinLecture.table reloadData];
     [self.joinedLecture.table reloadData];
-
-
 }
+
+
 
 #pragma mark action
 -(void)selectSegChanged:(UISegmentedControl*)seg{
@@ -99,10 +105,50 @@
     CGRect frame = self.lineView.frame;
     frame.origin.x = self.lineView.width*self.selectSeg.selectedSegmentIndex;
     self.lineView.frame = frame;
+    if (scrollView.contentOffset.x==0) {
+        if (self.joinedLecture.data.count<=0) {
+            [self requestMySignUpLecture];
+        }
+    }else if (scrollView.contentOffset.x==SCREENWIDTH){
+        if (self.wantJoinLecture.data.count<=0) {
+            [self requestMyCollectionLecture];
+        }
+
+    }
 }
 
+#pragma mark network
+-(void)requestMySignUpLecture{
+    
+    XZUserCenterService * mySignUpService = [[XZUserCenterService alloc]initWithServiceTag:XZMySignupLectureTag];
+    mySignUpService.delegate = self;
+    [mySignUpService mySignUpLectureWithUserCode:_userCode pageNum:self.joinedLecture.table.row pageSize:10 view:self.joinedLecture ];
+}
 
+-(void)requestMyCollectionLecture{
+    
+    XZUserCenterService * myCollectionService = [[XZUserCenterService alloc]initWithServiceTag:XZMyCollectionLectureTag];
+    myCollectionService.delegate = self;
+    [myCollectionService myCollectionLectureWithUserCode:_userCode pageNum:self.wantJoinLecture.table.row pageSize:10 view:self.wantJoinLecture ];
+}
 
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    XZUserCenterService * lectureService = (XZUserCenterService*)service;
+    switch (lectureService.serviceTag) {
+        case XZMySignupLectureTag:{
+            NSLog(@"参加的讲座%@",succeedHandle);
+        }
+            break;
+            
+        default:
+            break;
+    }
+    NSLog(@"netsculels = %@",succeedHandle);
+}
+
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+
+}
 #pragma mark getter
 
 -(NSArray *)selectArray{

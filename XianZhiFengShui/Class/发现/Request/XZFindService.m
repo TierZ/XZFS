@@ -146,7 +146,10 @@ static NSString * XZPointOfPraiseService = @"/master/pointOfPraise";
 -(void)lectureDetailWithMasterCode:(NSString*)masterCode UserCode:(NSString*)userCode cityCode:(NSString*)cityCode view:(id)view{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:cityCode forKey:@"cityCode"];
-    [dic setObject:masterCode forKey:@"lecturesCode"];
+    
+    NSString * masterCodeStr = masterCode?:@"";
+    [dic setObject:masterCodeStr forKey:@"lecturesCode"];
+    
     NSString * userCodeStr = userCode?:@"";
     [dic setObject:userCodeStr forKey:@"userCode"];
     
