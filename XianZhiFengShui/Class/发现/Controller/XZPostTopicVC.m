@@ -9,6 +9,8 @@
 #import "XZPostTopicVC.h"
 #import "XZTagView.h"
 #import "XZTextView.h"
+#import "XZThemeDetailData.h"
+#import "XZLoginVC.h"
 
 @interface XZPostTopicVC ()<LQPhotoPickerViewDelegate,UITextViewDelegate,UITextFieldDelegate>
 @property (nonatomic,strong)UIScrollView * mainScroll;
@@ -27,6 +29,8 @@
     UIView * tagV;
     
     float _textviewHeight;
+    NSMutableString * _typeCode;
+    NSString * _userCode;
 }
 
 - (void)viewDidLoad {
@@ -34,7 +38,7 @@
     self.view.backgroundColor = XZFS_HEX_RGB(@"#F1EEEF");
     self.titelLab.text = @"发帖";
     _textviewHeight = 31;
-    
+    _typeCode = [NSMutableString string];
     [self initPicker];
     [self setupTag];
     [self setupTitle];
@@ -260,15 +264,23 @@
 
 }
 
+
 #pragma mark action
 -(void)btnClick:(UIButton*)sender{
     sender.selected = !sender.selected;
     sender.layer.borderColor = sender.selected?XZFS_TEXTORANGECOLOR.CGColor:XZFS_HEX_RGB(@"#B5B6B6").CGColor;
     NSLog(@"选择的 标签--%ld",(long)sender.tag);
+
 }
 
 -(void)postTopic:(UIButton*)sender{
-    NSLog(@"发表");
+    if ([self checkLoginState]) {
+        if ([self checkInputData]) {
+            [self confirmTopic];
+             NSLog(@"发表");
+        }
+    }
+   
 }
 -(void)clickLeftButton{
     [self.navigationController popViewControllerAnimated:YES];
@@ -319,6 +331,65 @@
 }
 
 
+#pragma mark 网络
+-(void)confirmTopic{
+    XZThemeDetailData * confirmTopic = [[XZThemeDetailData alloc]initWithServiceTag:XZConfirmTopicTag];
+    confirmTopic.delegate = self;
+    NSArray * picArr = [self LQPhotoPicker_getBigImageDataArray];
+    [confirmTopic confirmTopicWithCityCode:@"110000" userCode:_userCode title:_titleField.text content:_contentTV.text typeCode:_typeCode picList:picArr view:self.view];
+  
+}
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    NSLog(@"succhandle = %@",succeedHandle);
+    NSDictionary *dic = (NSDictionary*)succeedHandle;
+    if ([[[dic objectForKey:@"data"]objectForKey:@"affect"]boolValue]==1) {
+        [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    }else{
+        [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
+    }
+}
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+    NSLog(@"failHandle = %@",failHandle)
+}
+#pragma mark private
+-(BOOL)checkLoginState{
+    NSDictionary * dic = GETUserdefault(@"userInfos");
+    BOOL isLogin = [[dic objectForKey:@"isLogin"]boolValue];
+    _userCode = [dic objectForKey:@"bizCode"];
+    if (!isLogin) {
+        [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:NO message:@"未登录，请先去登录"];
+        __weak typeof(self)weakself = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];
+            navi.navigationBar.hidden = YES;
+            [weakself.navigationController presentViewController:navi animated:YES completion:nil];
+        });
+    }
+    return isLogin;
+}
+
+-(BOOL)checkInputData{
+    for (UIButton*btn in tagV.subviews) {
+        if (btn.selected) {
+            [_typeCode appendString:btn.titleLabel.text];
+        }
+    }
+    if ([_typeCode isEqualToString:@""]) {
+        [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:NO message:@"话题类型不能为空"];
+        return NO;
+    }else if ([_titleField.text isEqualToString:@""]){
+         [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:NO message:@"标题不能为空"];
+        return NO;
+    }else if ([_contentTV.text isEqualToString:@""]){
+         [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:NO message:@"话题内容不能为空"];
+        return NO;
+    }
+    return YES;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

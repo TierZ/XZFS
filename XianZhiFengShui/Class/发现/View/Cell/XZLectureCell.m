@@ -64,7 +64,7 @@
 #pragma mark refresh
 -(void)refreshLectureCellWithModel:(XZTheMasterModel*)model{
     if (model) {
-        [self.photo setImageWithURL:[NSURL URLWithString:model.masterIcon] placeholder:[UIImage imageNamed:@""] ];
+        [self.photo setImageWithURL:[NSURL URLWithString:model.masterIcon] options:YYWebImageOptionProgressive ];
         
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.photo.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:self.photo.bounds.size];
         

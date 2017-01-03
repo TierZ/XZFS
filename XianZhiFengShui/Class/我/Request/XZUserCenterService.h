@@ -11,6 +11,7 @@ typedef NS_ENUM(NSUInteger, XZUserCenterServiceTag) {
     XZFeedBackTag = 400,
     XZMySignupLectureTag,//我报名的讲座列表
     XZMyCollectionLectureTag,//我收藏的讲座列表
+    XZHelpAndFeedbackListTag,//帮助反馈导航列表
 };
 #import "BasicService.h"
 
@@ -47,4 +48,12 @@ typedef NS_ENUM(NSUInteger, XZUserCenterServiceTag) {
  @param view     。。
  */
 -(void)myCollectionLectureWithUserCode:(NSString*)userCode pageNum:(int)pageNum pageSize:(int)pageSize view:(id)view;
+
+/**
+ 帮助与反馈导航界面
+
+ @param cityCode 城市代码
+ @param view     。。
+ */
+-(void)feedbackListWithCityCode:(NSString*)cityCode view:(id)view;
 @end

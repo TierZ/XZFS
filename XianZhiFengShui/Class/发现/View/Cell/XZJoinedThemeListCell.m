@@ -189,7 +189,7 @@
 
 -(void)setModel:(XZThemeListModel *)model{
     _model = model;
-    [_photoView setImageWithURL:[NSURL URLWithString:model.icon] placeholder:[UIImage imageNamed:@""]];
+    [_photoView setImageWithURL:[NSURL URLWithString:model.icon] options:YYWebImageOptionProgressive];
     _nameLable.text = model.issuer;
     _timeLabel.text = model.issueTime;
     

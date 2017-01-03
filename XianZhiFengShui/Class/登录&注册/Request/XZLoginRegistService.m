@@ -38,7 +38,7 @@ static NSString * XZResetPwdService = @"/user/resetPassword";
     
      [self postRequestWithUrl:XZLoginService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         if ([[data objectForKey:@"statusCode"]intValue]!=200) {
-             SETUserdefault([NSDictionary dictionary], @"userInfo");
+             SETUserdefault([NSDictionary dictionary], @"userInfos");
          }
         
         
@@ -64,7 +64,7 @@ static NSString * XZResetPwdService = @"/user/resetPassword";
     
     [self postRequestWithUrl:XZGetSecurityCodeService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         if ([[data objectForKey:@"statusCode"]intValue]!=200) {
-            SETUserdefault([NSDictionary dictionary], @"userInfo");
+            SETUserdefault([NSDictionary dictionary], @"userInfos");
         }
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
             [self.delegate netSucceedWithHandle:data dataService:self];
@@ -90,7 +90,7 @@ static NSString * XZResetPwdService = @"/user/resetPassword";
     
     [self postRequestWithUrl:XZRegistService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         if ([[data objectForKey:@"statusCode"]intValue]!=200) {
-            SETUserdefault([NSDictionary dictionary], @"userInfo");
+            SETUserdefault([NSDictionary dictionary], @"userInfos");
         }else{
             [ToastManager showToastOnView:view position:CSToastPositionCenter flag:YES message:@"注册成功"];
         }
@@ -120,7 +120,7 @@ static NSString * XZResetPwdService = @"/user/resetPassword";
     
     [self postRequestWithUrl:XZUpdatePwdService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         if ([[data objectForKey:@"statusCode"]intValue]!=200) {
-            SETUserdefault([NSDictionary dictionary], @"userInfo");
+            SETUserdefault([NSDictionary dictionary], @"userInfos");
         }else{
             [ToastManager showToastOnView:view position:CSToastPositionCenter flag:YES message:@"更新成功"];
         }
@@ -146,7 +146,7 @@ static NSString * XZResetPwdService = @"/user/resetPassword";
     
     [self postRequestWithUrl:XZResetPwdService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         if ([[data objectForKey:@"statusCode"]intValue]!=200) {
-            SETUserdefault([NSDictionary dictionary], @"userInfo");
+            SETUserdefault([NSDictionary dictionary], @"userInfos");
         }else{
             [ToastManager showToastOnView:view position:CSToastPositionCenter flag:YES message:@"重置成功"];
         }

@@ -10,7 +10,6 @@
 
 static NSString * XZSignUpLecture = @"/lectures/signUp/sign";
 static NSString * XZCollectLecture = @"/lectures/collection/collect";
-
 @implementation XZLectureDetailData
 #pragma mark 报名/取消报名 讲座
 -(void)signupLectureWithUsercode:(NSString*)usercode lectCode:(NSString*)lectCode type:(NSString*)type view:(id)view{

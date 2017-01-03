@@ -108,7 +108,7 @@
 
 #pragma mark 网络
 -(void)requestMasterInfo{
-    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSDictionary * dic = GETUserdefault(@"userInfos");
     NSString * userCode = [dic objectForKey:@"bizCode"]?:@"";
     XZFindService * masterInfo = [[XZFindService alloc]initWithServiceTag:XZMasterDetail];
     masterInfo.delegate = self;
@@ -118,7 +118,7 @@
 
 
 -(void)collectionMasterWithType:(NSInteger)type{
-    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSDictionary * dic = GETUserdefault(@"userInfos");
     NSString * userCode = [dic objectForKey:@"bizCode"];
     XZFindService * collectMasterService = [[XZFindService alloc]initWithServiceTag:XZCollectionMaster];
     collectMasterService.delegate = self;
@@ -126,7 +126,7 @@
 }
 
 -(void)pointOfPraiseMaster{
-    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSDictionary * dic = GETUserdefault(@"userInfos");
     NSString * userCode = [dic objectForKey:@"bizCode"];
     XZFindService * pointOfPraiseService = [[XZFindService alloc]initWithServiceTag:XZPointOfPraiseMaster];
     pointOfPraiseService.delegate = self;

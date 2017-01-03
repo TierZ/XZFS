@@ -274,7 +274,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
  讲座详情
  */
 -(void)requestLectureInfo{
-    NSDictionary * userInfoDic = GETUserdefault(@"userInfo");
+    NSDictionary * userInfoDic = GETUserdefault(@"userInfos");
     NSString * userCode = [userInfoDic objectForKey:@"bizCode"]?[userInfoDic objectForKey:@"bizCode"]:@"";
     XZFindService * lectureInfoService = [[XZFindService alloc]initWithServiceTag:XZLectureDetail];
     lectureInfoService.delegate = self;
@@ -288,7 +288,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
  @param type 1 报名 ， 0 取消报名
  */
 -(void)signUpLectureWithType:(NSString*)type{
-    NSDictionary * userInfoDic = GETUserdefault(@"userInfo");
+    NSDictionary * userInfoDic = GETUserdefault(@"userInfos");
     NSString * userCode = [userInfoDic objectForKey:@"bizCode"]?[userInfoDic objectForKey:@"bizCode"]:@"";
     XZLectureDetailData * signupService = [[XZLectureDetailData alloc]initWithServiceTag:XZLectureSignUp];
     signupService.delegate = self;
@@ -302,7 +302,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
  @param type 1：收藏  0 ：取消收藏
  */
 -(void)collectLectureWithType:(NSString*)type{
-    NSDictionary * userInfoDic = GETUserdefault(@"userInfo");
+    NSDictionary * userInfoDic = GETUserdefault(@"userInfos");
     NSString * userCode = [userInfoDic objectForKey:@"bizCode"]?[userInfoDic objectForKey:@"bizCode"]:@"";
     XZLectureDetailData * collectService = [[XZLectureDetailData alloc]initWithServiceTag:XZLectureCollection];
     collectService.delegate = self;
@@ -398,7 +398,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
 #pragma mark private
 
 -(BOOL)certifyUserLogIn{
-    NSDictionary * userInfoDic = GETUserdefault(@"userInfo");
+    NSDictionary * userInfoDic = GETUserdefault(@"userInfos");
     BOOL isLogin = [userInfoDic objectForKey:@"isLogin"];
     if (!isLogin) {
         [ToastManager showToastOnView:self.mainView position:CSToastPositionCenter flag:NO message:@"还未登录，请先登录"];

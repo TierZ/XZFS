@@ -71,7 +71,7 @@
 
 -(void)setModel:(XZTheMasterModel *)model{
     _model = model;
-    [self.photo setImageWithURL:[NSURL URLWithString:model.icon] placeholder:[UIImage imageNamed:@""] ];
+    [self.photo setImageWithURL:[NSURL URLWithString:model.icon] options:YYWebImageOptionProgressive ];
     self.name.text = model.name;
     self.levelLab.text = model.level;
     self.service.text = model.service;

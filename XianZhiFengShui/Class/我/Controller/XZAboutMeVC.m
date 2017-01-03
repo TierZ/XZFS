@@ -65,7 +65,9 @@
     
      tableHead = [[XZAboutMeHeadView alloc]initWithFrame:CGRectMake(0, 0, self.mySelfTable.width, 185)];
     tableHead.backgroundColor = XZFS_HEX_RGB(@"#FE5100");
-    BOOL isLogin = arc4random()%2;
+    NSDictionary * dic = GETUserdefault(@"userInfos");
+    
+    BOOL isLogin = [[dic objectForKey:@"isLogin"]boolValue];
     [tableHead refreshInfoWithLogin:isLogin];
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.mySelfTable.width, 185)];
     view.backgroundColor = [UIColor clearColor];

@@ -200,7 +200,7 @@
     [userInfo setObject:[userDic objectForKey:@"username"] forKey:@"username"];
     [userInfo setObject:@YES forKey:@"isLogin"];
     
-    SETUserdefault(userInfo, @"userInfo");
+    SETUserdefault(userInfo, @"userInfos");
     
     [JMSGUser loginWithUsername:self.userNoTf.text password:self.userPwdTf.text completionHandler:^(id resultObject, NSError *error) {
         if (error) {

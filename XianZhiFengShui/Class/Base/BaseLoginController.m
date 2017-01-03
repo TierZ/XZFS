@@ -20,7 +20,7 @@
 {
     self = [super init];
     if (self) {
-        NSDictionary * userDic =GETUserdefault(@"userInfo");
+        NSDictionary * userDic =GETUserdefault(@"userInfos");
         self.isUserLogin = [KISDictionaryHaveKey(userDic, @"isLogin")boolValue];
         self.hidesBottomBarWhenPushed = YES;
     }

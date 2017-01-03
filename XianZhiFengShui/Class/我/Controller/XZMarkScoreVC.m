@@ -121,7 +121,7 @@
 
 #pragma mark 网络
 -(void)evaluateMaster{
-    NSDictionary * userInfo = GETUserdefault(@"userInfo");
+    NSDictionary * userInfo = GETUserdefault(@"userInfos");
     NSString * userCode = [userInfo objectForKey:@"bizCode"];
     XZFindService * evaluateService = [[XZFindService alloc]initWithServiceTag:XZEvaluateMaster];
     evaluateService.delegate = self;

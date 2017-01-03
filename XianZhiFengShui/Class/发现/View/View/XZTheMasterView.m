@@ -132,7 +132,7 @@
  @param masterCode 。。
  */
 -(void)pointOfPraiseMasterWithMasterCode:(NSString*)masterCode{
-    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSDictionary * dic = GETUserdefault(@"userInfos");
     NSString * userCode = [dic objectForKey:@"bizCode"];
     XZFindService * pointOfPraiseService = [[XZFindService alloc]initWithServiceTag:XZPointOfPraiseMaster];
     pointOfPraiseService.delegate = self;

@@ -165,7 +165,7 @@ static NSString * infoCellId = @"infoCellId";
             [self.areaPick selectRow:cityIndex inComponent:1 animated:YES];
             [self.areaPick selectRow:areaIndex inComponent:2 animated:YES];
         }else if (indexPath.row==3){
-              XZAddAddressCell * cell = [self.infoTable cellForRowAtIndexPath:indexPath];
+            XZAddAddressCell * cell = [self.infoTable cellForRowAtIndexPath:indexPath];
             self.selectCell = cell;
             self.townPick = [ActionSheet_UIPickerView styleDefault];
             self.townPick.delegate = self;

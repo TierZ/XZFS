@@ -65,7 +65,7 @@
 -(void)setModel:(XZMasterInfoEvaluateModel *)model{
     _model = model;
     
-    [self.evaluateAvatar setImageWithURL:[NSURL URLWithString:model.evaluateAvatar] placeholder:[UIImage imageNamed:@""]];
+    [self.evaluateAvatar setImageWithURL:[NSURL URLWithString:model.evaluateAvatar] options:YYWebImageOptionProgressive];
     
     self.evaluateName.text = model.evaluateName;
     self.evaluateTime.text = [Tool timeWithTimestamp:model.createTime dateFormat:@"yyyy-MM-dd"];

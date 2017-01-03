@@ -8,21 +8,40 @@
 
 #import "XZEditInfoVC.h"
 #import <AVFoundation/AVFoundation.h>
-
-@interface XZEditInfoVC ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#import "ActionSheet_UIPickerView.h"
+@interface XZEditInfoVC ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ActionSheet_UIPickerViewDelegate>
 @property (nonatomic,strong)UITableView * editTable;
 @property (nonatomic,strong)NSArray * editItems;
 @property (nonatomic,strong)NSArray * pickerArr;
-
+@property (nonatomic,strong)ActionSheet_UIPickerView * sexPicker;
+@property (nonatomic,strong)NSIndexPath * selectIndex;
 @end
 
-@implementation XZEditInfoVC
+@implementation XZEditInfoVC{
+    NSString * _sexStr;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.editTable.frame = CGRectMake(0, 7, SCREENWIDTH, SCREENHEIGHT-XZFS_STATUS_BAR_H-7);
     [self.mainView addSubview:self.editTable];
+    UIView * footV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 85)];
+    footV.backgroundColor = self.mainView.backgroundColor;
+    
+    UIButton * footBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    footBtn.backgroundColor = XZFS_TEXTORANGECOLOR;
+    [footBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [footBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    footBtn.titleLabel.font = XZFS_S_FONT(19);
+    footBtn.frame = CGRectMake(20, 40, footV.width-40, 45);
+    [footBtn addTarget:self action:@selector(saveInfo) forControlEvents:UIControlEventTouchUpInside];
+    footBtn.layer.masksToBounds = YES;
+    footBtn.layer.cornerRadius = 5;
+    [footV addSubview:footBtn];
+    self.editTable.tableFooterView = footV;
+
+    
     
 }
 
@@ -38,7 +57,7 @@
     cell.textLabel.textColor = XZFS_TEXTLIGHTGRAYCOLOR;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row==0) {
-        UIImageView * iv = [[UIImageView alloc]initWithFrame:CGRectMake(cell.width-50, 2, 40, 40)];
+        UIImageView * iv = [[UIImageView alloc]initWithFrame:CGRectMake(SCREENWIDTH-50, 2, 40, 40)];
         iv.backgroundColor = [UIColor redColor];
         iv.layer.masksToBounds = YES;
         iv.layer.cornerRadius = 20;
@@ -48,8 +67,9 @@
         tf.textColor = XZFS_TEXTBLACKCOLOR;
         tf.font = XZFS_S_FONT(14);
         [cell.contentView addSubview:tf];
-        if (indexPath.row==3||indexPath.row==5) {
+        if (indexPath.row==3) {
             tf.userInteractionEnabled = NO;
+            tf.text = _sexStr;
         }
     }
     
@@ -60,14 +80,11 @@
     return 44;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    CGRect rectInTableView = [tableView rectForRowAtIndexPath:indexPath];
+    self.selectIndex = indexPath;
     if (indexPath.row==3){
-        UIPickerView * picker = [self setupPickviewWithArray:@[ @"女",@"男",@"保密" ] rect:rectInTableView];
-    
-        [self.mainView addSubview:picker];
-    }else if (indexPath.row==5){
-        UIPickerView * picker = [self setupPickviewWithArray:@[ @"北京",@"天津",@"上海",@"重庆"] rect:rectInTableView];
-        [self.mainView addSubview:picker];
+        self.sexPicker = [ActionSheet_UIPickerView styleDefault];
+        self.sexPicker.delegate = self;
+        [self.sexPicker show:self];
     }else if (indexPath.row==0){
         UIActionSheet* actionSheet = [[UIActionSheet alloc]
                                       initWithTitle:@"修改头像"
@@ -83,50 +100,29 @@
     }
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 100;
-}
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    UIView * footV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 100)];
-    footV.backgroundColor = self.mainView.backgroundColor;
-    
-    UIButton * footBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    footBtn.backgroundColor = XZFS_TEXTORANGECOLOR;
-    [footBtn setTitle:@"保存" forState:UIControlStateNormal];
-    [footBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    footBtn.titleLabel.font = XZFS_S_FONT(19);
-    footBtn.frame = CGRectMake(20, 40, footV.width-40, 45);
-    [footBtn addTarget:self action:@selector(saveInfo) forControlEvents:UIControlEventTouchUpInside];
-    footBtn.layer.masksToBounds = YES;
-    footBtn.layer.cornerRadius = 5;
-    [footV addSubview:footBtn];
-    
-    return footV;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+//    return 85;
+//}
+//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+//    UIView * footV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 85)];
+//    footV.backgroundColor = self.mainView.backgroundColor;
+//    
+//    UIButton * footBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    footBtn.backgroundColor = XZFS_TEXTORANGECOLOR;
+//    [footBtn setTitle:@"保存" forState:UIControlStateNormal];
+//    [footBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    footBtn.titleLabel.font = XZFS_S_FONT(19);
+//    footBtn.frame = CGRectMake(20, 40, footV.width-40, 45);
+//    [footBtn addTarget:self action:@selector(saveInfo) forControlEvents:UIControlEventTouchUpInside];
+//    footBtn.layer.masksToBounds = YES;
+//    footBtn.layer.cornerRadius = 5;
+//    [footV addSubview:footBtn];
+//    
+//    return footV;
+//}
 
-#pragma mark picker 代理
 
-//指定pickerview有几个表盘
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    return 1;
-}
 
-//指定每个表盘上有几行数据
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return self.pickerArr.count;
-}
-
-//指定每行如何展示数据（此处和tableview类似）
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    return self.pickerArr[row];
-}
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    return 20;
-}
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    
-}
 #pragma mark actionSheet delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -166,6 +162,49 @@
             break;
     }
 }
+
+#pragma mark pickviewDelegate
+- (void)actionCancleWithPick:(UIPickerView *)pick{
+    [self.sexPicker dismiss:self];
+}
+
+- (void)actionDoneWithPick:(UIPickerView *)pick {
+    [self.editTable reloadRow:3 inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+    [self.sexPicker dismiss:self];
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.pickerArr.count;
+ }
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+        return [self.pickerArr objectAtIndex:row];
+  }
+//
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    _sexStr = self.pickerArr[row];
+  
+    
+}
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+    UILabel* pickerLabel = (UILabel*)view;
+    if (!pickerLabel){
+        pickerLabel = [[UILabel alloc] init];
+        pickerLabel.textColor = XZFS_HEX_RGB(@"#333333");
+        pickerLabel.textAlignment = NSTextAlignmentCenter ;
+        [pickerLabel setBackgroundColor:[UIColor clearColor]];
+        [pickerLabel setFont:XZFS_S_FONT(18)];
+    }
+    // Fill the label text here
+    pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
+    return pickerLabel;
+}
+
+
 
 #pragma mark imagePicker delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo {
@@ -258,7 +297,12 @@
     }
     return _editItems;
 }
-
+-(NSArray *)pickerArr{
+    if (!_pickerArr) {
+        _pickerArr = [NSArray arrayWithObjects:@"男",@"女",@"保密" ,nil];
+    }
+    return _pickerArr;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

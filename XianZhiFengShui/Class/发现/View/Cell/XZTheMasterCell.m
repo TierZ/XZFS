@@ -78,7 +78,7 @@
 -(void)refreshMasterCellWithModel:(XZTheMasterModel *)model{
     if (model) {
         self.model = model;
-        [self.photo setImageWithURL:[NSURL URLWithString:model.icon] placeholder:[UIImage imageNamed:@""] ];
+        [self.photo setImageWithURL:[NSURL URLWithString:model.icon] options:YYWebImageOptionProgressive];
         self.name.text = model.name;
         [self.name sizeToFit];
         self.level.frame = CGRectMake(self.name.right+30, 12.5, 19, 12);

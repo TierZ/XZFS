@@ -44,7 +44,7 @@
             });
             [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
         }else{
-            SETUserdefault(@{}, @"userInfo");
+            SETUserdefault(@{}, @"userInfos");
             [self.navigationController popViewControllerAnimated:YES];
         }
     }];
@@ -69,7 +69,7 @@
     line.backgroundColor = XZFS_HEX_RGB(@"#F2F3F3");
     [cell addSubview:line];
 
-    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSDictionary * dic = GETUserdefault(@"userInfos");
     cell.detailTextLabel.text = [dic objectForKey:@"mobilePhone"];
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.textLabel.text = [self.setArray[indexPath.row]objectForKey:@"title"];

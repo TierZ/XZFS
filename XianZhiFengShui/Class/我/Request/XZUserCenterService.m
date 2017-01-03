@@ -9,7 +9,7 @@
 static NSString * feedbackService = @"/feedback/feedback";
 static NSString * MySignUpLectureService = @"/lectures/signUp/list";
 static NSString * MyCollectionLectureService = @"/lectures/collection/list";
-
+static NSString * HelpAndFeedbackListService = @"/helpAndFeedback/list";
 
 #import "XZUserCenterService.h"
 
@@ -70,6 +70,24 @@ static NSString * MyCollectionLectureService = @"/lectures/collection/list";
         NSLog(@"MyCollectionLectureService-------%@",data)
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
             [self.delegate netSucceedWithHandle:[[data objectForKey:@"data"] objectForKey:@"list"] dataService:self];
+        }
+    } failBlock:^(NSError *error) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+}
+
+#pragma mark 帮助与反馈导航列表
+-(void)feedbackListWithCityCode:(NSString*)cityCode view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dic setObject:cityCode forKey:@"cityCode"];
+    
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:HelpAndFeedbackListService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+            [self.delegate netSucceedWithHandle:[data objectForKey:@"data"] dataService:self];
         }
     } failBlock:^(NSError *error) {
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {

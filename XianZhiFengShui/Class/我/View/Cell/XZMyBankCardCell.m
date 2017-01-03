@@ -65,7 +65,7 @@
 
 -(void)setModel:(XZBankCardModel *)model{
     _model = model;
-    [_bankImage setImageWithURL:[NSURL URLWithString:model.bankCardUrl] placeholder:[UIImage imageNamed:@""]];
+    [_bankImage setImageWithURL:[NSURL URLWithString:model.bankCardUrl] options:YYWebImageOptionProgressive];
     _cardName.text = model.cardName;
     _cardNum.text = model.cardNum;
 }

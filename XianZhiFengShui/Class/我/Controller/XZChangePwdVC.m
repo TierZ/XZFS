@@ -90,7 +90,7 @@
 -(void)updatePwd{
     XZLoginRegistService * updatePwdService = [[XZLoginRegistService alloc]init];
     updatePwdService.delegate = self;
-    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSDictionary * dic = GETUserdefault(@"userInfos");
     [updatePwdService updatePwdWithMobilePhone:[dic objectForKey:@"mobilePhone"] oldPwd:self.beforePwd.text newPwd:self.nowPwd.text cityCode:@"110000" view:self.view];
 }
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{

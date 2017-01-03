@@ -140,7 +140,7 @@
 
 #pragma mark 网络
 -(void)feedbackService{
-    NSDictionary * userInfo = GETUserdefault(@"userInfo");
+    NSDictionary * userInfo = GETUserdefault(@"userInfos");
     NSString * userCode = [userInfo objectForKey:@"bizCode"];
 
     XZUserCenterService * feedbackService = [[XZUserCenterService alloc]initWithServiceTag:XZFeedBackTag];

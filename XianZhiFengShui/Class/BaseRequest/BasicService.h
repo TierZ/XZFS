@@ -50,10 +50,55 @@
 
  */
 - (void)postRequestWithUrl:(NSString *)url parmater:(NSDictionary *)requestData view:(UIView*)currentView isOpenHUD:(BOOL)isOpenHUD Block:(void (^)(NSDictionary *data))block failBlock:(void (^)(NSError *error))errorBlock;
+
+
+
 /**
- *  得到 auth_key 和 seq 的值 字典形式
- *
- *  add by lf
+ 上传单文件
+ 
+ @param url         url
+ @param requestData 参数
+ @param fileName    文件名
+ @param fileData    文件数据流
+ @param currentView 当前view
+ @param isOpenHUD   显示hud
+ @param block       成功
+ @param errorBlock  失败
+ */
+- (void)postAddFileWithUrl:(NSString *)url parmater:(NSDictionary *)requestData fileName:(NSString *)fileName fileData:(NSData *)fileData view:(UIView*)currentView isOpenHUD:(BOOL)isOpenHUD  Block:(void (^)(NSDictionary *data))block failBlock:(void (^)(NSError *error))errorBlock;
+
+/**
+ 请求网络获上传文件 多文件上传, 文件名称相同使用该方法  <POST>
+ 
+ @param URLString   url
+ @param parameters  参数
+ @param fileName    文件名
+ @param fileDatas   文件数组
+ @param currentView 。。
+ @param isOpenHUD   显示
+ @param block       成功
+ @param errorBlock  失败
+ */
+- (void)postAddFiles:(NSString *)URLString parameters:(NSDictionary *)parameters fileName:(NSString *)fileName fileDatas:(NSArray *)fileDatas  view:(UIView*)currentView isOpenHUD:(BOOL)isOpenHUD  Block:(void (^)(NSDictionary *data))block failBlock:(void (^)(NSError *error))errorBlock;
+
+/**
+ 请求网络获上传文件 多文件上传, 文件名称不相同使用该方法  <POST>
+ 
+ @param URLString   url
+ @param parameters  参数
+ @param fileNames   文件名数组
+ @param fileDatas   文件数组
+ @param currentView view
+ @param isOpenHUD   是否显示
+ @param block       成功
+ @param errorBlock  失败
+ */
+- (void)postAddWithFiles:(NSString *)URLString parameters:(NSDictionary *)parameters fileNames:(NSArray *)fileNames fileDatas:(NSArray *)fileDatas view:(UIView*)currentView isOpenHUD:(BOOL)isOpenHUD  Block:(void (^)(NSDictionary *data))block failBlock:(void (^)(NSError *error))errorBlock;
+
+/**
+ 拼接公共参数
+
+ @return 字典
  */
 -(NSMutableDictionary*)getCommonDictionary;
 

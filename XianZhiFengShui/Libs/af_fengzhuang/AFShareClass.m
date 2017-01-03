@@ -17,9 +17,9 @@ static NSString * const AFBaseURLString = XZBASEURL;
 //        _sharedClient = [AFShareClass manager];
         _sharedClient.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
   
-        AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
-        [serializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [serializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+//        AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
+//        [serializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//        [serializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         _sharedClient.requestSerializer = [AFHTTPRequestSerializer serializer];
         _sharedClient.responseSerializer = [AFHTTPResponseSerializer serializer];
         _sharedClient.requestSerializer.timeoutInterval = 30.0f;

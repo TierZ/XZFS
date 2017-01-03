@@ -27,7 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSDictionary * dic = GETUserdefault(@"userInfos");
     _userCode = [dic objectForKey:@"bizCode"]?:@"";
     [self drawMainSeg];
     [self drawMainScroll];
@@ -84,8 +84,8 @@
         lecture.startTime = @"9月18日  9:00";
         lecture.remainSeats = @"余10席";
         
-        [self.wantJoinLecture.data addObject:lecture];
-        [self.joinedLecture.data addObject:lecture];
+//        [self.wantJoinLecture.data addObject:lecture];
+//        [self.joinedLecture.data addObject:lecture];
 
     }
     [self.wantJoinLecture.table reloadData];
@@ -137,6 +137,10 @@
     switch (lectureService.serviceTag) {
         case XZMySignupLectureTag:{
             NSLog(@"参加的讲座%@",succeedHandle);
+        }
+            break;
+        case XZMyCollectionLectureTag:{
+            NSLog(@"收藏的讲座%@",succeedHandle);
         }
             break;
             

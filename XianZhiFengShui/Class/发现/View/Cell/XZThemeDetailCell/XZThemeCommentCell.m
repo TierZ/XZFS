@@ -75,7 +75,7 @@
 
 -(void)setModel:(XZThemeCommentModel *)model{
     _model = model;
-    [_avatar setImageWithURL:[NSURL URLWithString:model.avatar] placeholder:[UIImage imageNamed:@""]];
+    [_avatar setImageWithURL:[NSURL URLWithString:model.avatar] options:YYWebImageOptionProgressive];
     _name.text = model.commenter;
     _time.text = model.time;
     _content.text = model.content;

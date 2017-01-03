@@ -87,7 +87,7 @@
 -(void)setModel:(XZMyEvaluateModel *)model{
     _model = model;
     
-    [_photo setImageWithURL:[NSURL URLWithString:model.photo] placeholder:[UIImage imageNamed:@""]];
+    [_photo setImageWithURL:[NSURL URLWithString:model.photo] options:YYWebImageOptionProgressive];
     _name.text = model.name;
     _time.text = model.time;
     _service.text = model.service;

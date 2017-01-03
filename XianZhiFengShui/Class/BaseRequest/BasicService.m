@@ -47,8 +47,8 @@ static BasicService * shareService;
 -(NSMutableDictionary*)getCommonDictionary{
 
     NSMutableDictionary *mDict = [NSMutableDictionary dictionaryWithCapacity:0];
-    [mDict setObject:@"110000" forKey:@"cityCode"];
-    [mDict setObject:@"android" forKey:@"deviceType"];
+//    [mDict setObject:@"110000" forKey:@"cityCode"];
+    [mDict setObject:@"ios" forKey:@"deviceType"];
 //    UIDevice *device = [UIDevice currentDevice];
 //    NSString *deviceName = [device model];
     //以下注释是获取UUID的方法
@@ -209,6 +209,202 @@ static BasicService * shareService;
     }
 }
 
+
+
+#pragma mark 上传单文件
+
+- (void)postAddFileWithUrl:(NSString *)url parmater:(NSDictionary *)requestData fileName:(NSString *)fileName fileData:(NSData *)fileData view:(UIView*)currentView isOpenHUD:(BOOL)isOpenHUD  Block:(void (^)(NSDictionary *data))block failBlock:(void (^)(NSError *error))errorBlock{
+    NSMutableDictionary *mDict = [self getCommonDictionary];
+    [mDict addEntriesFromDictionary:requestData];  //在通用数据后附加本次请求的数据
+    if ([self isNetWorkConnectionAvailable]) {
+        AFShareClass * afShare = [AFShareClass sharedClient];
+        if (isOpenHUD) {
+            [BasicService startActivityWithView:currentView];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        }
+        [afShare POST:url parameters:mDict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            [formData appendPartWithFileData:fileData name:fileName fileName:@"picture.png" mimeType:@"image/png"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSDictionary * resultDic = [self dataDecryptionWithDic:dic];
+            BOOL isSuccess =  [self showFailInfoWithDic:resultDic view:currentView];
+            if (isSuccess) {
+                block(resultDic);
+            }else{
+                NSError *error;
+                errorBlock(error);
+            }
+            if (isOpenHUD == YES) {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [BasicService stopActivityWithView:currentView];
+                //                currentView.hidden = YES;
+            }
+            [BasicService stopActivityWithView:currentView];
+
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            errorBlock(error);
+            if (isOpenHUD == YES) {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [BasicService stopActivityWithView:currentView];
+                //                currentView.hidden = YES;
+            }
+            NSLog(@"error 内容 = %@",error);
+            [BasicService stopActivityWithView:currentView];
+            UIViewController * vc = (UIViewController*)[self getCurrentVC];
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:[error.userInfo objectForKey:@"NSLocalizedDescription" ] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction * action) {}];
+            [alert addAction:defaultAction];
+            [vc presentViewController:alert animated:true completion:^{
+                
+            }];
+        }];
+    } else {
+        NSLog(@"BasicService POS 判断无网络 [%@]", url);
+        if (_isShowNetErrToast) {
+            CGPoint pt = CGPointMake(SCREENWIDTH/2, SCREENHEIGHT/2);
+            NSValue *nspt = [NSValue valueWithCGPoint:pt];
+            //        [currentView makeToast:ToastMSG_NetworkErr duration:3.0f position:nspt];
+            [ToastManager showToastOnView:currentView position:nspt flag:NO message:ToastMSG_NetworkErr];
+        }
+        errorBlock(nil);
+    }
+}
+
+#pragma mark 上传文件名相同的多文件
+
+- (void)postAddFiles:(NSString *)URLString parameters:(NSDictionary *)parameters fileName:(NSString *)fileName fileDatas:(NSArray *)fileDatas  view:(UIView*)currentView isOpenHUD:(BOOL)isOpenHUD  Block:(void (^)(NSDictionary *data))block failBlock:(void (^)(NSError *error))errorBlock{
+    NSMutableDictionary *mDict = [self getCommonDictionary];
+    [mDict addEntriesFromDictionary:parameters];  //在通用数据后附加本次请求的数据
+    if ([self isNetWorkConnectionAvailable]) {
+        AFShareClass * afShare = [AFShareClass sharedClient];
+        if (isOpenHUD) {
+            [BasicService startActivityWithView:currentView];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        }
+        [afShare POST:URLString parameters:mDict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            for (int i=0; i<fileDatas.count; i++) {
+                NSString *imageName = [NSString stringWithFormat:@"%@[%i]", fileName, i];
+                [formData appendPartWithFileData:fileDatas[i] name:imageName fileName:imageName mimeType:@"image/png"];
+            }
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSDictionary * resultDic = [self dataDecryptionWithDic:dic];
+            BOOL isSuccess =  [self showFailInfoWithDic:resultDic view:currentView];
+            if (isSuccess) {
+                block(resultDic);
+            }else{
+                NSError *error;
+                errorBlock(error);
+            }
+            if (isOpenHUD == YES) {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [BasicService stopActivityWithView:currentView];
+                //                currentView.hidden = YES;
+            }
+            [BasicService stopActivityWithView:currentView];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            errorBlock(error);
+            if (isOpenHUD == YES) {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [BasicService stopActivityWithView:currentView];
+                //                currentView.hidden = YES;
+            }
+            NSLog(@"error 内容 = %@",error);
+            [BasicService stopActivityWithView:currentView];
+            UIViewController * vc = (UIViewController*)[self getCurrentVC];
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:[error.userInfo objectForKey:@"NSLocalizedDescription" ] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction * action) {}];
+            [alert addAction:defaultAction];
+            [vc presentViewController:alert animated:true completion:^{
+                
+            }];
+        }];
+    } else {
+        NSLog(@"BasicService POS 判断无网络 [%@]",URLString );
+        if (_isShowNetErrToast) {
+            CGPoint pt = CGPointMake(SCREENWIDTH/2, SCREENHEIGHT/2);
+            NSValue *nspt = [NSValue valueWithCGPoint:pt];
+            //        [currentView makeToast:ToastMSG_NetworkErr duration:3.0f position:nspt];
+            [ToastManager showToastOnView:currentView position:nspt flag:NO message:ToastMSG_NetworkErr];
+        }
+        errorBlock(nil);
+    }
+
+}
+
+#pragma mark 上传文件名不同 的 多文件
+
+- (void)postAddWithFiles:(NSString *)URLString parameters:(NSDictionary *)parameters fileNames:(NSArray *)fileNames fileDatas:(NSArray *)fileDatas view:(UIView*)currentView isOpenHUD:(BOOL)isOpenHUD  Block:(void (^)(NSDictionary *data))block failBlock:(void (^)(NSError *error))errorBlock{
+    NSMutableDictionary *mDict = [self getCommonDictionary];
+    [mDict addEntriesFromDictionary:parameters];  //在通用数据后附加本次请求的数据
+    if ([self isNetWorkConnectionAvailable]) {
+        AFShareClass * afShare = [AFShareClass sharedClient];
+        if (isOpenHUD) {
+            [BasicService startActivityWithView:currentView];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        }
+        [afShare POST:URLString parameters:mDict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            for (int i=0; i<fileDatas.count; i++) {
+                [formData appendPartWithFileData:fileDatas[i] name:fileNames[i] fileName:fileNames[i] mimeType:@"image/png"];
+            }
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSDictionary * resultDic = [self dataDecryptionWithDic:dic];
+            BOOL isSuccess =  [self showFailInfoWithDic:resultDic view:currentView];
+            if (isSuccess) {
+                block(resultDic);
+            }else{
+                NSError *error;
+                errorBlock(error);
+            }
+            if (isOpenHUD == YES) {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [BasicService stopActivityWithView:currentView];
+                //                currentView.hidden = YES;
+            }
+            [BasicService stopActivityWithView:currentView];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            errorBlock(error);
+            if (isOpenHUD == YES) {
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [BasicService stopActivityWithView:currentView];
+                //                currentView.hidden = YES;
+            }
+            NSLog(@"error 内容 = %@",error);
+            [BasicService stopActivityWithView:currentView];
+            UIViewController * vc = (UIViewController*)[self getCurrentVC];
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:[error.userInfo objectForKey:@"NSLocalizedDescription" ] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction * action) {}];
+            [alert addAction:defaultAction];
+            [vc presentViewController:alert animated:true completion:^{
+                
+            }];
+        }];
+    } else {
+        NSLog(@"BasicService POS 判断无网络 [%@]",URLString );
+        if (_isShowNetErrToast) {
+            CGPoint pt = CGPointMake(SCREENWIDTH/2, SCREENHEIGHT/2);
+            NSValue *nspt = [NSValue valueWithCGPoint:pt];
+            //        [currentView makeToast:ToastMSG_NetworkErr duration:3.0f position:nspt];
+            [ToastManager showToastOnView:currentView position:nspt flag:NO message:ToastMSG_NetworkErr];
+        }
+        errorBlock(nil);
+    }
+
+  
+ 
+}
 
 
 #pragma mark  判断网络

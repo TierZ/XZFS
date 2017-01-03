@@ -44,7 +44,7 @@
 
 #pragma mark 网络
 -(void)requestThemeDetailWithTopicCode:(NSString*)topicCode{
-    NSDictionary * dic = GETUserdefault(@"userInfo");
+    NSDictionary * dic = GETUserdefault(@"userInfos");
     NSString * userCode = [dic objectForKey:@"bizCode"];
     
     XZFindService * themeDetailService = [[XZFindService alloc]initWithServiceTag:XZThemeDetail];

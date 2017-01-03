@@ -76,7 +76,7 @@
 
 -(void)setModel:(XZTheMasterModel *)model{
     _model = model;
-    [self.photo setImageWithURL:[NSURL URLWithString:model.icon] placeholder:[UIImage imageNamed:@""] ];
+    [self.photo setImageWithURL:[NSURL URLWithString:model.icon] options:YYWebImageOptionProgressive  ];
     self.name.text = model.masterName;
     self.levelLab.text = model.level;
     self.timeLab.text = model.startTime;

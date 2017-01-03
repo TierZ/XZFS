@@ -7,6 +7,7 @@
 //
 
 #import "XZHelpAndFeedbackVC.h"
+#import "XZUserCenterService.h"
 
 @interface XZHelpAndFeedbackVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView * helpTable;
@@ -23,9 +24,21 @@
     self.helpTable.frame = CGRectMake(0, XZFS_STATUS_BAR_H+7, SCREENWIDTH, SCREENHEIGHT-XZFS_STATUS_BAR_H-7);
     [self.helpTable reloadData];
     
-    
+    [self requestFeedBackList];
 }
 
+#pragma mark 网络
+-(void)requestFeedBackList{
+    XZUserCenterService * feedbackListService = [[XZUserCenterService alloc]initWithServiceTag:XZHelpAndFeedbackListTag];
+    feedbackListService.delegate = self;
+    [feedbackListService feedbackListWithCityCode:@"11000" view:self.view];
+}
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    NSLog(@"successhandele = %@",succeedHandle);
+}
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+
+}
 #pragma mark table 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
