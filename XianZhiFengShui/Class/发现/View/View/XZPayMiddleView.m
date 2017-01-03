@@ -59,10 +59,10 @@
     [_couponSelectBtn addSubview:_couponLab];
     
     UILabel * noCouponLab = [[UILabel alloc]initWithFrame:CGRectMake(40, line.bottom+14, self.width-40-85, 12)];
-    _couponLab.text = @"新用户注册优惠券￥50";
-    _couponLab.textColor  = XZFS_HEX_RGB(@"#5A5959");
-    _couponLab.font = XZFS_S_FONT(12);
-    [_couponSelectBtn addSubview:_couponLab];
+    noCouponLab.text = @"新用户注册优惠券￥50";
+    noCouponLab.textColor  = XZFS_HEX_RGB(@"#5A5959");
+    noCouponLab.font = XZFS_S_FONT(12);
+    [self addSubview:noCouponLab];
     
     
     _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
