@@ -59,15 +59,18 @@
     [_couponSelectBtn addSubview:_couponLab];
     
     UILabel * noCouponLab = [[UILabel alloc]initWithFrame:CGRectMake(40, line.bottom+14, self.width-40-85, 12)];
-    noCouponLab.text = @"新用户注册优惠券￥50";
+    noCouponLab.text = @"您当前没有可用优惠券,赶紧去领吧!";
     noCouponLab.textColor  = XZFS_HEX_RGB(@"#5A5959");
     noCouponLab.font = XZFS_S_FONT(12);
     [self addSubview:noCouponLab];
     
+    noCouponLab.hidden = _couponStyle?NO:YES;
+    _couponSelectBtn.hidden = _couponStyle?YES:NO;
+    
     
     _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _rightBtn.frame = CGRectMake(self.width-80-20, line.bottom+15, RightBtnWidth, 9);
-    NSString * rightTitle = _couponStyle?@"如何获取优惠券":@"点我获取优惠券";
+    NSString * rightTitle = _couponStyle?@"点我获取优惠券":@"如何获取优惠券";
     [_rightBtn setTitle:rightTitle forState:UIControlStateNormal];
     _rightBtn.titleLabel.font = XZFS_S_FONT(9);
     [_rightBtn setTitleColor:XZFS_TEXTORANGECOLOR forState:UIControlStateNormal];
@@ -79,6 +82,8 @@
 
 -(void)selectCoupon:(UIButton*)sender{
     sender.selected = !sender.selected;
+    _iv.image = sender.selected?XZFS_IMAGE_NAMED(@"chongzhi_select"):XZFS_IMAGE_NAMED(@"chongzhi_unselect");
+    
     NSLog(@"选中优惠券");
 }
 
