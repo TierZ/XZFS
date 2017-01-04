@@ -12,6 +12,7 @@
 #import "XZMasterDetailVC.h"
 #import "XZMyEvaluateVC.h"
 #import "XZMarkScoreVC.h"
+#import "JCHATConversationController.h"
 
 @interface XZMyMasterFinishedView()<UITableViewDataSource,UITableViewDelegate>
 @end
@@ -61,6 +62,22 @@
         progressCell = [[XZMyMasterInProgressCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:progressingCellId];
         [progressCell messageWithBlock:^(XZTheMasterModel *model) {
             NSLog(@"私信大师===");
+            
+                __block JCHATConversationController *sendMessageCtl = [[JCHATConversationController alloc] init];
+                sendMessageCtl.superViewController = self;
+                __weak __typeof(self)weakSelf = self;
+                [JMSGConversation createSingleConversationWithUsername:@"asdfg" appKey:JMESSAGE_APPKEY completionHandler:^(id resultObject, NSError *error) {
+            
+                    if (error == nil) {
+                        [MBProgressHUD hideHUDForView:self animated:YES];
+                        __strong __typeof(weakSelf) strongSelf = weakSelf;
+                        sendMessageCtl.conversation = resultObject;
+                        [strongSelf.weakSelfVC.navigationController pushViewController:sendMessageCtl animated:YES];
+                    } else {
+                        [MBProgressHUD showMessage:[error.userInfo objectForKey:@"NSLocalizedDescription" ] view:self];
+                    }
+                    
+                }];
         }];
         [progressCell cancelWithBlock:^(XZTheMasterModel *model) {
             NSLog(@"取消约见===");
@@ -75,15 +92,8 @@
         finishedCell = [[XZMyMasterFinishedCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:progressingCellId];
         [finishedCell evaluateMasterWithBlock:^(XZTheMasterModel *model) {
             NSLog(@"评价大师");
-            int i = arc4random()%8;
-            if (i%2==0) {
                 XZMarkScoreVC * markVC = [[XZMarkScoreVC alloc]initWithMasterCode:model.masterCode];
                 [self.weakSelfVC.navigationController  pushViewController:markVC animated:YES];
-            }else{
-                XZMyEvaluateVC * myEvaluateVC = [[XZMyEvaluateVC alloc]init];
-                [self.weakSelfVC.navigationController  pushViewController:myEvaluateVC animated:YES];
-                
-            }
         }];
 
     }

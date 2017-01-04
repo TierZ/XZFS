@@ -11,6 +11,7 @@
 #import "XZMyMasterFinishedView.h"
 #import "XZFindService.h"
 #import "UIButton+XZImageTitleSpacing.h"
+#import "XZMasterServiceVC.h"
 @interface XZMyMasterVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UIButton*wantBtn;//想参加的
 @property (nonatomic,strong)UIButton * finishedBtn;//完成的
@@ -34,7 +35,13 @@
     isShowSelectList = NO;
     tmpTag = 1;
     [self setupSelectList];
+    self.rightButton.backgroundColor = [UIColor redColor];
 }
+
+-(void)clickRightButton{
+    [self.navigationController pushViewController:[[XZMasterServiceVC alloc]init] animated:YES];
+}
+
 -(void)setupSeg{
     self.finishedBtn.frame = CGRectMake(0, 0, SCREENWIDTH/2, 32);
     self.wantBtn.frame = CGRectMake(SCREENWIDTH/2, 0, SCREENWIDTH/2, 32);

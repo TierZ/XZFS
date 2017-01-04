@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void(^SelectPayStyleBlock)();
+typedef NS_ENUM(NSUInteger, SelectPay) {
+    AliPaySelected = 10,
+    WXPaySelected,
+    ZBPaySelected,
+};
+
+typedef void(^SelectPayStyleBlock)(SelectPay pay);
 @interface XZPayView : UIView
 @property (nonatomic,copy)SelectPayStyleBlock block;
 -(void)selectPayWithBlock:(SelectPayStyleBlock)block;

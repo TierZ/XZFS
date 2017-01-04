@@ -51,6 +51,7 @@
     [self initTable];
     [self initData];
     [self.mySelfTable reloadData];
+    
 }
 
 -(void)initNavi{

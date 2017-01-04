@@ -9,7 +9,7 @@
 #import "XZPayMiddleView.h"
 #import "UIButton+XZImageTitleSpacing.h"
 
-#define RightBtnWidth 60
+#define RightBtnWidth 80
 #define WidthSpace 20
 
 @implementation XZPayMiddleView{
@@ -37,7 +37,7 @@
     title.textColor = XZFS_TEXTBLACKCOLOR;
     [self addSubview:title];
     
-    UIView * line = [[UIView alloc]initWithFrame:CGRectMake(20, title.bottom+12, self.width-40, 0.5)];
+    UIView * line = [[UIView alloc]initWithFrame:CGRectMake(WidthSpace, title.bottom+12, self.width-WidthSpace*2, 0.5)];
     line.backgroundColor = XZFS_HEX_RGB(@"#F2F3F3");
     [self addSubview:line];
     
@@ -49,7 +49,7 @@
     [self addSubview:_couponSelectBtn];
     
     _iv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 14.5, 11, 11)];
-    _iv.image = XZFS_IMAGE_NAMED(@"chongzhi_unselect@");
+    _iv.image = XZFS_IMAGE_NAMED(@"chongzhi_unselect");
     [_couponSelectBtn addSubview:_iv];
     
     _couponLab = [[UILabel alloc]initWithFrame:CGRectMake(_iv.right+16, 14, _couponSelectBtn.width-_iv.right-16, 12)];

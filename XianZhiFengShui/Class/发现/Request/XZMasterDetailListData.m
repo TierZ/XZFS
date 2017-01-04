@@ -11,6 +11,8 @@
 
 static NSString * XZGetMasterArticleList = @"/master/article/list";
 static NSString * XZGetArticleDetail = @"/master/article/detail";
+static NSString * XZGetMasterOrderDetail = @"/master/order/detail";
+static NSString * XZGetMasterOrderPay= @"/master/order/pay";
 @implementation XZMasterDetailListData
 
 
@@ -60,4 +62,46 @@ static NSString * XZGetArticleDetail = @"/master/article/detail";
     }];
 }
 
+
+#pragma mark 大师订单详情
+-(void)masterOrderDetailWithTradeNo:(NSString*)tradeNo view:(id)view successBlock:(void (^)(NSDictionary *data))successBlock failBlock:(void (^)(NSError *error))errorBlock{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dic setObject:tradeNo forKey:@"tradeNo"];
+//    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:XZGetMasterOrderDetail parmater:dic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        NSDictionary * dic = [data objectForKey:@"data"];
+        if (successBlock) {
+            successBlock(dic);
+        }
+    } failBlock:^(NSError *error) {
+        if (errorBlock) {
+            errorBlock(error);
+        }
+    }];
+}
+
+#pragma mark 预约大师（付款）
+-(void)masterOrderPayWithUsercode:(NSString*)usercode ip:(NSString*)ip totalFee:(long)totalFee body:(NSString*)body mastCode:(NSString*)mastCode payType:(NSString*)payType reserveTime:(NSString*)reserveTime view:(id)view successBlock:(void (^)(NSDictionary *data))successBlock failBlock:(void (^)(NSError *error))errorBlock{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dic setObject:usercode forKey:@"usercode"];
+    [dic setObject:ip forKey:@"ip"];
+    [dic setObject:[NSNumber numberWithLong:totalFee] forKey:@"totalFee"];
+    [dic setObject:body forKey:@"body"];
+    [dic setObject:mastCode forKey:@"mastCode"];
+    [dic setObject:payType forKey:@"payType"];
+    [dic setObject:reserveTime forKey:@"reserveTime"];
+    //    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:XZGetMasterOrderPay parmater:dic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        NSDictionary * dic = [data objectForKey:@"data"];
+        if (successBlock) {
+            successBlock(dic);
+        }
+    } failBlock:^(NSError *error) {
+        if (errorBlock) {
+            errorBlock(error);
+        }
+    }];
+}
 @end

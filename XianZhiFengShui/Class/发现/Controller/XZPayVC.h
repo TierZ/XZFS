@@ -7,7 +7,7 @@
 //
 
 #import "BaseLoginController.h"
-
+#import "XZPayTopView.h"
 @interface XZPayVC : BaseLoginController
-
+- (instancetype)initWithPayStyle:(XZPayTopStyle)style;
 @end

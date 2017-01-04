@@ -6,6 +6,7 @@
 //  Copyright © 2016年 XianZhiFengShui. All rights reserved.
 //
 
+
 #import "XZMasterServicesCell.h"
 @interface XZMasterServicesCell ()
 @property (nonatomic,strong)UILabel * titleLab;//标题
@@ -80,7 +81,14 @@
 #pragma mark action
 -(void)appointMaster:(UIButton*)sender{
     sender.selected = !sender.selected;
+    if (self.appointBlock) {
+        self.appointBlock(self.model);
+    }
     NSLog(@"预约");
+}
+
+-(void)appointWithBlock:(AppointmentBlock)block{
+    self.appointBlock = block;
 }
 
 #pragma mark getter

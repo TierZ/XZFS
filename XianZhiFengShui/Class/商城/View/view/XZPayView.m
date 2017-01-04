@@ -88,7 +88,7 @@
     NSLog(@"支付方式");
     NSLog(@"sender.tag = %ld",(long)sender.tag);
     if (self.block) {
-        self.block();
+        self.block((int)sender.tag);
     }
 }
 -(void)selectPayWithBlock:(SelectPayStyleBlock)block{

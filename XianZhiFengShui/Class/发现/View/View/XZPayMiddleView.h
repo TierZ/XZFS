@@ -13,5 +13,5 @@ typedef enum : NSUInteger {
 #import <UIKit/UIKit.h>
 
 @interface XZPayMiddleView : UIView
-
+- (instancetype)initWithFrame:(CGRect)frame couponStyle:(XZCouponStyle)style;
 @end

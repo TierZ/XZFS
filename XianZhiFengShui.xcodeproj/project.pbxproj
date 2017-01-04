@@ -248,6 +248,13 @@
 		D18FF43A1E1B995E00479E37 /* XZPayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF4391E1B995E00479E37 /* XZPayVC.m */; };
 		D18FF43D1E1BACF200479E37 /* XZPayTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF43C1E1BACF200479E37 /* XZPayTopView.m */; };
 		D18FF4401E1BB2E600479E37 /* XZPayMiddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF43F1E1BB2E600479E37 /* XZPayMiddleView.m */; };
+		D18FF4521E1CBB4600479E37 /* NSArray+HYBUnicodeReadable.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF44D1E1CBB4600479E37 /* NSArray+HYBUnicodeReadable.m */; };
+		D18FF4531E1CBB4600479E37 /* NSDictionary+HYBUnicodeReadable.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF44F1E1CBB4600479E37 /* NSDictionary+HYBUnicodeReadable.m */; };
+		D18FF4541E1CBB4600479E37 /* NSSet+HYBUnicodeReadable.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF4511E1CBB4600479E37 /* NSSet+HYBUnicodeReadable.m */; };
+		D18FF4581E1CC13E00479E37 /* XZMasterServiceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF4571E1CC13E00479E37 /* XZMasterServiceVC.m */; };
+		D18FF45B1E1CC44A00479E37 /* XZMasterAddServiceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF45A1E1CC44A00479E37 /* XZMasterAddServiceVC.m */; };
+		D18FF45F1E1CC4A200479E37 /* XZMasterServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF45E1E1CC4A200479E37 /* XZMasterServiceCell.m */; };
+		D18FF4621E1CC4E200479E37 /* XZMasterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF4611E1CC4E200479E37 /* XZMasterModel.m */; };
 		D1912BC31DED20FE007050F6 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1912BC21DED20FE007050F6 /* UserNotifications.framework */; };
 		D191C7A91DAB3FD000496906 /* XZLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D191C7891DAB3FD000496906 /* XZLoginVC.m */; };
 		D191C7AA1DAB3FD000496906 /* XZFindVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D191C7901DAB3FD000496906 /* XZFindVC.m */; };
@@ -1032,6 +1039,20 @@
 		D18FF43C1E1BACF200479E37 /* XZPayTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZPayTopView.m; sourceTree = "<group>"; };
 		D18FF43E1E1BB2E600479E37 /* XZPayMiddleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZPayMiddleView.h; sourceTree = "<group>"; };
 		D18FF43F1E1BB2E600479E37 /* XZPayMiddleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZPayMiddleView.m; sourceTree = "<group>"; };
+		D18FF44C1E1CBB4600479E37 /* NSArray+HYBUnicodeReadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+HYBUnicodeReadable.h"; sourceTree = "<group>"; };
+		D18FF44D1E1CBB4600479E37 /* NSArray+HYBUnicodeReadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+HYBUnicodeReadable.m"; sourceTree = "<group>"; };
+		D18FF44E1E1CBB4600479E37 /* NSDictionary+HYBUnicodeReadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+HYBUnicodeReadable.h"; sourceTree = "<group>"; };
+		D18FF44F1E1CBB4600479E37 /* NSDictionary+HYBUnicodeReadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+HYBUnicodeReadable.m"; sourceTree = "<group>"; };
+		D18FF4501E1CBB4600479E37 /* NSSet+HYBUnicodeReadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+HYBUnicodeReadable.h"; sourceTree = "<group>"; };
+		D18FF4511E1CBB4600479E37 /* NSSet+HYBUnicodeReadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+HYBUnicodeReadable.m"; sourceTree = "<group>"; };
+		D18FF4561E1CC13E00479E37 /* XZMasterServiceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterServiceVC.h; sourceTree = "<group>"; };
+		D18FF4571E1CC13E00479E37 /* XZMasterServiceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterServiceVC.m; sourceTree = "<group>"; };
+		D18FF4591E1CC44A00479E37 /* XZMasterAddServiceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterAddServiceVC.h; sourceTree = "<group>"; };
+		D18FF45A1E1CC44A00479E37 /* XZMasterAddServiceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterAddServiceVC.m; sourceTree = "<group>"; };
+		D18FF45D1E1CC4A200479E37 /* XZMasterServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterServiceCell.h; sourceTree = "<group>"; };
+		D18FF45E1E1CC4A200479E37 /* XZMasterServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterServiceCell.m; sourceTree = "<group>"; };
+		D18FF4601E1CC4E200479E37 /* XZMasterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterModel.h; sourceTree = "<group>"; };
+		D18FF4611E1CC4E200479E37 /* XZMasterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterModel.m; sourceTree = "<group>"; };
 		D1912BC21DED20FE007050F6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		D191C7881DAB3FD000496906 /* XZLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZLoginVC.h; sourceTree = "<group>"; };
 		D191C7891DAB3FD000496906 /* XZLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZLoginVC.m; sourceTree = "<group>"; };
@@ -1796,6 +1817,7 @@
 		D113CC4D1DAF78470067A965 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				D18FF45C1E1CC48500479E37 /* MasterCell */,
 				D12F74DE1DDEB8E9003E2A0B /* XZAddBankCardCell.h */,
 				D12F74DF1DDEB8E9003E2A0B /* XZAddBankCardCell.m */,
 				D12F74E01DDEB8E9003E2A0B /* XZMyAccountBillCell.h */,
@@ -1951,6 +1973,7 @@
 		D11592BF1DA8CF1E004A7B86 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				D18FF44B1E1CBB4600479E37 /* 控制台打印中文 */,
 				D1D6A2BB1E0A1F4100215CEA /* 三方分享 */,
 				D1D6A2241E027C3000215CEA /* 三方支付 */,
 				D1F2FB3D1DF14B6E00EFC19B /* 三方登录 */,
@@ -2385,6 +2408,39 @@
 			path = PickView;
 			sourceTree = "<group>";
 		};
+		D18FF44B1E1CBB4600479E37 /* 控制台打印中文 */ = {
+			isa = PBXGroup;
+			children = (
+				D18FF44C1E1CBB4600479E37 /* NSArray+HYBUnicodeReadable.h */,
+				D18FF44D1E1CBB4600479E37 /* NSArray+HYBUnicodeReadable.m */,
+				D18FF44E1E1CBB4600479E37 /* NSDictionary+HYBUnicodeReadable.h */,
+				D18FF44F1E1CBB4600479E37 /* NSDictionary+HYBUnicodeReadable.m */,
+				D18FF4501E1CBB4600479E37 /* NSSet+HYBUnicodeReadable.h */,
+				D18FF4511E1CBB4600479E37 /* NSSet+HYBUnicodeReadable.m */,
+			);
+			path = "控制台打印中文";
+			sourceTree = "<group>";
+		};
+		D18FF4551E1CC0DE00479E37 /* Master */ = {
+			isa = PBXGroup;
+			children = (
+				D18FF4561E1CC13E00479E37 /* XZMasterServiceVC.h */,
+				D18FF4571E1CC13E00479E37 /* XZMasterServiceVC.m */,
+				D18FF4591E1CC44A00479E37 /* XZMasterAddServiceVC.h */,
+				D18FF45A1E1CC44A00479E37 /* XZMasterAddServiceVC.m */,
+			);
+			path = Master;
+			sourceTree = "<group>";
+		};
+		D18FF45C1E1CC48500479E37 /* MasterCell */ = {
+			isa = PBXGroup;
+			children = (
+				D18FF45D1E1CC4A200479E37 /* XZMasterServiceCell.h */,
+				D18FF45E1E1CC4A200479E37 /* XZMasterServiceCell.m */,
+			);
+			path = MasterCell;
+			sourceTree = "<group>";
+		};
 		D191C7851DAB3F6B00496906 /* BaseRequest */ = {
 			isa = PBXGroup;
 			children = (
@@ -2637,6 +2693,7 @@
 		D191C7A31DAB3FD000496906 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D18FF4551E1CC0DE00479E37 /* Master */,
 				D191C7A41DAB3FD000496906 /* XZAboutMeVC.h */,
 				D191C7A51DAB3FD000496906 /* XZAboutMeVC.m */,
 				D113CC361DAF3F6D0067A965 /* XZMyMasterVC.h */,
@@ -2702,6 +2759,8 @@
 				D1315B3E1DB9EE23006254ED /* MyCouponModel.m */,
 				84F9C4341DDCBE97000EF201 /* XZBankCardModel.h */,
 				84F9C4351DDCBE97000EF201 /* XZBankCardModel.m */,
+				D18FF4601E1CC4E200479E37 /* XZMasterModel.h */,
+				D18FF4611E1CC4E200479E37 /* XZMasterModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4001,6 +4060,7 @@
 				D1131A361DEE83BE00E1398D /* JCHATAlbumTableViewCell.m in Sources */,
 				D128ACB21DC0A249002392E0 /* MShowGroupAllSet.m in Sources */,
 				D128ACA61DC0A249002392E0 /* JJMainScrollView.m in Sources */,
+				D18FF45B1E1CC44A00479E37 /* XZMasterAddServiceVC.m in Sources */,
 				D16921401DD303BC00867011 /* XZMasterIntroduce.m in Sources */,
 				D12F74DC1DDEB8D0003E2A0B /* XZMyAccountBillVC.m in Sources */,
 				D113CC4A1DAF40610067A965 /* XZSettingVC.m in Sources */,
@@ -4024,15 +4084,18 @@
 				D129AAA71DBF13BD00DA2A6D /* XZMasterInfoArticleCell.m in Sources */,
 				D11593201DA8E181004A7B86 /* AttributedLabel.m in Sources */,
 				D11593221DA8E181004A7B86 /* StringToColor.m in Sources */,
+				D18FF4541E1CBB4600479E37 /* NSSet+HYBUnicodeReadable.m in Sources */,
 				D19590AE1DE40ECD00C06A05 /* ViewUtil.m in Sources */,
 				D128ACA41DC0A249002392E0 /* MHeaderImaCell.m in Sources */,
 				D1131A3A1DEE83BE00E1398D /* JCHATSelectImgCollectionView.m in Sources */,
 				D11EAB221DC840320053B114 /* XZLectureDetailVC.m in Sources */,
 				D169213D1DD3038E00867011 /* XZMasterBasicInfo.m in Sources */,
 				D18FF4341E14EF4C00479E37 /* XZLectureDetailData.m in Sources */,
+				D18FF4581E1CC13E00479E37 /* XZMasterServiceVC.m in Sources */,
 				D19590291DE3FFF100C06A05 /* MJPhotoBrowser.m in Sources */,
 				D1315B501DB9FFDE006254ED /* SDWaitingView.m in Sources */,
 				D1A26BAA1DF961510092BADB /* XZGoodsModel.m in Sources */,
+				D18FF45F1E1CC4A200479E37 /* XZMasterServiceCell.m in Sources */,
 				D113CC381DAF3F6D0067A965 /* XZMyMasterVC.m in Sources */,
 				D16921431DD303F900867011 /* XZMasterCertainInfo.m in Sources */,
 				D1A26BE21DFA7C790092BADB /* XZOrderCell.m in Sources */,
@@ -4045,6 +4108,7 @@
 				D180ADBA1E0110F80043FB61 /* ActionSheet_UIPickerView.m in Sources */,
 				D128ACB31DC0A249002392E0 /* SDBaseProgressView.m in Sources */,
 				D19590A41DE40E6200C06A05 /* MASLayoutConstraint.m in Sources */,
+				D18FF4531E1CBB4600479E37 /* NSDictionary+HYBUnicodeReadable.m in Sources */,
 				D19590061DE3F81600C06A05 /* XHVoiceCommonHelper.m in Sources */,
 				D1D6A2991E027ED100215CEA /* DataSigner.m in Sources */,
 				D19590081DE3F81600C06A05 /* XHVoiceRecordHUD.m in Sources */,
@@ -4090,6 +4154,7 @@
 				D129AAA41DBF137D00DA2A6D /* XZMasterInfoEvaluateCell.m in Sources */,
 				D1D6A2981E027ED100215CEA /* base64.m in Sources */,
 				D180AD891DFE444E0043FB61 /* XZOrderFooterView.m in Sources */,
+				D18FF4621E1CC4E200479E37 /* XZMasterModel.m in Sources */,
 				D180AD981DFEAAE40043FB61 /* XZAddAddressVC.m in Sources */,
 				D1315B531DBA0BD3006254ED /* XZThemeListModel.m in Sources */,
 				D1315B361DB8C44C006254ED /* XZMyAccountVC.m in Sources */,
@@ -4208,6 +4273,7 @@
 				D115927F1DA8CEA6004A7B86 /* main.m in Sources */,
 				D195902C1DE3FFF100C06A05 /* MJPhotoToolbar.m in Sources */,
 				84F9C4301DD82CFF000EF201 /* XZLoginRegistService.m in Sources */,
+				D18FF4521E1CBB4600479E37 /* NSArray+HYBUnicodeReadable.m in Sources */,
 				D1D6A21F1E02730B00215CEA /* Order.m in Sources */,
 				D113CC291DACC8510067A965 /* XZTheMasterView.m in Sources */,
 				D1131A2E1DEE83BE00E1398D /* JCHATAlbumModel.m in Sources */,

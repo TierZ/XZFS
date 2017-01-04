@@ -13,7 +13,7 @@
 #import "XZMasterServicesCell.h"
 
 #import "XZArticleDetailVC.h"
-
+#import "XZPayVC.h"
 
 
 NSString * const MasterServiceCellId = @"MasterServiceCellId";
@@ -71,6 +71,11 @@ NSString * const MasterArticleCellId = @"MasterArticleCellId";
             if (!cell) {
                 cell = [[XZMasterServicesCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
             }
+            __weak typeof(self)weakSelf = self;
+            [cell appointWithBlock:^(XZMasterInfoServiceModel *model) {
+                XZPayVC * payVC = [[XZPayVC alloc]initWithPayStyle:XZMasterPay];
+                [weakSelf.currentVC.navigationController pushViewController:payVC animated:YES];
+            }];
             cell.model =self.data [indexPath.row];
             return cell;
         }
