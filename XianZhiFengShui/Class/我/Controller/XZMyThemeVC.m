@@ -71,6 +71,18 @@ NSString * const focusThemeCellId = @"focusThemeCellId";
     [self.myTheme registerClass:[XZThemeListCell class] forCellReuseIdentifier:myThemeCellId];
     [self.joinedTheme registerClass:[XZJoinedThemeListCell class] forCellReuseIdentifier:joinedThemeCellId];
     [self.focusTheme registerClass:[XZMyFocusThemeCell class] forCellReuseIdentifier:focusThemeCellId];
+    
+    [self.myTheme refreshListWithBlock:^(int page, BOOL isRefresh) {
+        
+    }];
+    
+    [self.joinedTheme refreshListWithBlock:^(int page, BOOL isRefresh) {
+        
+    }];
+    
+    [self.focusTheme refreshListWithBlock:^(int page, BOOL isRefresh) {
+        
+    }];
 }
 
 -(void)reloadTable{
@@ -78,9 +90,15 @@ NSString * const focusThemeCellId = @"focusThemeCellId";
     [self.joinedTheme.dataArray addObjectsFromArray:[self creatModelsWithCount:10]];
     [self.focusTheme.dataArray addObjectsFromArray:[self creatModelsWithCount:10]];
     
+ 
     [self.myTheme reloadData];
     [self.joinedTheme reloadData];
     [self.focusTheme reloadData];
+    
+    [self.myTheme endRefreshHeader];
+    [self.joinedTheme endRefreshHeader];
+    [self.focusTheme endRefreshHeader];
+    
 }
 
 #pragma mark 假数据

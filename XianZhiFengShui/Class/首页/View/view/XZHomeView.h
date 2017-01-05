@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "XZTheMasterModel.h"
+#import "XZRefreshTable.h"
 @interface XZHomeView : UIView
-@property (nonatomic,strong)UITableView * xzHomeTable;
+@property (nonatomic,strong)XZRefreshTable * xzHomeTable;
 @property (nonatomic,strong)NSMutableArray * xzHomeData;
 
 -(void)refreshHeadView;

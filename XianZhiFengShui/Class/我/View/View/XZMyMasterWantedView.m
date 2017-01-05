@@ -41,6 +41,7 @@
         [self.hopeTable.dataArray addObject:model];
     }
     [self.hopeTable reloadData];
+    [self.hopeTable.mj_header endRefreshing];
 }
 
 
@@ -64,7 +65,10 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    XZMasterDetailVC * detailvc = [[XZMasterDetailVC alloc]initWithMasterCode:@"bd35193472fa43d6b6aa7cdcf96d4c33"];
+    XZTheMasterModel * model = self.hopeTable.dataArray [indexPath.row];
+    NSString * masterCode = model.masterCode?:@"";
+
+    XZMasterDetailVC * detailvc = [[XZMasterDetailVC alloc]initWithMasterCode:masterCode];
     [self.weakSelfVC.navigationController pushViewController:detailvc animated:YES];
 }
 

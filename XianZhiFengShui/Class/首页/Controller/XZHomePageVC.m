@@ -12,12 +12,18 @@
 #import "PYSearchViewController.h"
 #import "XZMessagesVC.h"
 #import "XZHomeService.h"
+#import "XZFindService.h"
 @interface XZHomePageVC ()<UIWebViewDelegate,PYSearchViewControllerDelegate>
 @property (nonatomic,strong)XZHomeView * home ;
 @property (nonatomic,strong)NSString  * cityCode ;
+@property (nonatomic,strong)NSMutableArray  * masters ;
+@property (nonatomic,strong)NSMutableArray  * lectures ;
+@property (nonatomic,strong)NSArray  * headArray; ;
 @end
 
-@implementation XZHomePageVC
+@implementation XZHomePageVC{
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,8 +32,6 @@
     _cityCode = @"110000";
     [self setupNavi];
     [self setUpHomeView];
-//    [self setUpData];
-    [self requestHomeData];
 }
 
 -(void)setupNavi{
@@ -50,74 +54,71 @@
 
 -(void)setUpHomeView{
     [self.view addSubview:self.home];
+    __weak typeof(self)weakSelf =self;
+    [self.home.xzHomeTable refreshListWithBlock:^(int page, BOOL isRefresh) {
+        [weakSelf initData];
+    }];
 }
 
--(void)setUpData{
-      NSMutableArray * masters = [NSMutableArray array];
-    for (int i = 0; i<3; i++) {
-        XZTheMasterModel * model = [[XZTheMasterModel alloc]init];
-        model.icon = @"http://navatar.shagualicai.cn/uid/150922010117012662";
-        model.name = @"张三丰";
-        model.level = @"V1";
-        model.singleVolume = @"82";
-        model.pointOfPraise = @"99";
-        model.type  =@[@"上知天文",@"下晓地理",@"古往今来",@"无所不知"];
-        model.summary  =@"我是张三丰，zhang。。。。。爱撒大声地阿萨德阿达";
-        [masters addObject:model];
-    }
-
-    
-    NSMutableArray * lectures = [NSMutableArray array];
-    for (int i = 0; i<3; i++) {
-        XZTheMasterModel * lecture = [[XZTheMasterModel alloc]init];
-        lecture.masterIcon = @"http://file.shagualicai.cn/201610/09/pic/pic_14759978965900.jpg";
-        lecture.masterName = @"张三丰  中国道教协会会长，武当创始人，太极";
-        lecture.title = @"聊聊买房买车开公司那些事";
-        lecture.isCollected = NO;
-        lecture.price = @"￥99";
-        lecture.startTime = @"9月18日  9:00";
-        lecture.remainSeats = @"余10席";
-        
-        [lectures addObject:lecture];
-    }
-
-    [self.home.xzHomeData addObjectsFromArray:@[masters,lectures]];
-    NSLog(@"arrya = %@",self.home.xzHomeData);
-
-    
-}
 #pragma mark 网络
--(void)requestHomeData{
-    XZHomeService * homeService = [[XZHomeService alloc]init];
-    homeService.serviceTag = XZGetDataList;
-    homeService.delegate = self;
-    [homeService requestHomeDataWithCityCode:_cityCode View:self.mainView];
-}
--(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
-    XZHomeService * homeService = (XZHomeService*)service;
-    switch (homeService.serviceTag) {
-        case XZGetDataList:{
-            NSDictionary * dic = (NSDictionary*)succeedHandle;
+// 数据请求
+-(void)initData
+{
+        // 创建信号量
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    // 创建全局并行
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_async(group, queue, ^{
+        XZHomeService * homeService = [[XZHomeService alloc]init];
+        [homeService requestHomeDataWithCityCode:_cityCode View:self.mainView successBlock:^(NSDictionary *data) {
+            NSDictionary * dic = [data objectForKey:@"data"];
             NSArray * carouselList = [dic objectForKey:@"carouselList"];
             NSArray * cityList = [dic objectForKey:@"cityList"];
             NSArray * naviMenuList = [dic objectForKey:@"naviMenuList"];
-            
-            [self.home.xzHomeData addObjectsFromArray:@[carouselList,@{@"tags":naviMenuList}]];
-            [self setUpData];
-          
-            [self.home.xzHomeTable reloadData];
-            [self.home refreshHeadView];
+            self.headArray = @[carouselList,@{@"tags":naviMenuList}];
+            dispatch_semaphore_signal(semaphore);
+        } failBlock:^(NSError *error) {
+             self.headArray = @[@[],@{@"tags":@[]}];
+           dispatch_semaphore_signal(semaphore);
+        }];
 
-        }
-            break;
-            
-        default:
-            break;
-    }
-    NSLog(@"successHandle = %@",succeedHandle);
-
+    });
+    dispatch_group_async(group, queue, ^{
+        XZHomeService * homeMasterService = [[XZHomeService alloc]init];
+        [homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:_cityCode view:self.mainView successBlock:^(NSArray *data) {
+              self.masters = [NSMutableArray arrayWithArray:data];
+             dispatch_semaphore_signal(semaphore);
+        } failBlock:^(NSError *error) {
+            self.masters = [NSMutableArray arrayWithArray:@[]];
+             dispatch_semaphore_signal(semaphore);
+        }];
+       
+    });
+    dispatch_group_async(group, queue, ^{
+       XZHomeService * homeLectureService = [[XZHomeService alloc]init];
+        [homeLectureService lectureListWithPageNum:1 PageSize:10 cityCode:_cityCode view:self.mainView successBlock:^(NSArray *data) {
+            self.lectures = [NSMutableArray arrayWithArray:data];
+            dispatch_semaphore_signal(semaphore);
+        } failBlock:^(NSError *error) {
+            self.lectures = [NSMutableArray arrayWithArray:@[]];
+            dispatch_semaphore_signal(semaphore);
+        }];
+    });
+    
+    dispatch_group_notify(group, queue, ^{
+        // 三个请求对应三次信号等待
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        [self.home.xzHomeData addObjectsFromArray:self.headArray];
+        [self.home.xzHomeData addObjectsFromArray:@[self.masters,self.lectures]];
+        [self.home.xzHomeTable reloadData];
+        [self.home refreshHeadView];
+        [self.home.xzHomeTable.mj_header endRefreshing];
+    });
+    
 }
-
 #pragma mark action
 -(void)search:(UIButton*)sender{
     // 1.创建热门搜索
@@ -165,7 +166,24 @@
     }
     return _home;
 }
-
+-(NSMutableArray *)masters{
+    if (!_masters) {
+        _masters = [NSMutableArray arrayWithCapacity:1];
+    }
+    return _masters;
+}
+-(NSMutableArray *)lectures{
+    if (!_lectures) {
+        _lectures = [NSMutableArray arrayWithCapacity:1];
+    }
+    return _lectures;
+}
+//-(NSArray *)headArray{
+//    if (!_headArray) {
+//        _headArray = [NSMutableArray arrayWithCapacity:1];
+//    }
+//    return _headArray;
+//}
 //-(void)click{
 //   
 //    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];

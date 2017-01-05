@@ -45,6 +45,7 @@
         [self.finishedMaster.dataArray addObject:model];
     }
     [self.finishedMaster reloadData];
+    [self.finishedMaster.mj_header endRefreshing];
 }
 
 
@@ -121,7 +122,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    XZMasterDetailVC * detailVC = [[XZMasterDetailVC alloc]initWithMasterCode:@"bd35193472fa43d6b6aa7cdcf96d4c33"];
+    XZTheMasterModel * model = self.finishedMaster.dataArray[indexPath.row];
+    NSString * masterCode = model.masterCode?:@"";
+    XZMasterDetailVC * detailVC = [[XZMasterDetailVC alloc]initWithMasterCode:masterCode];
     [self.weakSelfVC.navigationController pushViewController:detailVC animated:YES];
 }
 

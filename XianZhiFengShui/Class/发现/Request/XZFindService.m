@@ -34,7 +34,7 @@ static NSString * XZPointOfPraiseService = @"/master/pointOfPraise";
     
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
 
-    [self postRequestWithUrl:XZGetMasterList parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+    [self postRequestWithUrl:XZGetMasterList parmater:lastDic view:view isOpenHUD:NO Block:^(NSDictionary *data) {
               if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
             [self.delegate netSucceedWithHandle:[data objectForKey:@"data"] dataService:self];
         }
@@ -124,7 +124,7 @@ static NSString * XZPointOfPraiseService = @"/master/pointOfPraise";
     
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
-    [self postRequestWithUrl:XZGetLectureList parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+    [self postRequestWithUrl:XZGetLectureList parmater:lastDic view:view isOpenHUD:NO Block:^(NSDictionary *data) {
         NSArray * arr = [[data objectForKey:@"data"]objectForKey:@"list"];
         NSMutableArray * dataArr = [NSMutableArray array];
         for (int i = 0; i<arr.count; i++) {

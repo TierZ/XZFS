@@ -11,6 +11,7 @@
 #import "XZMasterIntroduce.h"
 #import "XZMasterCertainInfo.h"
 #import "XZMasterAudit.h"
+#import "XZUserCenterService.h"
 
 @interface XZRegistMasterVC ()
 @property (nonatomic,strong)UIScrollView * mainScroll;
@@ -177,9 +178,23 @@
     
 }
 -(void)submitInfo:(UIButton*)sender{
+    [self registMasterRequest];
     NSLog(@"提交");
 }
 
+#pragma mark 网络请求
+-(void)registMasterRequest{
+    XZUserCenterService * registMaster = [[XZUserCenterService alloc]initWithServiceTag:XZRegistMasterTag];
+    registMaster.delegate = self;
+    [registMaster RegistMasterWithCityCode:@"110000" masterCode:@"" name:[self.auditInfo objectForKey:@"name"] phoneNo:[self.auditInfo objectForKey:@"phone"] email:[self.auditInfo objectForKey:@"email"] city:[self.auditInfo objectForKey:@"city"] company:[self.auditInfo objectForKey:@"company"] position:[self.auditInfo objectForKey:@"position"] nickname:@"" sex:@"" title:@"" summary:@"" descr:@"" icon:@"" serviceType:[self.auditInfo objectForKey:@"selectTags"] photoList:@[[self.auditInfo objectForKey:@"selfPhoto"]] idcardList:@[[self.auditInfo objectForKey:@"forwardCard"],[self.auditInfo objectForKey:@"backgroundCard"],[self.auditInfo objectForKey:@"cardPerson"]] view:self.mainView];
+}
+
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    NSLog(@"成为大师 = %@",succeedHandle);
+}
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+    NSLog(@"error = %@",failHandle);
+}
 #pragma mark getter
 -(UIScrollView *)mainScroll{
     if (!_mainScroll) {

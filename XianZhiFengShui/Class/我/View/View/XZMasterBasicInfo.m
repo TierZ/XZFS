@@ -65,7 +65,10 @@
     ValidateRule * rule = [[ValidateRule alloc]init];
     BOOL isvalidate = [rule validateResultWithView:self];
     if (isvalidate) {
-        self.itemsDic  = [NSMutableDictionary dictionaryWithDictionary:@{@"name":_realName.text,@"phone":_phoneNo.text,@"email":_email.text,@"city":_city.text,@"location":_location.text,@"jobTitle":_jobTitle.text}];
+        NSString * locationStr = _location.text?:@"";
+        NSString * jobTitleStr = _jobTitle.text?:@"";
+        self.itemsDic  = [NSMutableDictionary dictionaryWithDictionary:@{@"name":_realName.text,@"phone":_phoneNo.text,@"email":_email.text,@"city":_city.text,@"location":locationStr,@"jobTitle":jobTitleStr}];
+        NSLog(@"itemsdic = %@",self.itemsDic);
     }
     return isvalidate;
 }

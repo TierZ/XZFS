@@ -30,7 +30,7 @@
     self = [super init];
     if (self) {
         _masterCode = masterCode;
-        _masterCode = @"bd35193472fa43d6b6aa7cdcf96d4c33";
+//        _masterCode = @"bd35193472fa43d6b6aa7cdcf96d4c33";
     }
     return self;
 }

@@ -255,6 +255,7 @@
 		D18FF45B1E1CC44A00479E37 /* XZMasterAddServiceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF45A1E1CC44A00479E37 /* XZMasterAddServiceVC.m */; };
 		D18FF45F1E1CC4A200479E37 /* XZMasterServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF45E1E1CC4A200479E37 /* XZMasterServiceCell.m */; };
 		D18FF4621E1CC4E200479E37 /* XZMasterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF4611E1CC4E200479E37 /* XZMasterModel.m */; };
+		D18FF4651E1E33A300479E37 /* XZInvestFriendsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18FF4641E1E33A300479E37 /* XZInvestFriendsVC.m */; };
 		D1912BC31DED20FE007050F6 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1912BC21DED20FE007050F6 /* UserNotifications.framework */; };
 		D191C7A91DAB3FD000496906 /* XZLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D191C7891DAB3FD000496906 /* XZLoginVC.m */; };
 		D191C7AA1DAB3FD000496906 /* XZFindVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D191C7901DAB3FD000496906 /* XZFindVC.m */; };
@@ -1053,6 +1054,8 @@
 		D18FF45E1E1CC4A200479E37 /* XZMasterServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterServiceCell.m; sourceTree = "<group>"; };
 		D18FF4601E1CC4E200479E37 /* XZMasterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterModel.h; sourceTree = "<group>"; };
 		D18FF4611E1CC4E200479E37 /* XZMasterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterModel.m; sourceTree = "<group>"; };
+		D18FF4631E1E33A300479E37 /* XZInvestFriendsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZInvestFriendsVC.h; sourceTree = "<group>"; };
+		D18FF4641E1E33A300479E37 /* XZInvestFriendsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZInvestFriendsVC.m; sourceTree = "<group>"; };
 		D1912BC21DED20FE007050F6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		D191C7881DAB3FD000496906 /* XZLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZLoginVC.h; sourceTree = "<group>"; };
 		D191C7891DAB3FD000496906 /* XZLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZLoginVC.m; sourceTree = "<group>"; };
@@ -2744,6 +2747,8 @@
 				D12F74D81DDEB8D0003E2A0B /* XZMyEvaluateVC.m */,
 				D1A26AF41DF65A7E0092BADB /* XZCertifyPhoneVC.h */,
 				D1A26AF51DF65A7E0092BADB /* XZCertifyPhoneVC.m */,
+				D18FF4631E1E33A300479E37 /* XZInvestFriendsVC.h */,
+				D18FF4641E1E33A300479E37 /* XZInvestFriendsVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4201,6 +4206,7 @@
 				D128AC5F1DC073B5002392E0 /* XZPostTopicVC.m in Sources */,
 				D180ADA11DFFAB450043FB61 /* XZOrderDetailCell.m in Sources */,
 				D19F5DC21DE54ED1001F5EB0 /* XZFeedBackVC.m in Sources */,
+				D18FF4651E1E33A300479E37 /* XZInvestFriendsVC.m in Sources */,
 				D113CC2F1DADD43D0067A965 /* XZLectureCell.m in Sources */,
 				D1958FEC1DE3F81600C06A05 /* JCHATLoadMessageTableViewCell.m in Sources */,
 				D12EE7DC1DB4A28A00C9A0F3 /* XZChangePwdVC.m in Sources */,

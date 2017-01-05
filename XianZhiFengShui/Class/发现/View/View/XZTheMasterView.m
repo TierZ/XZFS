@@ -101,7 +101,6 @@
     __weak typeof(self)weakSelf = self;
     [_hotMaster.table refreshListWithBlock:^(int page, BOOL isRefresh) {
         NSLog(@"page= %d,isrefresh = %d",page,isRefresh);
-  
             [weakSelf loadDataWithStyle:MasterHot page:weakSelf.hotMaster.table.row isRefresh:isRefresh];
     }];
     

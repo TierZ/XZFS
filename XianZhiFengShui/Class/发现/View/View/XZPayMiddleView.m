@@ -89,5 +89,13 @@
 
 -(void)jumpToCoupon:(UIButton*)sender{
     NSLog(@"跳转到推荐送礼");
+    if (self.block) {
+        self.block();
+    }
 }
+
+-(void)investFriendWithBlock:(InvestFriendBlock)block{
+    self.block = block;
+}
+
 @end

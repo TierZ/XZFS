@@ -137,10 +137,14 @@
     switch (lectureService.serviceTag) {
         case XZMySignupLectureTag:{
             NSLog(@"参加的讲座%@",succeedHandle);
+            [self.joinedLecture.table endRefreshHeader];
+            [self.joinedLecture.table endRefreshFooter];
         }
             break;
         case XZMyCollectionLectureTag:{
             NSLog(@"收藏的讲座%@",succeedHandle);
+            [self.wantJoinLecture.table endRefreshHeader];
+            [self.wantJoinLecture.table endRefreshFooter];
         }
             break;
             
@@ -151,6 +155,25 @@
 }
 
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+    XZUserCenterService * lectureService = (XZUserCenterService*)service;
+    switch (lectureService.serviceTag) {
+        case XZMySignupLectureTag:{
+            NSLog(@"参加的讲座%@",failHandle);
+            [self.joinedLecture.table endRefreshHeader];
+            [self.joinedLecture.table endRefreshFooter];
+        }
+            break;
+        case XZMyCollectionLectureTag:{
+            NSLog(@"收藏的讲座%@",failHandle);
+            [self.wantJoinLecture.table endRefreshHeader];
+            [self.wantJoinLecture.table endRefreshFooter];
+        }
+            break;
+            
+        default:
+            break;
+
+    }
 
 }
 #pragma mark getter

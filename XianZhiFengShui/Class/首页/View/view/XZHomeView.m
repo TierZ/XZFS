@@ -273,15 +273,15 @@
 }
 
 #pragma mark getter
--(UITableView *)xzHomeTable{
+-(XZRefreshTable *)xzHomeTable{
     if (!_xzHomeTable) {
-        _xzHomeTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _xzHomeTable = [[XZRefreshTable alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _xzHomeTable.backgroundColor = XZFS_HEX_RGB(@"#ffffff");
         _xzHomeTable.dataSource = self;
         _xzHomeTable.delegate = self;
         _xzHomeTable.backgroundColor = [UIColor whiteColor];
         _xzHomeTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
+        _xzHomeTable.mj_footer.hidden = YES;
         UIView * footerView = [[UIView alloc]initWithFrame:CGRectZero];;
         footerView.backgroundColor = [UIColor clearColor];
         _xzHomeTable.tableFooterView = footerView;

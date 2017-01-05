@@ -10,6 +10,7 @@
 
 #import "XZPayMiddleView.h"
 #import "XZPayView.h"
+#import "XZInvestFriendsVC.h"
 
 #define BottomHeight 45
 @interface XZPayVC ()
@@ -54,10 +55,13 @@
     self.middleView = [[XZPayMiddleView alloc]initWithFrame:CGRectMake(0, self.topView.bottom+10, SCREENWIDTH, 80) couponStyle:XZHaveCoupon];
     self.middleView.backgroundColor = [UIColor whiteColor];
     [scroll addSubview:self.middleView];
+    __weak typeof(self)weakSelf = self;
+    [self.middleView investFriendWithBlock:^{
+        [weakSelf.navigationController pushViewController:[[XZInvestFriendsVC alloc]init] animated:YES];
+    }];
     
     self.payView =  [[XZPayView alloc]initWithFrame:CGRectMake(0, self.middleView.bottom, SCREENWIDTH, 200)];
     [scroll addSubview:self.payView];
-    __weak typeof(self)weakSelf = self;
    [self.payView selectPayWithBlock:^(SelectPay pay) {
        weakSelf.paySelect = (int)pay;
    }];

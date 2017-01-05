@@ -9,6 +9,7 @@
 #import "XZMyCouponVC.h"
 #import "XZMyCouponCell.h"
 #import "UIButton+XZImageTitleSpacing.h"
+#import "XZInvestFriendsVC.h"
 
 @interface XZMyCouponVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView * couponTable;
@@ -136,6 +137,7 @@
 #pragma mark action
 -(void)clickSendGift{
     NSLog(@"点击送礼物");
+    [self.navigationController pushViewController:[[XZInvestFriendsVC alloc]init] animated:YES];
 }
 -(void)seeCannotUsedCoupon{
     NSLog(@"查看失效优惠券");

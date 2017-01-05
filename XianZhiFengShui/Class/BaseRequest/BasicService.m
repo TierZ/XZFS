@@ -517,7 +517,7 @@ static BasicService * shareService;
 
 +(void)stopActivityWithView:(id)view{
     UIView * currentView = (UIView*)view;
-    [MBProgressHUD hideAllHUDsForView:currentView animated:YES];
+    [MBProgressHUD hideHUDForView:currentView animated:YES];
 
 
 }

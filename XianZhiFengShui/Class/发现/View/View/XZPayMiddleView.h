@@ -11,7 +11,9 @@ typedef enum : NSUInteger {
     XZNoCoupon,
 } XZCouponStyle;//是否有优惠券
 #import <UIKit/UIKit.h>
-
+typedef void(^InvestFriendBlock)();
 @interface XZPayMiddleView : UIView
 - (instancetype)initWithFrame:(CGRect)frame couponStyle:(XZCouponStyle)style;
+@property (nonatomic,copy)InvestFriendBlock block;
+-(void)investFriendWithBlock:(InvestFriendBlock)block;
 @end
