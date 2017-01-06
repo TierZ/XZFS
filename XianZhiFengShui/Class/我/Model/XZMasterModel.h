@@ -20,3 +20,18 @@
 @property (nonatomic,assign)int appointCount;//约见次数
 @property (nonatomic,copy)NSString * summary;//项目介绍
 @end
+
+
+/**
+ 大师订单
+ */
+@interface XZMasterOrderModel : NSObject
+@property (nonatomic,copy)NSString * icon;
+@property (nonatomic,copy)NSString * service;
+@property (nonatomic,copy)NSString * time;
+@property (nonatomic,copy)NSString * location;
+@property (nonatomic,copy)NSString * price;
+@property (nonatomic,copy)NSString * appointTime;
+@property (nonatomic,copy)NSString * cancelReason;//取消原因
+
+@end

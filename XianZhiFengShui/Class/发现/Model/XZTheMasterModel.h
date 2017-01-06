@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ 发现 model
+ */
 @interface XZTheMasterModel : NSObject
 
 //大师

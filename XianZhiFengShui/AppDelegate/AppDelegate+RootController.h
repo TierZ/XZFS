@@ -22,12 +22,12 @@
 /**
  *  tabbar实例
  */
-- (void)setTabbarController;
+//- (void)setTabbarController;
 
 /**
  *  window实例
  */
-- (void)setAppWindows;
+//- (void)setAppWindows;
 
 /**
  *  根视图

@@ -205,7 +205,7 @@
     [JMSGUser loginWithUsername:self.userNoTf.text password:self.userPwdTf.text completionHandler:^(id resultObject, NSError *error) {
         if (error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
             });
             [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
         }else{

@@ -65,7 +65,7 @@
 -(void)initData
 {
         // 创建信号量
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     // 创建全局并行
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_group_t group = dispatch_group_create();

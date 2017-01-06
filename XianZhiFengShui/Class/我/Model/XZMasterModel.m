@@ -11,3 +11,9 @@
 @implementation XZMasterModel
 
 @end
+
+@implementation XZMasterOrderModel
+
+
+
+@end
