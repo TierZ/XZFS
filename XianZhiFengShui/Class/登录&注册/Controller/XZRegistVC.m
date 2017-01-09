@@ -11,6 +11,8 @@
 #import "ValidateRule.h"
 #import "XZLoginRegistService.h"
 #import "UIButton+XZImageTitleSpacing.h"
+#import "JMessage.framework/Headers/JMessage.h"
+#import "JCHATStringUtils.h"
 
 @interface XZRegistVC ()
 @property (nonatomic,strong)UIButton * leftArrow;
@@ -60,7 +62,7 @@
     self.userNoIv.frame = CGRectMake(33, self.leftArrow.bottom+110, 16, 20);
     self.userPwdIv.frame =CGRectMake(33, self.userNoIv.bottom+40, 16, 20);
     self.userNickIv.frame =CGRectMake(33, self.userPwdIv.bottom+40, 16, 20);
-    self.userNoTf.frame = CGRectMake(self.userNoIv.right+17, self.userNoIv.top+3, 200, 17);
+    self.userNoTf.frame = CGRectMake(self.userNoIv.right+17, self.userNoIv.top+3, SCREENWIDTH-(self.userNoIv.right+17)-20, 17);
     self.userPwdTf.frame = CGRectMake(self.userPwdIv.right+17, self.userPwdIv.top+4, 200, 16);
      self.userNickTf.frame = CGRectMake(self.userPwdIv.right+17, self.userNickIv.top+4, 200, 16);
     self.codeTf.frame = CGRectMake(self.userPwdIv.left, self.userNickTf.bottom+44, 200, 16);
@@ -129,7 +131,7 @@
 -(void)sendSecurityCodeWithPhone:(NSString*)phoneNum{
     XZLoginRegistService * securityService = [[XZLoginRegistService alloc]initWithServiceTag:XZGetSecurityTag];
     securityService.delegate = self;
-    [securityService requestSecurityCodeWithPhoneNo:phoneNum cityCode:@"110000" type:@"1" view:self.mainView];
+    [securityService requestSecurityCodeWithPhoneNo:phoneNum cityCode:@"110000" type:@"1" view:self.view];
 
 }
 
@@ -161,10 +163,26 @@
 //            self.securityCode = [data objectForKey:@"vcode"];
 //            NSLog(@"successHandle = %@",succeedHandle);
 //            if ([[dic objectForKey:@"statusCode"]isEqualToString:@"200"]) {
+//            JMSGUser registerWithUsername:<#(nonnull NSString *)#> password:<#(nonnull NSString *)#> completionHandler:<#^(id resultObject, NSError *error)handler#>
+//            [JMSGUser loginWithUsername:self.userNoTf.text password:self.userPwdTf.text completionHandler:^(id resultObject, NSError *error) {
+//                if (error) {
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//                    });
+//                    [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
+//                }else{
+//                    [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:@"登陆成功"];
+//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                        [self dismissViewControllerAnimated:YES completion:nil];
+//                    });
+//                    
+//                }
+//            }];
+            
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self.navigationController popViewControllerAnimated:YES];
                 });
-//            }
+//           }
         }
             break;
             

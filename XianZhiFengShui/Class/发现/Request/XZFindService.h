@@ -25,15 +25,20 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
 
 @interface XZFindService : BasicService
 
+
 /**
  获取大师列表
 
- @param pageNum  页码
- @param pageSize 每页个数
- @param cityCode 城市列表
- @param view     a
+ @param pageNum    页码
+ @param pageSize   每页数量
+ @param cityCode   城市
+ @param keyWord    关键字（本地，全部，最热） 当searchType=1时有效
+ @param searchType 1表示默认列表；2表示预约（进行中）的大师列表；3表示预约（已完成）的大师列表；4表示收藏（想约）的大师列表，默认值为1
+ @param userCode   用户id   当searchType字段值为2/3时，如果不传此字段或此字段为空，则返回错误信息、没有收藏大师时返回一个空的JsonObject对象；
+ @param view       。。
+ 
  */
--(void)masterListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode view:(id)view;
+-(void)masterListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode keyWord:(NSString*)keyWord searchType:(int)searchType userCode:(NSString*)userCode view:(id)view;
 
 
 /**

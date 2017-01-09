@@ -11,6 +11,8 @@
 #import "XZTextView.h"
 #import "XZThemeDetailData.h"
 #import "XZLoginVC.h"
+#import "XZUploadFilesService.h"
+#import "SwpNetworking.h"
 
 @interface XZPostTopicVC ()<LQPhotoPickerViewDelegate,UITextViewDelegate,UITextFieldDelegate>
 @property (nonatomic,strong)UIScrollView * mainScroll;
@@ -276,7 +278,8 @@
 -(void)postTopic:(UIButton*)sender{
     if ([self checkLoginState]) {
         if ([self checkInputData]) {
-            [self confirmTopic];
+//            [self confirmTopic];
+            [self uploadFiles];
              NSLog(@"发表");
         }
     }
@@ -332,6 +335,21 @@
 
 
 #pragma mark 网络
+-(void)uploadFiles{
+//    XZUploadFilesService * uploadServ = [[XZUploadFilesService alloc]initWithServiceTag:10000];
+//    uploadServ.delegate = self;
+    NSArray * picArr = [self LQPhotoPicker_getSmallDataImageArray];
+//    [uploadServ uploadFilesWithFiles:picArr fileNames:@[@"file"] view:self.view];
+    [SwpNetworking swpPOSTAddFiles:@"http://api.xianzhifengshui.com/file/upload" parameters:@{} fileName:@"file" fileDatas:picArr swpNetworkingSuccess:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull resultObject) {
+        NSLog(@"resultObject = %@",resultObject);
+    } swpNetworkingError:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error, NSString * _Nonnull errorMessage) {
+        NSLog(@"errorMessage = %@",errorMessage);
+    }];
+    
+
+   
+}
+
 -(void)confirmTopic{
     XZThemeDetailData * confirmTopic = [[XZThemeDetailData alloc]initWithServiceTag:XZConfirmTopicTag];
     confirmTopic.delegate = self;
@@ -340,17 +358,23 @@
   
 }
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
-    NSLog(@"succhandle = %@",succeedHandle);
-    NSDictionary *dic = (NSDictionary*)succeedHandle;
-    if ([[[dic objectForKey:@"data"]objectForKey:@"affect"]boolValue]==1) {
-        [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController popViewControllerAnimated:YES];
-        });
-    }else{
-        [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
+   
+    if ([service isKindOfClass:[XZUploadFilesService class]]) {
+        NSLog(@"上传 = %@",succeedHandle);
+    }else if ([service isKindOfClass:[XZThemeDetailData class]]){
+         NSLog(@"succhandle = %@",succeedHandle);
+        NSDictionary *dic = (NSDictionary*)succeedHandle;
+        if ([[[dic objectForKey:@"data"]objectForKey:@"affect"]boolValue]==1) {
+            [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else{
+            [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
+        }
     }
+
 }
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
     NSLog(@"failHandle = %@",failHandle)

@@ -40,17 +40,9 @@
  
     [self layoutView];
     [self setupOtherLogin];
-    
-//    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithActionBlock:^(id  _Nonnull sender) {
-//        [self.userNoTf resignFirstResponder];
-//        [self.userPwdTf resignFirstResponder];
-//    }];
-//    [self.view addGestureRecognizer:tap];
-  
-    
 }
+
 -(void)layoutView{
-    
     self.scroll = [[UIScrollView alloc]initWithFrame:self.view.frame];
     self.scroll.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.scroll];
@@ -141,9 +133,7 @@
     ValidateRule * rule = [[ValidateRule alloc]init];
     BOOL isValidate = [rule validateResultWithView:self.view];
     if (isValidate) {
-        XZLoginRegistService * login = [[XZLoginRegistService alloc]init];
-        login.delegate = self;
-        [login requestLoginWithPhoneNo:self.userNoTf.text password:self.userPwdTf.text view:self.view];
+        [self loginService];
     }
        NSLog(@"登录");
     
@@ -159,26 +149,24 @@
 
 -(void)otherLogin:(UIButton*)sender{
     WTLoginType loginType;
+    NSString * thirdType;
     if (sender.tag == WTLoginTypeWeiBo) {
         loginType = WTLoginTypeWeiBo;
+        thirdType = @"S";
     }else if (sender.tag == WTLoginTypeTencent){
         loginType = WTLoginTypeTencent;
     }else if (sender.tag == WTLoginTypeWeiXin){
         loginType = WTLoginTypeWeiXin;
+        thirdType = @"W";
     }
-    
-    
+   
     [WTThirdPartyLoginManager getUserInfoWithWTLoginType:loginType result:^(NSDictionary *LoginResult, NSString *error) {
-        
-        
-        NSLog(@"%@",[NSThread currentThread]);
-        
         if (LoginResult) {
-            
             NSLog(@"🐒🐒🐒🐒🐒🐒🐒🐒-----%@", LoginResult);
                 NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:LoginResult[@"third_image"]]];
 //            self.userIcon.image = [UIImage imageWithData:data];
-            [self.navigationController pushViewController:[[XZBindingPhoneVC alloc]init] animated:YES];
+            [self thirdLoginServiceWithToken:[LoginResult objectForKey:@"access_token"] type:thirdType phone:@"15711035766"];
+//            [self.navigationController pushViewController:[[XZBindingPhoneVC alloc]init] animated:YES];
             
         }else{
             NSLog(@"%@",error);
@@ -189,33 +177,57 @@
     NSLog(@"三方登录--%ld",(long)sender.tag);
 }
 
-#pragma mark 网络回调
+#pragma mark 网络
+-(void)loginService{
+    XZLoginRegistService * login = [[XZLoginRegistService alloc]initWithServiceTag:XZLoginTag];
+    login.delegate = self;
+    [login requestLoginWithPhoneNo:self.userNoTf.text password:self.userPwdTf.text view:self.view];
+
+}
+
+-(void)thirdLoginServiceWithToken:(NSString*)token type:(NSString*)type phone:(NSString*)phone{
+    XZLoginRegistService * thirdLoginService = [[XZLoginRegistService alloc]initWithServiceTag:XZThirdLoginTag];
+    thirdLoginService.delegate = self;
+    [thirdLoginService thirdLoginWithToken:token tokenType:type phone:phone view:self.view];
+}
+
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
-    NSDictionary * dic = (NSDictionary*)succeedHandle;
-    NSLog(@"dic = %@",dic);
-    NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
-    NSDictionary * userDic = [dic objectForKey:@"data"];
-    [userInfo setObject:[userDic objectForKey:@"bizCode"] forKey:@"bizCode"];
-    [userInfo setObject:[userDic objectForKey:@"mobilePhone"] forKey:@"mobilePhone"];
-    [userInfo setObject:[userDic objectForKey:@"username"] forKey:@"username"];
-    [userInfo setObject:@YES forKey:@"isLogin"];
-    
-    SETUserdefault(userInfo, @"userInfos");
-    
-    [JMSGUser loginWithUsername:self.userNoTf.text password:self.userPwdTf.text completionHandler:^(id resultObject, NSError *error) {
-        if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-            });
-            [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
-        }else{
-            [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:@"登陆成功"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                 [self dismissViewControllerAnimated:YES completion:nil];
-            });
+    XZLoginRegistService * loginService = (XZLoginRegistService*)service;
+    switch (loginService.serviceTag) {
+        case XZLoginTag:{
+            NSDictionary * dic = (NSDictionary*)succeedHandle;
+            NSLog(@"dic = %@",dic);
+            NSMutableDictionary * userInfo = [NSMutableDictionary dictionary];
+            NSDictionary * userDic = [dic objectForKey:@"data"];
+            [userInfo setObject:KISDictionaryHaveKey(userDic, @"userCode") forKey:@"bizCode"];
+            [userInfo setObject:KISDictionaryHaveKey(userDic, @"mobilePhone") forKey:@"mobilePhone"];
+            [userInfo setObject:KISDictionaryHaveKey(userDic, @"username") forKey:@"username"];
+            [userInfo setObject:@YES forKey:@"isLogin"];
+            SETUserdefault(userInfo, @"userInfos");
             
+//            [JMSGUser loginWithUsername:self.userNoTf.text password:self.userPwdTf.text completionHandler:^(id resultObject, NSError *error) {
+//                if (error) {
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//                    });
+//                    [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
+//                }else{
+                    [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:@"登陆成功"];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    });
+//
+//                }
+//            }];
         }
-    }];
+            break;
+        case XZThirdLoginTag:{
+            NSLog(@"三方登录 = %@",succeedHandle);
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark getter

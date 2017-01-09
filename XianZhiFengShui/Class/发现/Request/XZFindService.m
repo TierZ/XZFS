@@ -26,9 +26,13 @@ static NSString * XZPointOfPraiseService = @"/master/pointOfPraise";
 @implementation XZFindService
 
 #pragma mark 大师列表
--(void)masterListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode view:(id)view{
+-(void)masterListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode keyWord:(NSString*)keyWord searchType:(int)searchType userCode:(NSString*)userCode view:(id)view{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:keyWord forKey:@"keyWord"];
+    NSString * userCodeStr = userCode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
+    [dic setObject:[NSNumber numberWithInt:searchType] forKey:@"searchType"];
     [dic setObject:[NSNumber numberWithInt:pageNum] forKey:@"pageNum"];
     [dic setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
     

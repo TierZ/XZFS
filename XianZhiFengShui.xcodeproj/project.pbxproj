@@ -238,6 +238,10 @@
 		D180ADB51E00F7B40043FB61 /* switch_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D180ADB31E00F7B40043FB61 /* switch_on@2x.png */; };
 		D180ADB61E00F7B40043FB61 /* switch_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D180ADB41E00F7B40043FB61 /* switch_on@3x.png */; };
 		D180ADBA1E0110F80043FB61 /* ActionSheet_UIPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180ADB91E0110F80043FB61 /* ActionSheet_UIPickerView.m */; };
+		D18CD11D1E23862500DBEFD4 /* XZUploadFilesService.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD11C1E23862500DBEFD4 /* XZUploadFilesService.m */; };
+		D18CD1251E2393C300DBEFD4 /* SwpNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1201E2393C300DBEFD4 /* SwpNetworking.m */; };
+		D18CD1261E2393C300DBEFD4 /* SwpNetworkingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1221E2393C300DBEFD4 /* SwpNetworkingTools.m */; };
+		D18CD1271E2393C300DBEFD4 /* SwpNetworkingVariableType.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1241E2393C300DBEFD4 /* SwpNetworkingVariableType.m */; };
 		D18DD7071DF16780003A6E21 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D18DD7061DF16780003A6E21 /* libc++.tbd */; };
 		D18FF42A1E1248E900479E37 /* coin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4281E1248E900479E37 /* coin@2x.png */; };
 		D18FF42B1E1248E900479E37 /* coin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4291E1248E900479E37 /* coin@3x.png */; };
@@ -1028,6 +1032,14 @@
 		D180ADB41E00F7B40043FB61 /* switch_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "switch_on@3x.png"; sourceTree = "<group>"; };
 		D180ADB81E0110F80043FB61 /* ActionSheet_UIPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheet_UIPickerView.h; sourceTree = "<group>"; };
 		D180ADB91E0110F80043FB61 /* ActionSheet_UIPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheet_UIPickerView.m; sourceTree = "<group>"; };
+		D18CD11B1E23862500DBEFD4 /* XZUploadFilesService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZUploadFilesService.h; sourceTree = "<group>"; };
+		D18CD11C1E23862500DBEFD4 /* XZUploadFilesService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZUploadFilesService.m; sourceTree = "<group>"; };
+		D18CD11F1E2393C300DBEFD4 /* SwpNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwpNetworking.h; sourceTree = "<group>"; };
+		D18CD1201E2393C300DBEFD4 /* SwpNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwpNetworking.m; sourceTree = "<group>"; };
+		D18CD1211E2393C300DBEFD4 /* SwpNetworkingTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwpNetworkingTools.h; sourceTree = "<group>"; };
+		D18CD1221E2393C300DBEFD4 /* SwpNetworkingTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwpNetworkingTools.m; sourceTree = "<group>"; };
+		D18CD1231E2393C300DBEFD4 /* SwpNetworkingVariableType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwpNetworkingVariableType.h; sourceTree = "<group>"; };
+		D18CD1241E2393C300DBEFD4 /* SwpNetworkingVariableType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwpNetworkingVariableType.m; sourceTree = "<group>"; };
 		D18DD7061DF16780003A6E21 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D18FF4281E1248E900479E37 /* coin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@2x.png"; sourceTree = "<group>"; };
 		D18FF4291E1248E900479E37 /* coin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@3x.png"; sourceTree = "<group>"; };
@@ -1991,6 +2003,7 @@
 		D11592BF1DA8CF1E004A7B86 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				D18CD11E1E2393C300DBEFD4 /* SwpNetworking */,
 				D18FF44B1E1CBB4600479E37 /* 控制台打印中文 */,
 				D1D6A2BB1E0A1F4100215CEA /* 三方分享 */,
 				D1D6A2241E027C3000215CEA /* 三方支付 */,
@@ -2426,6 +2439,19 @@
 			path = PickView;
 			sourceTree = "<group>";
 		};
+		D18CD11E1E2393C300DBEFD4 /* SwpNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				D18CD11F1E2393C300DBEFD4 /* SwpNetworking.h */,
+				D18CD1201E2393C300DBEFD4 /* SwpNetworking.m */,
+				D18CD1211E2393C300DBEFD4 /* SwpNetworkingTools.h */,
+				D18CD1221E2393C300DBEFD4 /* SwpNetworkingTools.m */,
+				D18CD1231E2393C300DBEFD4 /* SwpNetworkingVariableType.h */,
+				D18CD1241E2393C300DBEFD4 /* SwpNetworkingVariableType.m */,
+			);
+			path = SwpNetworking;
+			sourceTree = "<group>";
+		};
 		D18FF44B1E1CBB4600479E37 /* 控制台打印中文 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2589,6 +2615,8 @@
 				D18FF4331E14EF4C00479E37 /* XZLectureDetailData.m */,
 				D18FF4351E1B425300479E37 /* XZThemeDetailData.h */,
 				D18FF4361E1B425300479E37 /* XZThemeDetailData.m */,
+				D18CD11B1E23862500DBEFD4 /* XZUploadFilesService.h */,
+				D18CD11C1E23862500DBEFD4 /* XZUploadFilesService.m */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -4096,6 +4124,7 @@
 				D113CC4A1DAF40610067A965 /* XZSettingVC.m in Sources */,
 				D115931F1DA8E181004A7B86 /* UIView+Additions.m in Sources */,
 				D128ACA81DC0A249002392E0 /* JJPhoto.m in Sources */,
+				D18CD1261E2393C300DBEFD4 /* SwpNetworkingTools.m in Sources */,
 				D128ACB71DC0A249002392E0 /* LQPhotoViewCell.m in Sources */,
 				D1A26B9F1DF7FFF40092BADB /* XZBindingPhoneVC.m in Sources */,
 				D12F5BD51DC1D72E0035335E /* XZThemeCommentCell.m in Sources */,
@@ -4186,6 +4215,7 @@
 				D129AAA41DBF137D00DA2A6D /* XZMasterInfoEvaluateCell.m in Sources */,
 				D1D6A2981E027ED100215CEA /* base64.m in Sources */,
 				D180AD891DFE444E0043FB61 /* XZOrderFooterView.m in Sources */,
+				D18CD11D1E23862500DBEFD4 /* XZUploadFilesService.m in Sources */,
 				D18FF4621E1CC4E200479E37 /* XZMasterModel.m in Sources */,
 				D180AD981DFEAAE40043FB61 /* XZAddAddressVC.m in Sources */,
 				D1315B531DBA0BD3006254ED /* XZThemeListModel.m in Sources */,
@@ -4236,6 +4266,7 @@
 				D19F5DC21DE54ED1001F5EB0 /* XZFeedBackVC.m in Sources */,
 				D18FF4651E1E33A300479E37 /* XZInvestFriendsVC.m in Sources */,
 				D113CC2F1DADD43D0067A965 /* XZLectureCell.m in Sources */,
+				D18CD1271E2393C300DBEFD4 /* SwpNetworkingVariableType.m in Sources */,
 				D1958FEC1DE3F81600C06A05 /* JCHATLoadMessageTableViewCell.m in Sources */,
 				D12EE7DC1DB4A28A00C9A0F3 /* XZChangePwdVC.m in Sources */,
 				D11592CB1DA8D1BF004A7B86 /* Custom_tabbar.m in Sources */,
@@ -4264,6 +4295,7 @@
 				D1D6A2A21E0389CB00215CEA /* XZMallService.m in Sources */,
 				84F9C4251DD81179000EF201 /* BasicService.m in Sources */,
 				D19590A11DE40E6200C06A05 /* MASCompositeConstraint.m in Sources */,
+				D18CD1251E2393C300DBEFD4 /* SwpNetworking.m in Sources */,
 				D1958FFF1DE3F81600C06A05 /* JCHATMessageTableView.m in Sources */,
 				D1A26AF61DF65A7E0092BADB /* XZCertifyPhoneVC.m in Sources */,
 				D1958FFA1DE3F81600C06A05 /* JCHATGroupDetailFooterReusableView.m in Sources */,

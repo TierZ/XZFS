@@ -6,7 +6,7 @@
 //  Copyright © 2016年 XianZhiFengShui. All rights reserved.
 //
 
-static NSString * feedbackService = @"/feedback/feedback";
+static NSString * feedbackService = @"/mine/feedback";
 static NSString * MySignUpLectureService = @"/lectures/signUp/list";
 static NSString * MyCollectionLectureService = @"/lectures/collection/list";
 static NSString * HelpAndFeedbackListService = @"/helpAndFeedback/list";

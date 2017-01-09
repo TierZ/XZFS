@@ -14,7 +14,7 @@ static NSString * XZGetSecurityCodeService = @"/user/sendSMS";
 static NSString *  XZRegistService = @"/user/saveUserInfo";
 static NSString * XZUpdatePwdService = @"/user/updatePassword";
 static NSString * XZResetPwdService = @"/user/resetPassword";
-
+static NSString * XZThirdLoginService = @"/user/thirdLogin";
 @implementation XZLoginRegistService
 
 
@@ -31,7 +31,7 @@ static NSString * XZResetPwdService = @"/user/resetPassword";
 -(void)requestLoginWithPhoneNo:(NSString * )phoneNo password:(NSString*)password view:(id)view{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:@"110000" forKey:@"cityCode"];
-    [dic setObject:phoneNo forKey:@"username"];
+    [dic setObject:phoneNo forKey:@"mobilePhone"];
     [dic setObject:password forKey:@"password"];
    
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
@@ -59,7 +59,6 @@ static NSString * XZResetPwdService = @"/user/resetPassword";
     [dic setObject:cityCode forKey:@"cityCode"];
     [dic setObject:mobilePhone forKey:@"mobilePhone"];
     [dic setObject:type forKey:@"type"];
-    
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
     [self postRequestWithUrl:XZGetSecurityCodeService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
@@ -161,4 +160,25 @@ static NSString * XZResetPwdService = @"/user/resetPassword";
     }];
 }
 
+
+#pragma mark 三方登录
+-(void)thirdLoginWithToken:(NSString*)token tokenType:(NSString*)tokenType phone:(NSString*)phone view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dic setObject:token forKey:@"token"];
+    [dic setObject:tokenType forKey:@"tokenType"];
+    [dic setObject:phone forKey:@"phone"];
+    
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:XZThirdLoginService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+            [self.delegate netSucceedWithHandle:data dataService:self];
+        }
+    } failBlock:^(NSError *error) {
+        
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+}
 @end

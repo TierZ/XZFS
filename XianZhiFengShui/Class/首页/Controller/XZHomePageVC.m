@@ -85,8 +85,10 @@
 
     });
     dispatch_group_async(group, queue, ^{
+        NSDictionary * dic = GETUserdefault(@"userInfos");
+        NSString * userCodeStr = KISDictionaryHaveKey(dic, @"bizCode");
         XZHomeService * homeMasterService = [[XZHomeService alloc]init];
-        [homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:_cityCode view:self.mainView successBlock:^(NSArray *data) {
+       [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:_cityCode keyWord:@"全部" searchType:1 userCode:userCodeStr view:self.mainView successBlock:^(NSArray *data) {
               self.masters = [NSMutableArray arrayWithArray:data];
              dispatch_semaphore_signal(semaphore);
         } failBlock:^(NSError *error) {

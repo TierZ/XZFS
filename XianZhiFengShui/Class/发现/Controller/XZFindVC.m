@@ -33,7 +33,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self drawNaviTag];
     [self drawMainScroll];
-//    [self requestMasterListWithPage:1];
 }
 
 #pragma mark drawView

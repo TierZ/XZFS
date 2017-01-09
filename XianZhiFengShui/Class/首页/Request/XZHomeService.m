@@ -79,9 +79,13 @@ static NSString * XZHomeLectureList = @"/lectures/list";
 
 #pragma mark 首页大师
 
--(void)masterListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode view:(id)view successBlock:(void (^)(NSArray *data))successBlock failBlock:(void (^)(NSError *error))errorBlock{
+-(void)masterListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode keyWord:(NSString*)keyWord searchType:(int)searchType userCode:(NSString*)userCode view:(id)view successBlock:(void (^)(NSArray *data))successBlock failBlock:(void (^)(NSError *error))errorBlock{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:keyWord forKey:@"keyWord"];
+    NSString * userCodeStr = userCode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
+    [dic setObject:[NSNumber numberWithInt:searchType] forKey:@"searchType"];
     [dic setObject:[NSNumber numberWithInt:pageNum] forKey:@"pageNum"];
     [dic setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];

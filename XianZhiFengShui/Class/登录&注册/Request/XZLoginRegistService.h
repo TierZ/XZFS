@@ -14,7 +14,8 @@ typedef NS_ENUM(NSUInteger, XZLoginRegistServiceTag) {
     XZRegistTag,//注册
     XZUpdatePwdTag,//修改密码
     XZGetResetSecurityTag,//重置密码 获取验证码
-    XZResetPwdTag,
+    XZResetPwdTag,//重置密码
+    XZThirdLoginTag,//三方登录
 };
 
 @interface XZLoginRegistService : BasicService
@@ -73,4 +74,15 @@ typedef NS_ENUM(NSUInteger, XZLoginRegistServiceTag) {
  @param view        、、
  */
 -(void)resetPwdWithMobilePhone:(NSString*)mobilePhone pwd:(NSString*)password cityCode:(NSString*)cityCode view:(id)view;
+
+
+/**
+ 三方登录
+
+ @param token     三方登录token
+ @param tokenType 三方登录类型   S或者W;S代表新浪,W代表微信
+ @param phone     手机号
+ @param view      、、
+ */
+-(void)thirdLoginWithToken:(NSString*)token tokenType:(NSString*)tokenType phone:(NSString*)phone view:(id)view;
 @end

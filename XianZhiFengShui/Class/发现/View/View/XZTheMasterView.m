@@ -21,7 +21,7 @@
     
     UIScrollView * _masterScroll;
     UISegmentedControl * _masterSeg;
-
+    NSString * _userCode;
     NSArray * _segArray;
 }
 
@@ -30,6 +30,8 @@
     if (self) {
         _curVC = vc;
         _segArray = @[@"最火",@"本地",@"所有"];
+        NSDictionary * dic = GETUserdefault(@"userInfos");
+        _userCode = [dic objectForKey:@"bizCode"];
         [self drawSeg];
         [self drawTable];
         [self refreshList];
@@ -131,11 +133,10 @@
  @param masterCode 。。
  */
 -(void)pointOfPraiseMasterWithMasterCode:(NSString*)masterCode{
-    NSDictionary * dic = GETUserdefault(@"userInfos");
-    NSString * userCode = [dic objectForKey:@"bizCode"];
+    
     XZFindService * pointOfPraiseService = [[XZFindService alloc]initWithServiceTag:XZPointOfPraiseMaster];
     pointOfPraiseService.delegate = self;
-    [pointOfPraiseService pointOfPraiseMasterWithCityCode:@"110000" masterCode:masterCode userCode:userCode view:self];
+    [pointOfPraiseService pointOfPraiseMasterWithCityCode:@"110000" masterCode:masterCode userCode:_userCode view:self];
 
 }
 
@@ -150,20 +151,24 @@
 -(void)loadDataWithStyle:(MasterSelect)style page:(int)page isRefresh:(BOOL) isrefresh{
     int serviceTag;
     XZFindTable * masterTable;
+    NSString *keyWord;
     switch (style) {
         case MasterHot:{
             serviceTag=XZMasterListHot;
             masterTable = _hotMaster;
+            keyWord = @"最火";
         }
             break;
         case MasterLocal:{
             serviceTag=XZMasterListLocal;
             masterTable = _localMaster;
+            keyWord = @"本地";
         }
             break;
         case MasterAll:{
             serviceTag=XZMasterListAll;
             masterTable = _allMaster;
+            keyWord = @"所有";
         }
             break;
         default:
@@ -173,7 +178,7 @@
     if ((page==1&& masterTable.data.count<=0)||isrefresh) {
         XZFindService * masterService = [[XZFindService alloc]initWithServiceTag:serviceTag];
         masterService.delegate = self;
-        [masterService masterListWithPageNum:page PageSize:10 cityCode:@"110000" view:self];
+        [masterService masterListWithPageNum:page PageSize:10 cityCode:@"110000" keyWord:keyWord searchType:1 userCode:_userCode view:self];
     }
   
 }

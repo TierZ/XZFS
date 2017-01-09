@@ -159,6 +159,7 @@ static BasicService * shareService;
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 //            currentView.hidden= NO;
         }
+        NSLog(@"url = %@",url);
         [afShare POST:url parameters:mDict progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -286,7 +287,7 @@ static BasicService * shareService;
         }
         [afShare POST:URLString parameters:mDict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             for (int i=0; i<fileDatas.count; i++) {
-                NSString *imageName = [NSString stringWithFormat:@"%@[%i]", fileName, i];
+                NSString *imageName = [NSString stringWithFormat:@"%@[%d]", fileName, i];
                 [formData appendPartWithFileData:fileDatas[i] name:imageName fileName:imageName mimeType:@"image/png"];
             }
         } progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -524,7 +525,7 @@ static BasicService * shareService;
 
 -(BOOL)showFailInfoWithDic:(NSDictionary*)dic view:(id)view{
     if ([[dic objectForKey:@"statusCode"]intValue]!=200 ) {
-        [ToastManager showToastOnView:view position:CSToastPositionCenter flag:NO message:[dic objectForKey:@"status"]];
+        [ToastManager showToastOnView:view position:CSToastPositionCenter flag:NO message:[dic objectForKey:@"message"]];
         return NO;
     }
     return YES;
