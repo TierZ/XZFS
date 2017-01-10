@@ -75,7 +75,7 @@ static NSString * const reuseIdentifier = @"LQPhotoViewCell";
     {
         _LQPhotoPicker_bigImageArray = [NSMutableArray array];
     }
-    pushImgName = @"plus.png";
+    pushImgName = @"plus_LQ.png";
     
     _pickerCollectionView.scrollEnabled = NO;
     

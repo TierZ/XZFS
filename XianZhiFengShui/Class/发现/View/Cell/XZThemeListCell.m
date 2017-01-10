@@ -194,7 +194,7 @@
     _commentButton.sd_layout.topSpaceToView(_picContainerView,10);
     
     [_agreeButton setTitle:model.pointOfPraise forState:UIControlStateNormal];
-    [_commentButton setTitle:model.commentCount forState:UIControlStateNormal];
+    [_commentButton setTitle:model.comment forState:UIControlStateNormal];
     _agreeButton.selected = model.isAgree;
     _commentButton.selected = model.isComment;
  

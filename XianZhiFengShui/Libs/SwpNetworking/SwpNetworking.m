@@ -135,7 +135,7 @@
     [swpNetworking.swpSessionManager POST:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (int i=0; i<fileDatas.count; i++) {
             NSString *imageName = [NSString stringWithFormat:@"%@[%i]", fileName, i];
-            [formData appendPartWithFileData:fileDatas[i] name:@"file" fileName:imageName mimeType:@"image/png"];
+            [formData appendPartWithFileData:fileDatas[i] name:imageName fileName:imageName mimeType:@"image/png"];
         }
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         

@@ -242,6 +242,7 @@
 		D18CD1251E2393C300DBEFD4 /* SwpNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1201E2393C300DBEFD4 /* SwpNetworking.m */; };
 		D18CD1261E2393C300DBEFD4 /* SwpNetworkingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1221E2393C300DBEFD4 /* SwpNetworkingTools.m */; };
 		D18CD1271E2393C300DBEFD4 /* SwpNetworkingVariableType.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1241E2393C300DBEFD4 /* SwpNetworkingVariableType.m */; };
+		D18CD12A1E24E3F700DBEFD4 /* XZMyAccountService.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1291E24E3F700DBEFD4 /* XZMyAccountService.m */; };
 		D18DD7071DF16780003A6E21 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D18DD7061DF16780003A6E21 /* libc++.tbd */; };
 		D18FF42A1E1248E900479E37 /* coin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4281E1248E900479E37 /* coin@2x.png */; };
 		D18FF42B1E1248E900479E37 /* coin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4291E1248E900479E37 /* coin@3x.png */; };
@@ -1040,6 +1041,8 @@
 		D18CD1221E2393C300DBEFD4 /* SwpNetworkingTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwpNetworkingTools.m; sourceTree = "<group>"; };
 		D18CD1231E2393C300DBEFD4 /* SwpNetworkingVariableType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwpNetworkingVariableType.h; sourceTree = "<group>"; };
 		D18CD1241E2393C300DBEFD4 /* SwpNetworkingVariableType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwpNetworkingVariableType.m; sourceTree = "<group>"; };
+		D18CD1281E24E3F700DBEFD4 /* XZMyAccountService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMyAccountService.h; sourceTree = "<group>"; };
+		D18CD1291E24E3F700DBEFD4 /* XZMyAccountService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMyAccountService.m; sourceTree = "<group>"; };
 		D18DD7061DF16780003A6E21 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D18FF4281E1248E900479E37 /* coin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@2x.png"; sourceTree = "<group>"; };
 		D18FF4291E1248E900479E37 /* coin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@3x.png"; sourceTree = "<group>"; };
@@ -2828,6 +2831,8 @@
 			children = (
 				D1A26AF71DF69CDE0092BADB /* XZUserCenterService.h */,
 				D1A26AF81DF69CDE0092BADB /* XZUserCenterService.m */,
+				D18CD1281E24E3F700DBEFD4 /* XZMyAccountService.h */,
+				D18CD1291E24E3F700DBEFD4 /* XZMyAccountService.m */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -4359,6 +4364,7 @@
 				D1958FF41DE3F81600C06A05 /* JCHATAudioPlayerHelper.m in Sources */,
 				D1C2A8801DAA576000ADDAF1 /* ValidateTextField.m in Sources */,
 				D1958FF81DE3F81600C06A05 /* JCHATFootTableViewCell.m in Sources */,
+				D18CD12A1E24E3F700DBEFD4 /* XZMyAccountService.m in Sources */,
 				D1958FF51DE3F81600C06A05 /* JCHATChatTable.m in Sources */,
 				D1A26BA71DF95FB90092BADB /* XZGoodsCell.m in Sources */,
 				D1A26BE51DFA8E2F0092BADB /* UITableView+NoData.m in Sources */,

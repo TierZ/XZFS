@@ -20,8 +20,9 @@
 @property (nonatomic, copy) NSString *content;//内容
 @property (nonatomic,strong)NSArray * photo;//图片数组
 @property (nonatomic, copy) NSString *pointOfPraise;//点赞数
-@property (nonatomic, copy) NSString *commentCount;//评论数
+@property (nonatomic, copy) NSString *commentCount;//评论数（暂时弃用）
 @property (nonatomic, assign) BOOL isAgree;//是否点赞
 @property (nonatomic, assign) BOOL isComment;//是否评论
 @property (nonatomic,copy)NSString * comments;//评论内容
+@property (nonatomic,copy)NSString * comment;//评论数
 @end

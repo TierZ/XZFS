@@ -7,8 +7,8 @@
 //
 
 static NSString * XZComfirmTopicService = @"/topic/issue/confirm";
-
-
+static NSString * XZUpdateTopicService = @"/topic/issue/update";
+static NSString * XZPointOfPraiseTopicService = @"/topic/pointOfPraise";
 #import "XZThemeDetailData.h"
 
 @implementation XZThemeDetailData
@@ -20,19 +20,63 @@ static NSString * XZComfirmTopicService = @"/topic/issue/confirm";
     [dic setObject:title forKey:@"title"];
     [dic setObject:content forKey:@"content"];
     [dic setObject:typeCode forKey:@"typeCode"];
-    
-    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     NSArray * piclist = picList?:@[];
-    [self postAddFiles:XZComfirmTopicService parameters:lastDic fileName:@"confirmTopic" fileDatas:piclist view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+    [dic setObject:piclist forKey:@"confirmTopic"];
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:XZComfirmTopicService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
             [self.delegate netSucceedWithHandle:data dataService:self];
         }
-
     } failBlock:^(NSError *error) {
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
             [self.delegate netFailedWithHandle:error dataService:self];
         }
-
     }];
 }
+
+#pragma mark 话题点赞
+-(void)pointOfPraiseTopicWithCityCode:(NSString*)cityCode topicCode:(NSString*)topicCode userCode:(NSString*)userCode view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:userCode?:@"" forKey:@"userCode"];
+    [dic setObject:topicCode?:@"" forKey:@"topicCode"];
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:XZPointOfPraiseTopicService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        if (self.delegate&&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+            [self.delegate netSucceedWithHandle:data dataService:self];
+        }
+    } failBlock:^(NSError *error) {
+        if (self.delegate&&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+}
+
+#pragma mark 话题修改
+-(void)updateMyTopicWithCityCode:(NSString*)cityCode bizCode:(NSString*)bizCode userCode:(NSString*)userCode title:(NSString*)title content:(NSString*)content typeCode:(NSString*)typeCode picList:(NSArray*)picList view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:userCode forKey:@"userCode"];
+    [dic setObject:bizCode forKey:@"bizCode"];
+    [dic setObject:title forKey:@"title"];
+    [dic setObject:content forKey:@"content"];
+    [dic setObject:typeCode forKey:@"typeCode"];
+    NSArray * piclist = picList?:@[];
+    [dic setObject:piclist forKey:@"confirmTopic"];
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:XZUpdateTopicService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        if (self.delegate&&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+            [self.delegate netSucceedWithHandle:data dataService:self];
+        }
+    } failBlock:^(NSError *error) {
+        if (self.delegate&&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+
+}
+
 @end

@@ -105,7 +105,7 @@
     for (int i = 0; i<3; i++) {
        UIButton *  uploadCerCardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         uploadCerCardBtn.frame = CGRectMake(cerCardLab.left+i*(68+34), cerCardLab.bottom+13, 68, 68);
-        [uploadCerCardBtn setImage:XZFS_IMAGE_NAMED(@"tianjiatupian_big@2x") forState:UIControlStateNormal];
+        [uploadCerCardBtn setImage:XZFS_IMAGE_NAMED(@"tianjiatupian_big") forState:UIControlStateNormal];
         uploadCerCardBtn.layer.masksToBounds = YES;
         uploadCerCardBtn.layer.cornerRadius  =5;
         uploadCerCardBtn.tag = 10+i;

@@ -12,6 +12,7 @@
 
 static NSString * XZHomeMasterList = @"/master/list";
 static NSString * XZHomeLectureList = @"/lectures/list";
+static NSString * XZHomeNaviMenuList = @"/getNaviMenuList";
 #import "XZHomeService.h"
 #import "XZTheMasterModel.h"
 
@@ -127,5 +128,20 @@ static NSString * XZHomeLectureList = @"/lectures/list";
     }];
 }
 
-
+#pragma mark 首页获取大师服务列表
+-(void)requestNaviMenuListWithCityCode:(NSString*)cityCode view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    [dic setObject:cityCode forKey:@"cityCode"];
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:XZHomeNaviMenuList parmater:lastDic view:view isOpenHUD:NO  Block:^(NSDictionary *data) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+            [self.delegate netSucceedWithHandle:[data objectForKey:@"data"] dataService:self];
+        }
+    } failBlock:^(NSError *error) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+}
 @end

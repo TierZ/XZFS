@@ -9,6 +9,7 @@
 typedef NS_ENUM(NSUInteger, XZHomeServiceTag) {
     XZGetDataList = 100,
     XZGettCityList,
+    XZGetNaviMenuList,//获取大师服务类型列表接口
 };
 
 #import "BasicService.h"
@@ -70,4 +71,11 @@ typedef NS_ENUM(NSUInteger, XZHomeServiceTag) {
 -(void)requestHomeCityListWithView:(id)view;
 
 
+/**
+ 【首页】获取大师服务类型列表接口
+
+ @param cityCode 城市
+ @param view     。。
+ */
+-(void)requestNaviMenuListWithCityCode:(NSString*)cityCode view:(id)view;
 @end

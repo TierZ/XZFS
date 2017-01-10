@@ -18,16 +18,26 @@ NSString * const ThemeListTableViewCellId = @"ThemeListId";
 @interface XZThemeListVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)XZRefreshTable * themeListTable;
 @property (nonatomic,strong)NSMutableArray * themes;
+@property (nonatomic,assign)BOOL isRefresh;
+@property (nonatomic,strong)NSString* typeCode;
 @end
 
 @implementation XZThemeListVC
+- (instancetype)initWithTypeCode:(NSString*)typeCode
+{
+    self = [super init];
+    if (self) {
+        _typeCode = typeCode;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self setupNavi];
     [self setupTable];
-    [self requestThemeListWithPage:1];
+//
 
 }
 
@@ -47,9 +57,12 @@ NSString * const ThemeListTableViewCellId = @"ThemeListId";
     
     
     [self.themeListTable registerClass:[XZThemeListCell class] forCellReuseIdentifier:ThemeListTableViewCellId];
-    
-//    [self.themes addObjectsFromArray:[self creatModelsWithCount:10]];
-//    [self.themeListTable reloadData];
+    __weak typeof(self)weakSelf = self;
+    [self.themeListTable refreshListWithBlock:^(int page, BOOL isRefresh) {
+        weakSelf.isRefresh = isRefresh;
+        NSLog(@"page = %d",page);
+        [weakSelf requestThemeListWithPage:page];
+    }];
 }
 
 #pragma mark 网络
@@ -62,85 +75,33 @@ NSString * const ThemeListTableViewCellId = @"ThemeListId";
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
     NSLog(@"successhandle = %@",succeedHandle);
     NSArray * array = (NSArray*)succeedHandle;
+    if (self.isRefresh) {
+        [self.themes removeAllObjects];
+    }
     [self.themes addObjectsFromArray:array];
     [self.themeListTable reloadData];
+    [self.themeListTable endRefreshFooter];
+    [self.themeListTable endRefreshHeader];
+    if (array.count<=0) {
+        self.themeListTable.mj_footer.hidden = YES;
+    }
+    if (self.themes.count<=0) {
+        __weak typeof(self)weakSelf = self;
+        [self.themeListTable showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^{
+            [weakSelf requestThemeListWithPage:1];
+        } btnBlock:nil];
+    }else{
+        [self.themeListTable hideNoDataView];
+    }
 }
 
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
-
-}
-#pragma mark 假数据
-- (NSArray *)creatModelsWithCount:(NSInteger)count
-{
-    NSArray *iconImageNamesArray = @[@"icon0.jpg",
-                                     @"icon1.jpg",
-                                     @"icon2.jpg",
-                                     @"icon3.jpg",
-                                     @"icon4.jpg",
-                                     ];
-    
-    NSArray *namesArray = @[@"GSD_iOS",
-                            @"风口上的猪",
-                            @"当今世界网名都不好起了",
-                            @"我叫郭德纲",
-                            @"Hello Kitty"];
-    
-    NSArray *textArray = @[@"当你的 app 没有提供 3x 的 LaunchImage 时，系统默认进入兼容模式，https://github.com/gsdios/SDAutoLayout大屏幕一切按照 320 宽度渲染，屏幕宽度返回 320；然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。",
-                           @"然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，https://github.com/gsdios/SDAutoLayout等于把小屏完全拉伸。",
-                           @"当你的 app 没有提供 3x 的 LaunchImage 时屏幕宽度返回 320；然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。但是建议不要长期处于这种模式下。屏幕宽度返回 320；https://github.com/gsdios/SDAutoLayout然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。但是建议不要长期处于这种模式下。屏幕宽度返回 320；然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。但是建议不要长期处于这种模式下。",
-                           @"但是建议不要长期处于这种模式下，否则在大屏上会显得字大，内容少，容易遭到用户投诉。",
-                           @"屏幕宽度返回 320；https://github.com/gsdios/SDAutoLayout然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。但是建议不要长期处于这种模式下。"
-                           ];
-    
-
-    
-    NSArray *picImageNamesArray = @[ @"pic0.jpg",
-                                     @"pic1.jpg",
-                                     @"pic2.jpg",
-                                     @"pic3.jpg",
-                                     @"pic4.jpg",
-                                     @"pic5.jpg",
-                                     @"pic6.jpg",
-                                     @"pic7.jpg",
-                                     @"pic8.jpg"
-                                     ];
-    NSMutableArray *resArr = [NSMutableArray new];
-    
-    for (int i = 0; i < count; i++) {
-        int iconRandomIndex = arc4random_uniform(5);
-        int nameRandomIndex = arc4random_uniform(5);
-        int contentRandomIndex = arc4random_uniform(5);
-        
-        XZThemeListModel *model = [XZThemeListModel new];
-        model.icon = iconImageNamesArray[iconRandomIndex];
-        model.issuer = namesArray[nameRandomIndex];
-        model.issueTime = @"1小时前";
-        model.pointOfPraise  =@"99";
-        model.commentCount = @"111";
-        model.isAgree = YES;
-        model.isComment = NO;
-        model.title = @"求大神指点能不能挣钱。。。。。挣大钱";
-        int x = arc4random()%5;
-        model.content =textArray[x];
-        model.comments = @"阿里山的骄傲是爱上大南瓜华盛顿//@王小贱：吃不吃阿萨德";
-        
-        
-        // 模拟“随机图片”
-        int random = arc4random_uniform(10);
-        
-        NSMutableArray *temp = [NSMutableArray new];
-        for (int i = 0; i < random; i++) {
-            int randomIndex = arc4random_uniform(9);
-            [temp addObject:picImageNamesArray[randomIndex]];
-        }
-        if (temp.count) {
-            model.photo = [temp copy];
-        }
-        
-        
-        [resArr addObject:model];
-    }
-    return [resArr copy];
+    [self.themeListTable endRefreshFooter];
+    [self.themeListTable endRefreshHeader];
+    __weak typeof(self)weakSelf = self;
+    [self.themeListTable showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^{
+        [weakSelf requestThemeListWithPage:1];
+    } btnBlock:nil];
 }
 
 #pragma mark action

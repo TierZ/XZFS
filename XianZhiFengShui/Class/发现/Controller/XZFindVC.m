@@ -51,39 +51,11 @@
     
     self.mastView = [[XZTheMasterView alloc]initWithFrame:CGRectMake(0, 0, self.titleScroll.width, self.titleScroll.height) curVC:self];
     [self.titleScroll addSubview:self.mastView];
-    
-    self.lectureView = [[XZFindTable alloc]initWithFrame:CGRectMake(self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height) style:XZFindLecture];
-    self.lectureView.currentVC = self;
-    [self.titleScroll addSubview:self.lectureView];
-    
-    self.themeView = [[XZFindTable alloc]initWithFrame:CGRectMake(2*self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height) style:XZFindTheme];
-    self.themeView.currentVC = self;
-    [self.titleScroll addSubview:self.themeView];
-    [self refreshList];
 }
 
--(void)refreshList{
-    __weak typeof(self)weakSelf = self;
-    [self.lectureView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
-        [weakSelf requestLectureListWithPage:page];
-    }];
-    [self.themeView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
-        [weakSelf requestThemeList];
-    }];
-}
+
 
 #pragma mark 网络
-
-///**
-// 请求大师列表
-//
-// @param page <#page description#>
-// */
-//-(void)requestMasterListWithPage:(int)page{
-//    XZFindService * masterService = [[XZFindService alloc]initWithServiceTag:XZMasterListHot];
-//    masterService.delegate = self;
-//    [masterService masterListWithPageNum:page PageSize:10 cityCode:@"110000" view: self.mastView];
-//}
 
 
 /**
@@ -94,7 +66,7 @@
 -(void)requestLectureListWithPage:(int)page{
     XZFindService * lectureService = [[XZFindService alloc]initWithServiceTag:XZLectureList];
     lectureService.delegate = self;
-    [lectureService lectureListWithPageNum:page PageSize:10 cityCode:@"110000" view: self.mastView];
+    [lectureService lectureListWithPageNum:page PageSize:10 cityCode:@"110000" view: self.lectureView];
 }
 
 
@@ -105,7 +77,7 @@
 -(void)requestThemeList{
     XZFindService * themeService = [[XZFindService alloc]initWithServiceTag:XZThemeTypeList];
     themeService.delegate = self;
-    [themeService themeTypeListWithCityCode:@"110000" view:self.mastView];
+    [themeService themeTypeListWithCityCode:@"110000" view:self.themeView];
 }
 
 
@@ -124,7 +96,7 @@
             }
             if (self.lectureView.data.count<=0) {
                 [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-                    [self requestLectureListWithPage:1];
+//                    [self requestLectureListWithPage:1];
                 }];
             }else{
                 [self.mainView hideNoDataView];
@@ -143,15 +115,13 @@
             }
             if (self.themeView.data.count<=0) {
                 [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-                    [self requestThemeList];
+//                    [self requestThemeList];
                 }];
             }else{
                 [self.mainView hideNoDataView];
             }
         }
             break;
-
-            
         default:
             break;
     }
@@ -177,18 +147,27 @@
   CGRect frame = self.lineView.frame;
     frame.origin.x = self.lineView.width*self.titleSeg.selectedSegmentIndex;
     self.lineView.frame = frame;
-    
+     __weak typeof(self)weakSelf = self;
     if (scrollView.contentOffset.x==SCREENWIDTH) {
         NSLog(@"请求讲座")
-        if (self.lectureView.data.count>0) {
-        }else{
-            [self requestLectureListWithPage:1];
+        if (!self.lectureView) {
+            self.lectureView = [[XZFindTable alloc]initWithFrame:CGRectMake(self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height) style:XZFindLecture];
+            self.lectureView.currentVC = self;
+            [self.titleScroll addSubview:self.lectureView];
+           
+            [self.lectureView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
+                [weakSelf requestLectureListWithPage:page];
+            }];
         }
     }else if (scrollView.contentOffset.x==SCREENWIDTH*2){
         NSLog(@"请求话题");
-        if (self.themeView.data.count>0) {
-        }else{
-            [self requestThemeList];
+        if (!self.themeView) {
+            self.themeView = [[XZFindTable alloc]initWithFrame:CGRectMake(2*self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height) style:XZFindTheme];
+            self.themeView.currentVC = self;
+            [self.titleScroll addSubview:self.themeView];
+            [self.themeView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
+                [weakSelf requestThemeList];
+            }];
         }
     }
     

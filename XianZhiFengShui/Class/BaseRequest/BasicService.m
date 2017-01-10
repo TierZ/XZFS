@@ -230,17 +230,10 @@ static BasicService * shareService;
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             NSDictionary * resultDic = [self dataDecryptionWithDic:dic];
-            BOOL isSuccess =  [self showFailInfoWithDic:resultDic view:currentView];
-            if (isSuccess) {
-                block(resultDic);
-            }else{
-                NSError *error;
-                errorBlock(error);
-            }
+            block(resultDic);
             if (isOpenHUD == YES) {
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 [BasicService stopActivityWithView:currentView];
-                //                currentView.hidden = YES;
             }
             [BasicService stopActivityWithView:currentView];
 
@@ -249,7 +242,6 @@ static BasicService * shareService;
             if (isOpenHUD == YES) {
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 [BasicService stopActivityWithView:currentView];
-                //                currentView.hidden = YES;
             }
             NSLog(@"error 内容 = %@",error);
             [BasicService stopActivityWithView:currentView];
@@ -288,20 +280,14 @@ static BasicService * shareService;
         [afShare POST:URLString parameters:mDict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             for (int i=0; i<fileDatas.count; i++) {
                 NSString *imageName = [NSString stringWithFormat:@"%@[%d]", fileName, i];
-                [formData appendPartWithFileData:fileDatas[i] name:imageName fileName:imageName mimeType:@"image/png"];
+                [formData appendPartWithFileData:fileDatas[i] name:fileName fileName:imageName mimeType:@"image/png"];
             }
         } progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             NSDictionary * resultDic = [self dataDecryptionWithDic:dic];
-            BOOL isSuccess =  [self showFailInfoWithDic:resultDic view:currentView];
-            if (isSuccess) {
                 block(resultDic);
-            }else{
-                NSError *error;
-                errorBlock(error);
-            }
             if (isOpenHUD == YES) {
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 [BasicService stopActivityWithView:currentView];
@@ -360,13 +346,8 @@ static BasicService * shareService;
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             NSDictionary * resultDic = [self dataDecryptionWithDic:dic];
-            BOOL isSuccess =  [self showFailInfoWithDic:resultDic view:currentView];
-            if (isSuccess) {
-                block(resultDic);
-            }else{
-                NSError *error;
-                errorBlock(error);
-            }
+            block(resultDic);
+ 
             if (isOpenHUD == YES) {
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 [BasicService stopActivityWithView:currentView];

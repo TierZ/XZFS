@@ -12,6 +12,7 @@
 #import "XZMasterCertainInfo.h"
 #import "XZMasterAudit.h"
 #import "XZUserCenterService.h"
+#import "XZUploadFilesService.h"
 
 @interface XZRegistMasterVC ()
 @property (nonatomic,strong)UIScrollView * mainScroll;
@@ -174,8 +175,6 @@
              lab.textColor = XZFS_TEXTORANGECOLOR;
         }
     }
-    
-    
 }
 -(void)submitInfo:(UIButton*)sender{
     [self registMasterRequest];
@@ -183,6 +182,11 @@
 }
 
 #pragma mark 网络请求
+-(void)uploadImages{
+    XZUploadFilesService * uploadImages = [[XZUploadFilesService alloc]initWithServiceTag:10000];
+    uploadImages.delegate = self;
+}
+
 -(void)registMasterRequest{
     XZUserCenterService * registMaster = [[XZUserCenterService alloc]initWithServiceTag:XZRegistMasterTag];
     registMaster.delegate = self;

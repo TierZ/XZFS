@@ -12,5 +12,5 @@
 
 
 @interface XZThemeListVC : BaseContentController
-
+- (instancetype)initWithTypeCode:(NSString*)typeCode;
 @end

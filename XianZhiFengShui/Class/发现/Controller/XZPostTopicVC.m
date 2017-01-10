@@ -12,7 +12,7 @@
 #import "XZThemeDetailData.h"
 #import "XZLoginVC.h"
 #import "XZUploadFilesService.h"
-#import "SwpNetworking.h"
+#import "XZFindService.h"
 
 @interface XZPostTopicVC ()<LQPhotoPickerViewDelegate,UITextViewDelegate,UITextFieldDelegate>
 @property (nonatomic,strong)UIScrollView * mainScroll;
@@ -20,7 +20,8 @@
 @property (nonatomic,strong)UITextField * titleField;
 @property (nonatomic,strong)XZTextView * contentTV;
 @property (nonatomic,strong)UIButton *  uploadImages;
-
+@property (nonatomic,strong)NSMutableArray * uploadImageUrls;
+@property (nonatomic,strong)NSMutableArray * tags;
 @end
 
 @implementation XZPostTopicVC{
@@ -39,6 +40,10 @@
     [super viewDidLoad];
     self.view.backgroundColor = XZFS_HEX_RGB(@"#F1EEEF");
     self.titelLab.text = @"发帖";
+    [self requestTypeList];
+   
+}
+-(void)setupViews{
     _textviewHeight = 31;
     _typeCode = [NSMutableString string];
     [self initPicker];
@@ -54,7 +59,6 @@
     [self setupTapGesture];
 
 }
-
 
 #pragma mark setup
 
@@ -78,8 +82,6 @@
 }
 
 -(void)setupTag{
-    NSArray * _tags =  @[@"事业·运势",@"良辰·吉日",@"选址·乔迁",@"起名·测字",@"家居·装修",@"手相·面相",@"学业·考试",@"婚恋·情感"];
-    
     _tagLab = [[UILabel alloc]initWithFrame:CGRectMake(20, 12, 100, 13)];
     _tagLab.text = @"话题类别";
     _tagLab.font = XZFS_S_FONT(13);
@@ -100,7 +102,7 @@
     for (int i = 0; i<_tags.count; i++) {
         UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(leftWidth+(i%3)*(btnWidth+lineSpace), verticalSpace+(i/3)*(btnHeight+verticalSpace), 75, 24);
-        [btn setTitle:_tags[i] forState:UIControlStateNormal];
+        [btn setTitle:[_tags[i] objectForKey:@"title"] forState:UIControlStateNormal];
         [btn setTitleColor:XZFS_HEX_RGB(@"#B5B6B6") forState:UIControlStateNormal];
         [btn setTitleColor:XZFS_TEXTORANGECOLOR forState:UIControlStateSelected];
         btn.titleLabel.font = XZFS_S_FONT(12);
@@ -114,28 +116,6 @@
     }
     
 }
-
-
-///**
-// 标签
-// */
-//-(void)setupTag{
-//    
-//    _tagLab = [[UILabel alloc]initWithFrame:CGRectMake(20, 12, self.mainScroll.width-40, 12)];
-//    _tagLab.text = @"话题类别";
-//    _tagLab.textColor = XZFS_TEXTBLACKCOLOR;
-//    _tagLab.font = XZFS_S_FONT(12);
-//    [self.mainScroll addSubview:_tagLab];
-//    
-//    _tagV = [[XZTagView alloc]initWithFrame:CGRectMake(20, _tagLab.bottom+12, self.mainScroll.width-40, 30) tagHeight:24];
-//    _tagV.backgroundColor = [UIColor whiteColor];
-//    _tagV.tagsArray = @[@"事业·运势",@"良辰·吉日",@"选址·乔迁",@"起名·测字",@"家居·装修",@"手相·面相",@"学业·考试",@"婚恋·情感",];
-//    [_tagV setupTags];
-//    [self.mainScroll addSubview:_tagV];
-//    
-//}
-
-
 
 /**
  标题
@@ -269,16 +249,18 @@
 
 #pragma mark action
 -(void)btnClick:(UIButton*)sender{
-    sender.selected = !sender.selected;
-    sender.layer.borderColor = sender.selected?XZFS_TEXTORANGECOLOR.CGColor:XZFS_HEX_RGB(@"#B5B6B6").CGColor;
+    for (UIButton*btn in tagV.subviews) {
+        btn.selected = NO;
+         btn.layer.borderColor = XZFS_HEX_RGB(@"#B5B6B6").CGColor;
+    }
+    sender.selected  = YES;
+    sender.layer.borderColor = XZFS_TEXTORANGECOLOR.CGColor;
     NSLog(@"选择的 标签--%ld",(long)sender.tag);
-
 }
 
 -(void)postTopic:(UIButton*)sender{
     if ([self checkLoginState]) {
         if ([self checkInputData]) {
-//            [self confirmTopic];
             [self uploadFiles];
              NSLog(@"发表");
         }
@@ -335,32 +317,55 @@
 
 
 #pragma mark 网络
--(void)uploadFiles{
-//    XZUploadFilesService * uploadServ = [[XZUploadFilesService alloc]initWithServiceTag:10000];
-//    uploadServ.delegate = self;
-    NSArray * picArr = [self LQPhotoPicker_getSmallDataImageArray];
-//    [uploadServ uploadFilesWithFiles:picArr fileNames:@[@"file"] view:self.view];
-    [SwpNetworking swpPOSTAddFiles:@"http://api.xianzhifengshui.com/file/upload" parameters:@{} fileName:@"file" fileDatas:picArr swpNetworkingSuccess:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull resultObject) {
-        NSLog(@"resultObject = %@",resultObject);
-    } swpNetworkingError:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error, NSString * _Nonnull errorMessage) {
-        NSLog(@"errorMessage = %@",errorMessage);
-    }];
-    
 
-   
+/**
+ 请求话题类型列表
+ */
+-(void)requestTypeList{
+    XZFindService * typeListService = [[XZFindService alloc]initWithServiceTag:XZThemeTypeList];
+    typeListService.delegate = self;
+    [typeListService themeTypeListWithCityCode:@"110000" view:self.view];
 }
 
+/**
+ 上传图片
+ */
+-(void)uploadFiles{
+    XZUploadFilesService * uploadServ = [[XZUploadFilesService alloc]initWithServiceTag:10000];
+    uploadServ.delegate = self;
+    NSArray * picArr = [self LQPhotoPicker_getSmallDataImageArray];
+    [uploadServ uploadFilesWithFiles:picArr fileNames:@[@"file"] view:self.view];
+ }
+
+/**
+ 发表话题
+ */
 -(void)confirmTopic{
     XZThemeDetailData * confirmTopic = [[XZThemeDetailData alloc]initWithServiceTag:XZConfirmTopicTag];
     confirmTopic.delegate = self;
-    NSArray * picArr = [self LQPhotoPicker_getBigImageDataArray];
-    [confirmTopic confirmTopicWithCityCode:@"110000" userCode:_userCode title:_titleField.text content:_contentTV.text typeCode:_typeCode picList:picArr view:self.view];
+    [confirmTopic confirmTopicWithCityCode:@"110000" userCode:_userCode title:_titleField.text content:_contentTV.text typeCode:_typeCode picList:self.uploadImageUrls view:self.view];
   
 }
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
-   
     if ([service isKindOfClass:[XZUploadFilesService class]]) {
-        NSLog(@"上传 = %@",succeedHandle);
+        NSArray * uploadArr = (NSArray*)succeedHandle;
+        BOOL isUploadSuccess = NO;
+        for (int i = 0; i<uploadArr.count; i++) {
+            NSDictionary * dic = uploadArr[i];
+            if ([[dic objectForKey:@"code"]intValue]==1) {
+                [self.uploadImageUrls addObject:KISDictionaryHaveKey(dic, @"url")];
+                isUploadSuccess = YES;
+            }else{
+                [self.uploadImageUrls removeAllObjects];
+                [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:NO message:KISDictionaryHaveKey(dic, @"msg")];
+                isUploadSuccess = NO;
+                return;
+            }
+        }
+        if (isUploadSuccess) {
+            [self confirmTopic];
+        }
+
     }else if ([service isKindOfClass:[XZThemeDetailData class]]){
          NSLog(@"succhandle = %@",succeedHandle);
         NSDictionary *dic = (NSDictionary*)succeedHandle;
@@ -373,11 +378,23 @@
         }else{
             [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
         }
+    }else if ([service isKindOfClass:[XZFindService class]]){
+        NSArray * themeList = (NSArray*)succeedHandle;
+        [self.tags addObjectsFromArray:themeList];
+        [self.mainView hideNoDataView];
+        [self setupViews];
+        
     }
 
 }
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
     NSLog(@"failHandle = %@",failHandle)
+    __weak typeof(self)weakSelf = self;
+    if ([service isKindOfClass:[XZFindService class]]) {
+        [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^{
+             [weakSelf requestTypeList];
+        } btnBlock:nil];
+    }
 }
 #pragma mark private
 -(BOOL)checkLoginState{
@@ -399,7 +416,8 @@
 -(BOOL)checkInputData{
     for (UIButton*btn in tagV.subviews) {
         if (btn.selected) {
-            [_typeCode appendString:btn.titleLabel.text];
+            NSDictionary * dic = self.tags[(int)btn.tag-200];
+            [_typeCode appendString:KISDictionaryHaveKey(dic, @"typeCode")];
         }
     }
     if ([_typeCode isEqualToString:@""]) {
@@ -413,6 +431,19 @@
         return NO;
     }
     return YES;
+}
+#pragma mark getter
+-(NSMutableArray *)tags{
+    if (!_tags) {
+        _tags = [NSMutableArray arrayWithCapacity:1];
+    }
+    return _tags;
+}
+-(NSMutableArray *)uploadImageUrls{
+    if (!_uploadImageUrls) {
+        _uploadImageUrls = [NSMutableArray arrayWithCapacity:1];
+    }
+    return _uploadImageUrls;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

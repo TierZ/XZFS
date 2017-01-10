@@ -14,6 +14,7 @@
 #import "XZShoppingCartVC.h"
 #import "XZOrderVC.h"
 #import "XZAddressListVC.h"
+#import "XZThemeListVC.h"
 
 //#import "JCHATConversationViewController.h"
 @interface XZMallVC ()<UIScrollViewDelegate>
@@ -78,7 +79,7 @@
 }
 
 -(void)clickRightButton{
-    [self.navigationController pushViewController:[[XZAddressListVC alloc]init] animated:YES];
+    [self.navigationController pushViewController:[[XZThemeListVC alloc]init] animated:YES];
     
 //    __block JCHATConversationController *sendMessageCtl = [[JCHATConversationController alloc] init];
 //    sendMessageCtl.superViewController = self;
