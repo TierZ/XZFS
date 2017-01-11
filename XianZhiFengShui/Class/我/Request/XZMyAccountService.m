@@ -7,7 +7,7 @@
 //
 
 #import "XZMyAccountService.h"
-static NSString * rechargeRecordService = @"/mine/account/query";
+static NSString * rechargeRecordService = @"account/recharge/list";
 static NSString * myAccountService = @"/mine/account/query";
 static NSString * accountRechargeService = @"/account/recharge/confirm";
 @implementation XZMyAccountService

@@ -24,7 +24,8 @@ extern NSString * const FindThemeCellId;
 #import "XZFindVC.h"
 #import "XZRefreshTable.h"
 
-typedef void(^PointOfPraiseMasterBlock)(NSString * masterCode);
+typedef void(^PointOfPraiseMasterBlock)(NSString * masterCode,NSIndexPath * indexPath);
+typedef void(^LectureListCollectionBlock)(NSString * lectureCode,NSIndexPath * indexPath,NSString * isCollect);
 @interface XZFindTable : UIView<UITableViewDelegate,UITableViewDataSource>
 - (instancetype)initWithFrame:(CGRect)frame style:(XZFindStyle)style;
 @property (nonatomic,strong)XZRefreshTable * table;
@@ -32,5 +33,7 @@ typedef void(^PointOfPraiseMasterBlock)(NSString * masterCode);
 @property (nonatomic,weak)BaseViewController * currentVC;
 @property (nonatomic,assign)BOOL showLecturePrice;
 @property (nonatomic,copy)PointOfPraiseMasterBlock block;
+@property (nonatomic,copy)LectureListCollectionBlock lectureCollectBlock;
 -(void)pointOfPraiseMasterWithBlock:(PointOfPraiseMasterBlock)block;
+-(void)lectureListCollectionWithBlock:(LectureListCollectionBlock)block;
 @end

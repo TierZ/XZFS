@@ -18,6 +18,7 @@
 @property (nonatomic,strong)UILabel * time;
 @property (nonatomic,strong)UILabel * collectionState;
 @property (nonatomic,strong)UIButton * collection;
+@property (nonatomic,strong)XZTheMasterModel * model;
 @end
 @implementation XZLectureCell
 
@@ -50,20 +51,25 @@
     self.remain.frame = CGRectMake(0, self.price.bottom+13.5, SCREENWIDTH-32, 10);
     self.clock .frame = CGRectMake(self.title.left, self.name.bottom+12, 15, 15);
     self.time.frame = CGRectMake(self.clock.right+7, self.clock.top+2, 200, 11);
-    self.collection.frame = CGRectMake(SCREENWIDTH-50-32, self.clock.top, 50, 20);
-
+    self.collection.frame = CGRectMake(SCREENWIDTH-70-22, self.clock.top-5, 80, 30);
 }
 
 #pragma mark action
 -(void)collection:(UIButton*)sender{
-    sender.selected = !sender.selected;
+//    sender.selected = !sender.selected;
     NSLog(@"收藏");
+    if (self.block) {
+        self.block(self.model);
+    }
 }
-
+-(void)lectureListCollectWithBlock:(LectureListCollectBlock)block{
+    self.block = block;
+}
 
 #pragma mark refresh
 -(void)refreshLectureCellWithModel:(XZTheMasterModel*)model{
     if (model) {
+        self.model = model;
         [self.photo setImageWithURL:[NSURL URLWithString:model.masterIcon] options:YYWebImageOptionProgressive ];
         
         UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.photo.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:self.photo.bounds.size];
@@ -81,7 +87,7 @@
         self.remain.text = model.remainSeats;
         self.price.text = model.price;
         self.time.text = model.startTime;
-        self.collection.selected = model.isCollected;
+        self.collection.selected = [model.collect intValue];
     }
 }
 

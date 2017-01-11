@@ -9,11 +9,13 @@
 #import "XZTheMasterView.h"
 #import "XZFindTable.h"
 #import "XZTheMasterModel.h"
+#import "XZLoginVC.h"
 
 @interface XZTheMasterView ()
 @property (nonatomic,strong) XZFindTable * hotMaster;
 @property (nonatomic,strong) XZFindTable * localMaster;
 @property (nonatomic,strong) XZFindTable * allMaster;
+@property (nonatomic,strong) NSIndexPath * selectIndex;
 @end
 
 @implementation XZTheMasterView{
@@ -84,16 +86,19 @@
 }
 -(void)setupBlock{
     __weak typeof(self)weakSelf = self;
-    [_hotMaster pointOfPraiseMasterWithBlock:^(NSString *masterCode) {
+    [_hotMaster pointOfPraiseMasterWithBlock:^(NSString *masterCode,NSIndexPath * indexPath) {
         [weakSelf pointOfPraiseMasterWithMasterCode:masterCode];
+        weakSelf.selectIndex = indexPath;
     }];
     
-    [_localMaster pointOfPraiseMasterWithBlock:^(NSString *masterCode) {
+    [_localMaster pointOfPraiseMasterWithBlock:^(NSString *masterCode,NSIndexPath * indexPath) {
         [weakSelf pointOfPraiseMasterWithMasterCode:masterCode];
+        weakSelf.selectIndex = indexPath;
     }];
     
-    [_allMaster pointOfPraiseMasterWithBlock:^(NSString *masterCode) {
+    [_allMaster pointOfPraiseMasterWithBlock:^(NSString *masterCode,NSIndexPath * indexPath) {
         [weakSelf pointOfPraiseMasterWithMasterCode:masterCode];
+        weakSelf.selectIndex = indexPath;
     }];
 }
 
@@ -133,10 +138,22 @@
  @param masterCode 。。
  */
 -(void)pointOfPraiseMasterWithMasterCode:(NSString*)masterCode{
-    
-    XZFindService * pointOfPraiseService = [[XZFindService alloc]initWithServiceTag:XZPointOfPraiseMaster];
-    pointOfPraiseService.delegate = self;
-    [pointOfPraiseService pointOfPraiseMasterWithCityCode:@"110000" masterCode:masterCode userCode:_userCode view:self];
+    NSDictionary * userDic = GETUserdefault(@"userInfos");
+    BOOL isLogin = [[userDic objectForKey:@"isLogin"]boolValue];
+    if (isLogin) {
+        XZFindService * pointOfPraiseService = [[XZFindService alloc]initWithServiceTag:XZPointOfPraiseMaster];
+        pointOfPraiseService.delegate = self;
+        [pointOfPraiseService pointOfPraiseMasterWithCityCode:@"110000" masterCode:masterCode userCode:_userCode view:self];
+    }else{
+        [ToastManager showToastOnView:self position:CSToastPositionCenter flag:NO message:@"请先登录"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];
+            nav.navigationBar.hidden = YES;
+            [self.curVC.navigationController presentViewController:nav animated:YES completion:nil];
+
+        });
+    }
+   
 
 }
 
@@ -212,6 +229,14 @@
         }
             break;
         case XZPointOfPraiseMaster:{
+            NSDictionary * dic = (NSDictionary*)succeedHandle;
+            if ([KISDictionaryHaveKey(dic, @"affect") intValue]==1) {
+                int offset = _masterScroll.contentOffset.x/SCREENWIDTH;
+                XZFindTable * masterTable = [self selectTableWithTag: (offset+200)];
+                XZTheMasterModel * model = masterTable.data [self.selectIndex.row];
+                model.pointOfPraise = [NSString stringWithFormat:@"%d",model.pointOfPraise.intValue+1];
+                [masterTable.table reloadData];
+            }
             NSLog(@"点赞  %@",succeedHandle);
         }
             break;

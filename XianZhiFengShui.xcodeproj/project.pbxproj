@@ -243,6 +243,7 @@
 		D18CD1261E2393C300DBEFD4 /* SwpNetworkingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1221E2393C300DBEFD4 /* SwpNetworkingTools.m */; };
 		D18CD1271E2393C300DBEFD4 /* SwpNetworkingVariableType.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1241E2393C300DBEFD4 /* SwpNetworkingVariableType.m */; };
 		D18CD12A1E24E3F700DBEFD4 /* XZMyAccountService.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1291E24E3F700DBEFD4 /* XZMyAccountService.m */; };
+		D18CD12D1E2630BA00DBEFD4 /* XZSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD12C1E2630BA00DBEFD4 /* XZSearchResultVC.m */; };
 		D18DD7071DF16780003A6E21 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D18DD7061DF16780003A6E21 /* libc++.tbd */; };
 		D18FF42A1E1248E900479E37 /* coin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4281E1248E900479E37 /* coin@2x.png */; };
 		D18FF42B1E1248E900479E37 /* coin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4291E1248E900479E37 /* coin@3x.png */; };
@@ -1043,6 +1044,8 @@
 		D18CD1241E2393C300DBEFD4 /* SwpNetworkingVariableType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwpNetworkingVariableType.m; sourceTree = "<group>"; };
 		D18CD1281E24E3F700DBEFD4 /* XZMyAccountService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMyAccountService.h; sourceTree = "<group>"; };
 		D18CD1291E24E3F700DBEFD4 /* XZMyAccountService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMyAccountService.m; sourceTree = "<group>"; };
+		D18CD12B1E2630BA00DBEFD4 /* XZSearchResultVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZSearchResultVC.h; sourceTree = "<group>"; };
+		D18CD12C1E2630BA00DBEFD4 /* XZSearchResultVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZSearchResultVC.m; sourceTree = "<group>"; };
 		D18DD7061DF16780003A6E21 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D18FF4281E1248E900479E37 /* coin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@2x.png"; sourceTree = "<group>"; };
 		D18FF4291E1248E900479E37 /* coin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@3x.png"; sourceTree = "<group>"; };
@@ -2714,6 +2717,8 @@
 				D11EAB241DC85D040053B114 /* XZMessagesVC.m */,
 				D11EAB371DC89FCB0053B114 /* XZMessageListVC.h */,
 				D11EAB381DC89FCB0053B114 /* XZMessageListVC.m */,
+				D18CD12B1E2630BA00DBEFD4 /* XZSearchResultVC.h */,
+				D18CD12C1E2630BA00DBEFD4 /* XZSearchResultVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4176,6 +4181,7 @@
 				D19590061DE3F81600C06A05 /* XHVoiceCommonHelper.m in Sources */,
 				D1D6A2991E027ED100215CEA /* DataSigner.m in Sources */,
 				D19590081DE3F81600C06A05 /* XHVoiceRecordHUD.m in Sources */,
+				D18CD12D1E2630BA00DBEFD4 /* XZSearchResultVC.m in Sources */,
 				D1D6A2271E027C3000215CEA /* WTPayManager.m in Sources */,
 				D1D6A29F1E027ED100215CEA /* RSADataVerifier.m in Sources */,
 				D18FF4311E126ED000479E37 /* XZArticleDetailVC.m in Sources */,

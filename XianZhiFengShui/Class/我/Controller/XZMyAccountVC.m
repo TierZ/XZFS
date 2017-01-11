@@ -12,6 +12,7 @@
 #import "XZMyAccountBillVC.h"
 #import "XZWithdrawVC.h"
 #import "UIButton+XZImageTitleSpacing.h"
+#import "XZMyAccountService.h"
 
 @interface XZMyAccountVC ()
 @property (nonatomic,strong)UILabel * myBalance;
@@ -27,6 +28,7 @@
     
     [self drawMyAccount];
     [self drawList];
+    [self requestMyAccount];
 }
 
 
@@ -130,6 +132,21 @@
         XZMyAccountBillVC  * myBill = [[XZMyAccountBillVC alloc]init];
         [self.navigationController pushViewController:myBill animated:YES];
     }
+}
+#pragma mark 网络
+-(void)requestMyAccount{
+    NSDictionary * userDic =GETUserdefault(@"userInfos");
+    NSString * userCode = KISDictionaryHaveKey(userDic, @"bizCode");
+    XZMyAccountService * myAccountService = [[XZMyAccountService alloc]initWithServiceTag:XZAccountTag];
+    myAccountService.delegate = self;
+    [myAccountService requestMyAccountWithUserCode:userCode view:self.mainView];
+}
+
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    NSLog(@"succeedHandle = %@",succeedHandle);
+}
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+NSLog(@"failHandle = %@",failHandle);
 }
 #pragma mark getter
 

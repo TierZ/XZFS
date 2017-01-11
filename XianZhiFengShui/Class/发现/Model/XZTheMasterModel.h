@@ -46,7 +46,7 @@
 @property (nonatomic,copy)NSString * masterIcon;//大师icon
 
 
-@property (nonatomic,assign)BOOL isCollected;//收藏
+@property (nonatomic,copy)NSString* collect;//是否收藏 1：收藏 0：未收藏
 
 // 话题
 @property (nonatomic,copy)NSString * onFocus;//关注

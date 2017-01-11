@@ -12,8 +12,8 @@
 #import "XZFindTable.h"
 #import "XZTheMasterModel.h"
 #import "XZFindService.h"
-#import "AFHTTPSessionManager.h"
-#import "AFShareClass.h"
+#import "XZLectureDetailData.h"
+#import "XZLoginVC.h"
 
 @interface XZFindVC ()<UIScrollViewDelegate>
 @property (nonatomic,strong)NSArray * titleArray;
@@ -24,6 +24,7 @@
 @property (nonatomic,strong)XZTheMasterView * mastView;//大师
 @property (nonatomic,strong)XZFindTable * lectureView;//讲座
 @property (nonatomic,strong)XZFindTable * themeView;//话题
+@property (nonatomic,strong)NSIndexPath * selectIndex;
 @end
 
 @implementation XZFindVC
@@ -66,7 +67,9 @@
 -(void)requestLectureListWithPage:(int)page{
     XZFindService * lectureService = [[XZFindService alloc]initWithServiceTag:XZLectureList];
     lectureService.delegate = self;
-    [lectureService lectureListWithPageNum:page PageSize:10 cityCode:@"110000" view: self.lectureView];
+    NSDictionary * dic = GETUserdefault(@"userInfos");
+    NSString * userCodeStr = KISDictionaryHaveKey(dic, @"bizCode");
+    [lectureService lectureListWithPageNum:page PageSize:10 userCode:userCodeStr cityCode:@"110000" view: self.lectureView];
 }
 
 
@@ -81,50 +84,93 @@
 }
 
 
--(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
-    XZFindService * findService = (XZFindService*)service;
-    switch (findService.serviceTag) {
-        case XZLectureList:{
-            NSLog(@"successHandle= %@",succeedHandle);
-            NSArray * lectures = (NSArray*)succeedHandle;
-            [self.lectureView.data addObjectsFromArray:lectures];
-            [self.lectureView.table reloadData];
-            [self.lectureView.table endRefreshFooter];
-            [self.lectureView.table endRefreshHeader];
-            if (lectures.count<=0) {
-                self.lectureView.table.mj_footer.hidden = YES;
-            }
-            if (self.lectureView.data.count<=0) {
-                [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-//                    [self requestLectureListWithPage:1];
-                }];
-            }else{
-                [self.mainView hideNoDataView];
-            }
-        }
-            break;
-        case XZThemeTypeList:{
-            NSLog(@"successHandle2= %@",succeedHandle);
-            NSArray * themes = (NSArray*)succeedHandle;
-            [self.themeView.data addObjectsFromArray:themes];
-            [self.themeView.table reloadData];
-            [self.themeView.table endRefreshFooter];
-            [self.themeView.table endRefreshHeader];
-            if (themes.count<=0) {
-                self.themeView.table.mj_footer.hidden = YES;
-            }
-            if (self.themeView.data.count<=0) {
-                [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-//                    [self requestThemeList];
-                }];
-            }else{
-                [self.mainView hideNoDataView];
-            }
-        }
-            break;
-        default:
-            break;
+/**
+ 收藏/取消收藏 讲座
+
+ @param type        类型（1收藏   0 取消收藏）
+ @param lectureCode <#lectureCode description#>
+ */
+-(void)lectureCollectWithType:(NSString*)type lectureCode:(NSString*)lectureCode{
+    NSDictionary * dic = GETUserdefault(@"userInfos");
+    BOOL isLogin = [KISDictionaryHaveKey(dic, @"isLogin")boolValue];
+    if (!isLogin) {
+        [ToastManager showToastOnView:self.mainView position:CSToastPositionCenter flag:NO message:@"请先登录"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];
+            nav.navigationBar.hidden = YES;
+            [self.navigationController presentViewController:nav animated:YES completion:nil];
+        });
+        return;
     }
+    NSString * userCode = KISDictionaryHaveKey(dic, @"bizCode");
+    XZLectureDetailData * lectureCollectService = [[XZLectureDetailData alloc]initWithServiceTag:XZLectureCollection];
+    lectureCollectService.delegate = self;
+    [lectureCollectService collectLectureWithUsercode:userCode lectCode:lectureCode type:type view:self.mainView];
+}
+
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    if ([service isKindOfClass:[XZFindService class]]) {
+        XZFindService * findService = (XZFindService*)service;
+        switch (findService.serviceTag) {
+            case XZLectureList:{
+                NSLog(@"successHandle= %@",succeedHandle);
+                NSArray * lectures = (NSArray*)succeedHandle;
+                if (self.lectureView.table.row==1) {
+                    [self.lectureView.data removeAllObjects];
+                }
+                [self.lectureView.data addObjectsFromArray:lectures];
+                [self.lectureView.table reloadData];
+                [self.lectureView.table endRefreshFooter];
+                [self.lectureView.table endRefreshHeader];
+                if (lectures.count<=0) {
+                    self.lectureView.table.mj_footer.hidden = YES;
+                }
+                if (self.lectureView.data.count<=0) {
+                    [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
+                        //                    [self requestLectureListWithPage:1];
+                    }];
+                }else{
+                    [self.mainView hideNoDataView];
+                }
+            }
+                break;
+            case XZThemeTypeList:{
+                NSLog(@"successHandle2= %@",succeedHandle);
+                NSArray * themes = (NSArray*)succeedHandle;
+                [self.themeView.data addObjectsFromArray:themes];
+                [self.themeView.table reloadData];
+                [self.themeView.table endRefreshFooter];
+                [self.themeView.table endRefreshHeader];
+                if (themes.count<=0) {
+                    self.themeView.table.mj_footer.hidden = YES;
+                }
+                if (self.themeView.data.count<=0) {
+                    [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
+                        //                    [self requestThemeList];
+                    }];
+                }else{
+                    [self.mainView hideNoDataView];
+                }
+            }
+                break;
+            default:
+                break;
+        }
+
+    }else if ([service isKindOfClass:[XZLectureDetailData class]]){
+        NSLog(@"讲座收藏==%@",succeedHandle);
+        NSLog(@"讲座收藏有问题");
+        NSDictionary * dic = (NSDictionary*)succeedHandle;
+        if ([[dic objectForKey:@"statusCode"]intValue]==200) {
+            XZTheMasterModel * model = self.lectureView.data[self.selectIndex.row];
+            NSString * isCollect = model.collect;
+            
+            model.collect = isCollect?@"1":@"0";
+            [self.lectureView.table reloadData];
+        }
+        [ToastManager showToastOnView:self.lectureView position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
+    }
+    
 }
 
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
@@ -157,6 +203,11 @@
            
             [self.lectureView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
                 [weakSelf requestLectureListWithPage:page];
+            }];
+            [self.lectureView lectureListCollectionWithBlock:^(NSString *lectureCode, NSIndexPath *indexPath,NSString * isCollect) {
+                weakSelf.selectIndex = indexPath;
+                NSString * type = [isCollect intValue]>0?@"0":@"1";
+                [weakSelf lectureCollectWithType:type lectureCode:lectureCode];
             }];
         }
     }else if (scrollView.contentOffset.x==SCREENWIDTH*2){

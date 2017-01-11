@@ -56,12 +56,13 @@ typedef NS_ENUM(NSUInteger, XZHomeServiceTag) {
 
  @param pageNum      页码
  @param pageSize     每页
+  @param userCode     用户id
  @param cityCode     城市
  @param view         。。
  @param successBlock 成功
  @param errorBlock   失败
  */
--(void)lectureListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode view:(id)view successBlock:(void (^)(NSArray *data))successBlock failBlock:(void (^)(NSError *error))errorBlock;
+-(void)lectureListWithPageNum:(int)pageNum PageSize:(int)pageSize userCode:(NSString*)userCode cityCode:(NSString*)cityCode view:(id)view successBlock:(void (^)(NSArray *data))successBlock failBlock:(void (^)(NSError *error))errorBlock;
 
 /**
  获取城市列表

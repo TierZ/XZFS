@@ -9,6 +9,7 @@
 #import "PYSearchConst.h"
 #import "PYSearchSuggestionViewController.h"
 
+
 #define PYRectangleTagMaxCol 3 // 矩阵标签时，最多列数
 #define PYTextColor PYColor(113, 113, 113)  // 文本字体颜色
 #define PYColorPolRandomColor self.colorPol[arc4random_uniform((uint32_t)self.colorPol.count)] // 随机选取颜色池中的颜色

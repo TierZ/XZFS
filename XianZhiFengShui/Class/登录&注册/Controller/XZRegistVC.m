@@ -41,7 +41,7 @@
     self.navView.hidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     self.mainView.hidden = YES;
- }
+}
 
 -(void)layoutViews{
     [self.view addSubview:self.leftArrow];
@@ -64,15 +64,15 @@
     self.userNickIv.frame =CGRectMake(33, self.userPwdIv.bottom+40, 16, 20);
     self.userNoTf.frame = CGRectMake(self.userNoIv.right+17, self.userNoIv.top+3, SCREENWIDTH-(self.userNoIv.right+17)-20, 17);
     self.userPwdTf.frame = CGRectMake(self.userPwdIv.right+17, self.userPwdIv.top+4, 200, 16);
-     self.userNickTf.frame = CGRectMake(self.userPwdIv.right+17, self.userNickIv.top+4, 200, 16);
+    self.userNickTf.frame = CGRectMake(self.userPwdIv.right+17, self.userNickIv.top+4, 200, 16);
     self.codeTf.frame = CGRectMake(self.userPwdIv.left, self.userNickTf.bottom+44, 200, 16);
-
+    
     self.sendCodeBtn.frame = CGRectMake(SCREENWIDTH-20-80, self.codeTf.top-9, 80, 24);
     self.registBtn.frame = CGRectMake(20, self.codeTf.bottom+30, SCREENWIDTH-40, 45);
     self.agreeProtocalBtn.frame = CGRectMake(30, self.registBtn.bottom+12, 12, 12);
     self.agreeProtocalLab.frame = CGRectMake(self.agreeProtocalBtn.right+5, self.registBtn.bottom+8, 80, 12);
     [self.agreeProtocalLab sizeToFit];
-     self.protocalBtn.frame = CGRectMake(self.agreeProtocalLab.right+2, self.registBtn.bottom+12, 100, 12);
+    self.protocalBtn.frame = CGRectMake(self.agreeProtocalLab.right+2, self.registBtn.bottom+12, 100, 12);
     
     for (int i = 0; i<4; i++) {
         UIView * line = [[UIView alloc]initWithFrame:CGRectMake(20, self.userNoIv.bottom+5+i*60, SCREENWIDTH-40, 0.5)];
@@ -80,7 +80,7 @@
         [self.view addSubview:line];
     }
     
-
+    
 }
 
 #pragma mark action
@@ -125,14 +125,14 @@
 
 /**
  请求验证码
-
+ 
  @param phoneNum 手机号
  */
 -(void)sendSecurityCodeWithPhone:(NSString*)phoneNum{
     XZLoginRegistService * securityService = [[XZLoginRegistService alloc]initWithServiceTag:XZGetSecurityTag];
     securityService.delegate = self;
     [securityService requestSecurityCodeWithPhoneNo:phoneNum cityCode:@"110000" type:@"1" view:self.view];
-
+    
 }
 
 
@@ -143,7 +143,7 @@
     XZLoginRegistService * registService = [[XZLoginRegistService alloc]initWithServiceTag:XZRegistTag];
     registService.delegate = self;
     [registService registWithMobilePhone:self.userNoTf.text password:self.userPwdTf.text nickName:self.userNickTf.text cityCode:@"11000" view:self.view];
-
+    
 }
 
 //回调
@@ -158,31 +158,29 @@
         }
             break;
         case XZRegistTag:{
-//            NSDictionary * dic = (NSDictionary*)succeedHandle;
-//            NSDictionary * data = [dic objectForKey:@"data"];
-//            self.securityCode = [data objectForKey:@"vcode"];
-//            NSLog(@"successHandle = %@",succeedHandle);
-//            if ([[dic objectForKey:@"statusCode"]isEqualToString:@"200"]) {
-//            JMSGUser registerWithUsername:<#(nonnull NSString *)#> password:<#(nonnull NSString *)#> completionHandler:<#^(id resultObject, NSError *error)handler#>
-//            [JMSGUser loginWithUsername:self.userNoTf.text password:self.userPwdTf.text completionHandler:^(id resultObject, NSError *error) {
-//                if (error) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        [MBProgressHUD hideHUDForView:self.view animated:YES];
-//                    });
-//                    [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
-//                }else{
-//                    [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:@"登陆成功"];
-//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                        [self dismissViewControllerAnimated:YES completion:nil];
-//                    });
-//                    
-//                }
-//            }];
-            
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.navigationController popViewControllerAnimated:YES];
-                });
-//           }
+            NSDictionary * dic = (NSDictionary*)succeedHandle;
+            NSDictionary * data = [dic objectForKey:@"data"];
+            //            self.securityCode = [data objectForKey:@"vcode"];
+            NSLog(@"data = %@",data);
+            if ([[dic objectForKey:@"statusCode"]isEqualToString:@"200"]) {
+                if ([[data objectForKey:@"affect"]intValue]>0) {
+                    [JMSGUser registerWithUsername:KISDictionaryHaveKey(data, @"userCode") password:KISDictionaryHaveKey(data, @"userCode") completionHandler:^(id resultObject, NSError *error) {
+                        if (error) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                            });
+                            [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
+                        }else{
+                            [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:YES message:@"注册成功"];
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                [self.navigationController popViewControllerAnimated:YES];
+                            });
+                            
+                        }
+                    }];
+                    
+                }
+            }
         }
             break;
             
@@ -192,7 +190,7 @@
 }
 
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
-
+    
 }
 #pragma mark getter
 -(UIButton *)leftArrow{
@@ -313,7 +311,7 @@
         
     }
     return _sendCodeBtn;
-
+    
 }
 
 -(UIButton *)registBtn{
@@ -363,7 +361,7 @@
         _agreeProtocalLab.font = XZFS_S_FONT(11);
     }
     return _agreeProtocalLab;
-
+    
 }
 
 

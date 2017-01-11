@@ -46,13 +46,16 @@ NSString * const FindThemeCellId = @"FindThemeCellId";
 -(void)pointOfPraiseMasterWithBlock:(PointOfPraiseMasterBlock)block{
     self.block = block;
 }
-
+-(void)lectureListCollectionWithBlock:(LectureListCollectionBlock)block{
+    self.lectureCollectBlock = block;
+}
 #pragma mark tableDelegatef
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.data.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    __weak typeof(self)weakSelf = self;
     NSString * cellid = [self cellIdentifierWithStyle:_style];
     switch (_style) {
         case XZFindMaster:{
@@ -61,10 +64,10 @@ NSString * const FindThemeCellId = @"FindThemeCellId";
                 cell = [[XZTheMasterCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 }
             [cell refreshMasterCellWithModel:self.data [indexPath.row]];
-            __weak typeof(self)weakSelf = self;
+            
             [cell agreeMasterWithBlock:^(XZTheMasterModel *model) {
                 if (weakSelf.block) {
-                    weakSelf.block(model.masterCode);
+                    weakSelf.block(model.masterCode,indexPath);
                 }
             }];
             return cell;
@@ -76,8 +79,13 @@ NSString * const FindThemeCellId = @"FindThemeCellId";
                 cell = [[XZLectureCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
             }
             [cell showPrice:self.showLecturePrice];
-        [cell openCollectionUserInterfaced:self.showLecturePrice];
+            [cell openCollectionUserInterfaced:self.showLecturePrice];
             [cell refreshLectureCellWithModel:self.data [indexPath.row]];
+        [cell lectureListCollectWithBlock:^(XZTheMasterModel *model) {
+            if (weakSelf.lectureCollectBlock) {
+                weakSelf.lectureCollectBlock(model.lecturesCode,indexPath,model.collect);
+            }
+        }];
             return cell;
         }
             break;
@@ -87,7 +95,6 @@ NSString * const FindThemeCellId = @"FindThemeCellId";
             if (!cell) {
                 cell = [[XZThemeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
             }
-            
             [cell refreshThemeCellWithModel:self.data [indexPath.row]];
             return cell;
         }

@@ -13,6 +13,8 @@
 #import "XZMessagesVC.h"
 #import "XZHomeService.h"
 #import "XZFindService.h"
+#import "XZSearchResultVC.h"
+#import "XZTheMasterCell.h"
 @interface XZHomePageVC ()<UIWebViewDelegate,PYSearchViewControllerDelegate>
 @property (nonatomic,strong)XZHomeView * home ;
 @property (nonatomic,strong)NSString  * cityCode ;
@@ -22,7 +24,7 @@
 @end
 
 @implementation XZHomePageVC{
-
+    PYSearchViewController *_searchViewController ;
 }
 
 - (void)viewDidLoad {
@@ -64,6 +66,8 @@
 // 数据请求
 -(void)initData
 {
+    NSDictionary * dic = GETUserdefault(@"userInfos");
+    NSString * userCodeStr = KISDictionaryHaveKey(dic, @"bizCode");
         // 创建信号量
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     // 创建全局并行
@@ -85,8 +89,7 @@
 
     });
     dispatch_group_async(group, queue, ^{
-        NSDictionary * dic = GETUserdefault(@"userInfos");
-        NSString * userCodeStr = KISDictionaryHaveKey(dic, @"bizCode");
+       
         XZHomeService * homeMasterService = [[XZHomeService alloc]init];
        [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:_cityCode keyWord:@"全部" searchType:1 userCode:userCodeStr view:self.mainView successBlock:^(NSArray *data) {
               self.masters = [NSMutableArray arrayWithArray:data];
@@ -99,7 +102,7 @@
     });
     dispatch_group_async(group, queue, ^{
        XZHomeService * homeLectureService = [[XZHomeService alloc]init];
-        [homeLectureService lectureListWithPageNum:1 PageSize:10 cityCode:_cityCode view:self.mainView successBlock:^(NSArray *data) {
+        [homeLectureService lectureListWithPageNum:1 PageSize:10 userCode:userCodeStr cityCode:_cityCode view:self.mainView successBlock:^(NSArray *data) {
             self.lectures = [NSMutableArray arrayWithArray:data];
             dispatch_semaphore_signal(semaphore);
         } failBlock:^(NSError *error) {
@@ -126,15 +129,37 @@
     // 1.创建热门搜索
     NSArray *hotSeaches = @[@"商务风水", @"家居风水", @"流年运势", @"手相面相", @"婚恋情感", @"良辰吉日", @"周公解梦", @"阴宅风水"];
     // 2. 创建控制器
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"搜索大师、话题" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+    _searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"搜索大师、话题" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         
+        NSDictionary * dic = GETUserdefault(@"userInfos");
+        NSString * userCodeStr = KISDictionaryHaveKey(dic, @"bizCode");
+        XZHomeService * homeMasterService = [[XZHomeService alloc]init];
+        [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:@"11000" keyWord:searchText searchType:1 userCode:userCodeStr view:self.mainView successBlock:^(NSArray *data) {
+            searchViewController.searchSuggestions = data;
+//            if (_searchTable.data.count<=0) {
+//                [_searchTable showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^{
+//                    [self searchWithKeyWord:_keyword];
+//                } btnBlock:nil];
+//            }else{
+//                [_searchTable hideNoDataView];
+//            }
+            NSLog(@"dataarray = %@",data);
+        } failBlock:^(NSError *error) {
+//            [_searchTable showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^{
+//                [self searchWithKeyWord:_keyword];
+//            } btnBlock:nil];
+            NSLog(@"error= %@",error);
+        }];
+        
+//        XZSearchResultVC * resultVC = [[XZSearchResultVC alloc]initWithKeyWord:searchText];
+//        [searchViewController.navigationController pushViewController:resultVC animated:YES];
     }];
     // 3. 设置风格
-        searchViewController.searchHistoryStyle = PYHotSearchStyleDefault;
-    searchViewController.hotSearchStyle = PYHotSearchStyleDefault;
-    searchViewController.delegate = self;
+    _searchViewController.searchHistoryStyle = PYHotSearchStyleDefault;
+    _searchViewController.hotSearchStyle = PYHotSearchStyleDefault;
+    _searchViewController.delegate = self;
     // 5. 跳转到搜索控制器
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_searchViewController];
     [self presentViewController:nav  animated:YES completion:nil];
 }
 
@@ -145,19 +170,51 @@
 #pragma mark - PYSearchViewControllerDelegate
 - (void)searchViewController:(PYSearchViewController *)searchViewController searchTextDidChange:(UISearchBar *)seachBar searchText:(NSString *)searchText
 {
-    if (searchText.length) { // 与搜索条件再搜索
-        // 根据条件发送查询（这里模拟搜索）
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 搜素完毕
-            // 显示建议搜索结果
-            NSMutableArray *searchSuggestionsM = [NSMutableArray array];
-            for (int i = 0; i < arc4random_uniform(5) + 10; i++) {
-                NSString *searchSuggestion = [NSString stringWithFormat:@"搜索建议 %d", i];
-                [searchSuggestionsM addObject:searchSuggestion];
-            }
-            // 返回
-            searchViewController.searchSuggestions = searchSuggestionsM;
-        });
+    NSLog(@"$$$$$searchtext&&&& = %@",searchText);
+    
+//    if (searchText.length) { // 与搜索条件再搜索
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 搜素完毕
+//            // 显示建议搜索结果
+//            NSMutableArray *searchSuggestionsM = [NSMutableArray array];
+//            for (int i = 0; i < arc4random_uniform(5) + 10; i++) {
+//                NSString *searchSuggestion = [NSString stringWithFormat:@"搜索建议 %d", i];
+//                [searchSuggestionsM addObject:searchSuggestion];
+//            }
+//            // 返回
+//            searchViewController.searchSuggestions = searchSuggestionsM;
+//        });
+//    }
+}
+
+/** 返回用户自定义搜索建议Cell */
+- (UITableViewCell *)searchSuggestionView:(UITableView *)searchSuggestionView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    XZTheMasterCell * cell = [searchSuggestionView dequeueReusableCellWithIdentifier:@"searchCellId"];
+    if (!cell) {
+        cell = [[XZTheMasterCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"searchCellId"];
     }
+    [cell refreshMasterCellWithModel:_searchViewController.searchSuggestions [indexPath.row]];
+    
+//    [cell agreeMasterWithBlock:^(XZTheMasterModel *model) {
+//        if (weakSelf.block) {
+//            weakSelf.block(model.masterCode,indexPath);
+//        }
+//    }];
+    return cell;
+
+}
+/** 返回用户自定义搜索建议cell的rows */
+- (NSInteger)searchSuggestionView:(UITableView *)searchSuggestionView numberOfRowsInSection:(NSInteger)section{
+    return _searchViewController.searchSuggestions.count;
+}
+/** 返回用户自定义搜索建议cell的section */
+- (NSInteger)numberOfSectionsInSearchSuggestionView:(UITableView *)searchSuggestionView{
+    return 1;
+}
+/** 返回用户自定义搜索建议cell高度 */
+- (CGFloat)searchSuggestionView:(UITableView *)searchSuggestionView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
+//    UITableViewCell * cell = [self tableView:searchSuggestionView cellForRowAtIndexPath:indexPath];
+//    return cell.height;
 }
 
 #pragma mark  getter

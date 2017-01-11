@@ -74,11 +74,9 @@
         lecture.masterName = @"张三丰";
         lecture.masterDesc = @"中国道教协会会长，武当创始人，太极";
         lecture.title = @"聊聊买房买车开公司那些事";
-        lecture.isCollected = NO;
         if (i%5==0) {
             lecture.masterName  =@"老子 ";
             lecture.title  =@"做梦解梦，你了不了解你梦到的东西";
-            lecture.isCollected = YES;
         }
         lecture.price = @"￥99";
         lecture.startTime = @"9月18日  9:00";

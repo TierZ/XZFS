@@ -120,9 +120,10 @@ static NSString * XZPointOfPraiseService = @"/master/pointOfPraise";
 
 
 #pragma mark 讲座列表
--(void)lectureListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode view:(id)view{
+-(void)lectureListWithPageNum:(int)pageNum PageSize:(int)pageSize userCode:(NSString*)userCode cityCode:(NSString*)cityCode view:(id)view{
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
     [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:userCode?:@"" forKey:@"userCode"];
     [dic setObject:[NSNumber numberWithInt:pageNum] forKey:@"pageNum"];
     [dic setObject:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
     

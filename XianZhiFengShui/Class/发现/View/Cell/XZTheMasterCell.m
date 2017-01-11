@@ -68,7 +68,7 @@
         self.agreeBlock(self.model);
     }
 //    sender.selected = !sender.selected;
-    sender.selected = YES;
+//    sender.selected = YES;
 }
 
 -(void)agreeMasterWithBlock:(AgreeMasterBlock)block{
@@ -90,7 +90,11 @@
         self.successLab.frame = frame;
         [self.agreeBtn setTitle:model.pointOfPraise forState:UIControlStateNormal];
         self.agreeBtn.frame = CGRectMake(self.successLab.right-16, 8, 100, 18);
-        
+        if (model.pointOfPraise.intValue>0) {
+            [_agreeBtn setImage:XZFS_IMAGE_NAMED(@"yidianzan") forState:UIControlStateNormal];}
+        else{
+            [_agreeBtn setImage:XZFS_IMAGE_NAMED(@"weidianzan") forState:UIControlStateNormal];
+        }
         self.tagView.tagsArray = model.type;
         [self.tagView setupTags];
     

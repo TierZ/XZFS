@@ -84,10 +84,11 @@ typedef NS_ENUM(NSUInteger, XZFindServiceTag) {
 
  @param pageNum 页码
  @param pageSize 每页个数
+ @param userCode 用户id
  @param cityCode 城市代码
  @param view 。。
  */
--(void)lectureListWithPageNum:(int)pageNum PageSize:(int)pageSize cityCode:(NSString*)cityCode view:(id)view;
+-(void)lectureListWithPageNum:(int)pageNum PageSize:(int)pageSize userCode:(NSString*)userCode cityCode:(NSString*)cityCode view:(id)view;
 
 
 /**
