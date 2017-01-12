@@ -7,10 +7,11 @@
 //
 
 #import "XZMasterOrderCell.h"
-
+#import "XZMasterModel.h"
 /**
  大师端 我的订单 已取消
  */
 @interface XZYQXCell : XZMasterOrderCell
-
+@property (nonatomic,strong)XZMasterOrderModel * model;
+@property (nonatomic,strong)NSIndexPath * indexPath;
 @end

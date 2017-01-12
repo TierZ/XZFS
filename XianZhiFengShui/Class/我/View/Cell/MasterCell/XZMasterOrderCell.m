@@ -15,6 +15,7 @@
     if (self) {
         [self setupCell];
         [self layoutCell];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
@@ -22,6 +23,7 @@
 -(void)setupCell{
     _icon = [[UIImageView alloc]init];
     _icon.backgroundColor = [UIColor redColor];
+
     
     _service = [self setupLabelWithFont:12 textColor:XZFS_TEXTBLACKCOLOR text:@"--" isBold:NO];
     _time = [self setupLabelWithFont:11 textColor:XZFS_HEX_RGB(@"#C9CACA") text:@"--" isBold:NO];
@@ -43,6 +45,7 @@
     .topSpaceToView(self.contentView,8)
     .widthIs(35)
     .heightIs(35);
+    [_icon.layer addSublayer:[Tool drawCornerWithRect:_icon.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(35/2, 35/2) borderWidth:0 strokeColor:[UIColor clearColor] fillColor:[UIColor clearColor]]];
     
     _service.sd_layout
     .leftSpaceToView(_icon,18)

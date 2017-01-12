@@ -244,6 +244,18 @@
 		D18CD1271E2393C300DBEFD4 /* SwpNetworkingVariableType.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1241E2393C300DBEFD4 /* SwpNetworkingVariableType.m */; };
 		D18CD12A1E24E3F700DBEFD4 /* XZMyAccountService.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1291E24E3F700DBEFD4 /* XZMyAccountService.m */; };
 		D18CD12D1E2630BA00DBEFD4 /* XZSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD12C1E2630BA00DBEFD4 /* XZSearchResultVC.m */; };
+		D18CD1301E27680A00DBEFD4 /* XZMasterOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD12F1E27680A00DBEFD4 /* XZMasterOrderVC.m */; };
+		D18CD1361E2768D600DBEFD4 /* XZMasterOrderSuccessRateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1351E2768D600DBEFD4 /* XZMasterOrderSuccessRateVC.m */; };
+		D18CD1391E2768FE00DBEFD4 /* XZMasterOrderEvaluateLevelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1381E2768FE00DBEFD4 /* XZMasterOrderEvaluateLevelVC.m */; };
+		D18CD13E1E276A3700DBEFD4 /* chengjiaolv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18CD13A1E276A3700DBEFD4 /* chengjiaolv@2x.png */; };
+		D18CD13F1E276A3700DBEFD4 /* chengjiaolv@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18CD13B1E276A3700DBEFD4 /* chengjiaolv@3x.png */; };
+		D18CD1401E276A3700DBEFD4 /* pingjiaxingji@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18CD13C1E276A3700DBEFD4 /* pingjiaxingji@2x.png */; };
+		D18CD1411E276A3700DBEFD4 /* pingjiaxingji@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18CD13D1E276A3700DBEFD4 /* pingjiaxingji@3x.png */; };
+		D18CD1441E276B9200DBEFD4 /* XZMasterOrderDYYVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1431E276B9200DBEFD4 /* XZMasterOrderDYYVCViewController.m */; };
+		D18CD1471E27881F00DBEFD4 /* XZMasterOrderYYYVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1461E27881F00DBEFD4 /* XZMasterOrderYYYVC.m */; };
+		D18CD14A1E2789B400DBEFD4 /* XZMasterOrderYYJVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1491E2789B400DBEFD4 /* XZMasterOrderYYJVC.m */; };
+		D18CD14D1E278A9100DBEFD4 /* XZMasterOrderYQXVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD14C1E278A9100DBEFD4 /* XZMasterOrderYQXVC.m */; };
+		D18CD14F1E278DB300DBEFD4 /* MasterSelfList.plist in Resources */ = {isa = PBXBuildFile; fileRef = D18CD14E1E278DB300DBEFD4 /* MasterSelfList.plist */; };
 		D18DD7071DF16780003A6E21 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D18DD7061DF16780003A6E21 /* libc++.tbd */; };
 		D18FF42A1E1248E900479E37 /* coin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4281E1248E900479E37 /* coin@2x.png */; };
 		D18FF42B1E1248E900479E37 /* coin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4291E1248E900479E37 /* coin@3x.png */; };
@@ -1046,6 +1058,25 @@
 		D18CD1291E24E3F700DBEFD4 /* XZMyAccountService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMyAccountService.m; sourceTree = "<group>"; };
 		D18CD12B1E2630BA00DBEFD4 /* XZSearchResultVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZSearchResultVC.h; sourceTree = "<group>"; };
 		D18CD12C1E2630BA00DBEFD4 /* XZSearchResultVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZSearchResultVC.m; sourceTree = "<group>"; };
+		D18CD12E1E27680A00DBEFD4 /* XZMasterOrderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterOrderVC.h; sourceTree = "<group>"; };
+		D18CD12F1E27680A00DBEFD4 /* XZMasterOrderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterOrderVC.m; sourceTree = "<group>"; };
+		D18CD1341E2768D600DBEFD4 /* XZMasterOrderSuccessRateVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterOrderSuccessRateVC.h; sourceTree = "<group>"; };
+		D18CD1351E2768D600DBEFD4 /* XZMasterOrderSuccessRateVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterOrderSuccessRateVC.m; sourceTree = "<group>"; };
+		D18CD1371E2768FE00DBEFD4 /* XZMasterOrderEvaluateLevelVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterOrderEvaluateLevelVC.h; sourceTree = "<group>"; };
+		D18CD1381E2768FE00DBEFD4 /* XZMasterOrderEvaluateLevelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterOrderEvaluateLevelVC.m; sourceTree = "<group>"; };
+		D18CD13A1E276A3700DBEFD4 /* chengjiaolv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chengjiaolv@2x.png"; sourceTree = "<group>"; };
+		D18CD13B1E276A3700DBEFD4 /* chengjiaolv@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chengjiaolv@3x.png"; sourceTree = "<group>"; };
+		D18CD13C1E276A3700DBEFD4 /* pingjiaxingji@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pingjiaxingji@2x.png"; sourceTree = "<group>"; };
+		D18CD13D1E276A3700DBEFD4 /* pingjiaxingji@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pingjiaxingji@3x.png"; sourceTree = "<group>"; };
+		D18CD1421E276B9200DBEFD4 /* XZMasterOrderDYYVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterOrderDYYVCViewController.h; sourceTree = "<group>"; };
+		D18CD1431E276B9200DBEFD4 /* XZMasterOrderDYYVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterOrderDYYVCViewController.m; sourceTree = "<group>"; };
+		D18CD1451E27881F00DBEFD4 /* XZMasterOrderYYYVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterOrderYYYVC.h; sourceTree = "<group>"; };
+		D18CD1461E27881F00DBEFD4 /* XZMasterOrderYYYVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterOrderYYYVC.m; sourceTree = "<group>"; };
+		D18CD1481E2789B400DBEFD4 /* XZMasterOrderYYJVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterOrderYYJVC.h; sourceTree = "<group>"; };
+		D18CD1491E2789B400DBEFD4 /* XZMasterOrderYYJVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterOrderYYJVC.m; sourceTree = "<group>"; };
+		D18CD14B1E278A9100DBEFD4 /* XZMasterOrderYQXVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterOrderYQXVC.h; sourceTree = "<group>"; };
+		D18CD14C1E278A9100DBEFD4 /* XZMasterOrderYQXVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterOrderYQXVC.m; sourceTree = "<group>"; };
+		D18CD14E1E278DB300DBEFD4 /* MasterSelfList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MasterSelfList.plist; sourceTree = "<group>"; };
 		D18DD7061DF16780003A6E21 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D18FF4281E1248E900479E37 /* coin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@2x.png"; sourceTree = "<group>"; };
 		D18FF4291E1248E900479E37 /* coin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@3x.png"; sourceTree = "<group>"; };
@@ -2055,6 +2086,7 @@
 				D180ADA21DFFC08B0043FB61 /* miy.db */,
 				D1315B571DBA1A50006254ED /* Images */,
 				D113CC4B1DAF56550067A965 /* MySelfList.plist */,
+				D18CD14E1E278DB300DBEFD4 /* MasterSelfList.plist */,
 				84F9C4211DD7195A000EF201 /* SkillTags.plist */,
 			);
 			path = Resource;
@@ -2478,6 +2510,20 @@
 				D18FF4571E1CC13E00479E37 /* XZMasterServiceVC.m */,
 				D18FF4591E1CC44A00479E37 /* XZMasterAddServiceVC.h */,
 				D18FF45A1E1CC44A00479E37 /* XZMasterAddServiceVC.m */,
+				D18CD12E1E27680A00DBEFD4 /* XZMasterOrderVC.h */,
+				D18CD12F1E27680A00DBEFD4 /* XZMasterOrderVC.m */,
+				D18CD1421E276B9200DBEFD4 /* XZMasterOrderDYYVCViewController.h */,
+				D18CD1431E276B9200DBEFD4 /* XZMasterOrderDYYVCViewController.m */,
+				D18CD1451E27881F00DBEFD4 /* XZMasterOrderYYYVC.h */,
+				D18CD1461E27881F00DBEFD4 /* XZMasterOrderYYYVC.m */,
+				D18CD1481E2789B400DBEFD4 /* XZMasterOrderYYJVC.h */,
+				D18CD1491E2789B400DBEFD4 /* XZMasterOrderYYJVC.m */,
+				D18CD14B1E278A9100DBEFD4 /* XZMasterOrderYQXVC.h */,
+				D18CD14C1E278A9100DBEFD4 /* XZMasterOrderYQXVC.m */,
+				D18CD1341E2768D600DBEFD4 /* XZMasterOrderSuccessRateVC.h */,
+				D18CD1351E2768D600DBEFD4 /* XZMasterOrderSuccessRateVC.m */,
+				D18CD1371E2768FE00DBEFD4 /* XZMasterOrderEvaluateLevelVC.h */,
+				D18CD1381E2768FE00DBEFD4 /* XZMasterOrderEvaluateLevelVC.m */,
 			);
 			path = Master;
 			sourceTree = "<group>";
@@ -3240,6 +3286,10 @@
 		D1A26A5A1DF514750092BADB /* 我 */ = {
 			isa = PBXGroup;
 			children = (
+				D18CD13A1E276A3700DBEFD4 /* chengjiaolv@2x.png */,
+				D18CD13B1E276A3700DBEFD4 /* chengjiaolv@3x.png */,
+				D18CD13C1E276A3700DBEFD4 /* pingjiaxingji@2x.png */,
+				D18CD13D1E276A3700DBEFD4 /* pingjiaxingji@3x.png */,
 				D1A26AE31DF54FA80092BADB /* level1@2x.png */,
 				D1A26AE41DF54FA80092BADB /* level1@3x.png */,
 				D1A26ADF1DF544980092BADB /* weishoucang@2x.png */,
@@ -3860,6 +3910,7 @@
 				D1315B9C1DBA1A50006254ED /* 5.jpg in Resources */,
 				D1A26AD31DF514750092BADB /* zhifubaochongzhi@2x.png in Resources */,
 				D1315BA91DBA1A50006254ED /* pic0.jpg in Resources */,
+				D18CD13F1E276A3700DBEFD4 /* chengjiaolv@3x.png in Resources */,
 				D1A26A541DF509CE0092BADB /* zhanghao@2x.png in Resources */,
 				D19590F81DE4191B00C06A05 /* add01@2x.png in Resources */,
 				D1A26AF01DF554080092BADB /* fenxiang@2x.png in Resources */,
@@ -3888,6 +3939,7 @@
 				D19591101DE4191C00C06A05 /* fail05@2x.png in Resources */,
 				D1315BA41DBA1A50006254ED /* icon1.jpg in Resources */,
 				D128AC9F1DC0A249002392E0 /* ico_check_select@2x.png in Resources */,
+				D18CD1401E276A3700DBEFD4 /* pingjiaxingji@2x.png in Resources */,
 				D128AC9E1DC0A249002392E0 /* ico_check_nomal@3x.png in Resources */,
 				D1A26A501DF509CE0092BADB /* weibodenglu@2x.png in Resources */,
 				D1A26BD21DF9678A0092BADB /* zhibi@2x.png in Resources */,
@@ -3949,6 +4001,7 @@
 				D18FF42B1E1248E900479E37 /* coin@3x.png in Resources */,
 				D1A26AA61DF514750092BADB /* huatibianji@3x.png in Resources */,
 				D1A26A521DF509CE0092BADB /* weixindenglu@2x.png in Resources */,
+				D18CD1411E276A3700DBEFD4 /* pingjiaxingji@3x.png in Resources */,
 				D1D6A21B1E026F7000215CEA /* AlipaySDK.bundle in Resources */,
 				D19590FF1DE4191B00C06A05 /* addMan_pre@3x.png in Resources */,
 				D19591011DE4191B00C06A05 /* arrows_43@3x.png in Resources */,
@@ -3982,6 +4035,7 @@
 				D1A26ACA1DF514750092BADB /* yidianzan@3x.png in Resources */,
 				D1A26AE51DF54FA80092BADB /* level1@2x.png in Resources */,
 				D19591021DE4191B00C06A05 /* camera_35@2x.png in Resources */,
+				D18CD14F1E278DB300DBEFD4 /* MasterSelfList.plist in Resources */,
 				D19590051DE3F81600C06A05 /* JCHATToolBar.xib in Resources */,
 				D1958FFB1DE3F81600C06A05 /* JCHATGroupDetailFooterReusableView.xib in Resources */,
 				D1A26A341DF5072B0092BADB /* shangcheng_select@2x.png in Resources */,
@@ -3990,6 +4044,7 @@
 				84F9C4221DD7195A000EF201 /* SkillTags.plist in Resources */,
 				D1A26ADD1DF5181F0092BADB /* youjiantou_hui@2x.png in Resources */,
 				D1A26A331DF5072B0092BADB /* faxian@3x.png in Resources */,
+				D18CD13E1E276A3700DBEFD4 /* chengjiaolv@2x.png in Resources */,
 				D1A26A3A1DF5072B0092BADB /* wo_select@2x.png in Resources */,
 				D1958FDB1DE3F81600C06A05 /* JCHATGroupDetailViewController.xib in Resources */,
 				D1A26AD21DF514750092BADB /* zhanghutixian@3x.png in Resources */,
@@ -4131,6 +4186,7 @@
 				D18FF45B1E1CC44A00479E37 /* XZMasterAddServiceVC.m in Sources */,
 				D16921401DD303BC00867011 /* XZMasterIntroduce.m in Sources */,
 				D12F74DC1DDEB8D0003E2A0B /* XZMyAccountBillVC.m in Sources */,
+				D18CD1471E27881F00DBEFD4 /* XZMasterOrderYYYVC.m in Sources */,
 				D113CC4A1DAF40610067A965 /* XZSettingVC.m in Sources */,
 				D115931F1DA8E181004A7B86 /* UIView+Additions.m in Sources */,
 				D128ACA81DC0A249002392E0 /* JJPhoto.m in Sources */,
@@ -4201,6 +4257,7 @@
 				D101106D1DDC428400F435AF /* XZMyMasterInProgressCell.m in Sources */,
 				D195902A1DE3FFF100C06A05 /* MJPhotoLoadingView.m in Sources */,
 				D12F74D91DDEB8D0003E2A0B /* XZAddBankCardVC.m in Sources */,
+				D18CD1301E27680A00DBEFD4 /* XZMasterOrderVC.m in Sources */,
 				D1131A3B1DEE83BE00E1398D /* ThumbImageCollectionViewCell.m in Sources */,
 				D11592CF1DA8D3BC004A7B86 /* XZNavigationController.m in Sources */,
 				D11592D81DA8D477004A7B86 /* BaseViewController.m in Sources */,
@@ -4276,6 +4333,7 @@
 				D180ADA11DFFAB450043FB61 /* XZOrderDetailCell.m in Sources */,
 				D19F5DC21DE54ED1001F5EB0 /* XZFeedBackVC.m in Sources */,
 				D18FF4651E1E33A300479E37 /* XZInvestFriendsVC.m in Sources */,
+				D18CD14A1E2789B400DBEFD4 /* XZMasterOrderYYJVC.m in Sources */,
 				D113CC2F1DADD43D0067A965 /* XZLectureCell.m in Sources */,
 				D18CD1271E2393C300DBEFD4 /* SwpNetworkingVariableType.m in Sources */,
 				D1958FEC1DE3F81600C06A05 /* JCHATLoadMessageTableViewCell.m in Sources */,
@@ -4301,6 +4359,7 @@
 				D129AAAA1DBF142300DA2A6D /* XZMasterInfoModel.m in Sources */,
 				D180AD8C1DFE53D30043FB61 /* XZOrderHeaderView.m in Sources */,
 				D1315B451DB9FE21006254ED /* XZImageContainerView.m in Sources */,
+				D18CD14D1E278A9100DBEFD4 /* XZMasterOrderYQXVC.m in Sources */,
 				D195902D1DE3FFF100C06A05 /* MJPhotoView.m in Sources */,
 				D128ACAB1DC0A249002392E0 /* LQImgPickerActionSheet.m in Sources */,
 				D1D6A2A21E0389CB00215CEA /* XZMallService.m in Sources */,
@@ -4314,9 +4373,11 @@
 				D191C7BF1DAB473B00496906 /* DES3Util.m in Sources */,
 				D11592851DA8CEA6004A7B86 /* ViewController.m in Sources */,
 				D1F2FB391DEFE9A500EFC19B /* XZResetPwdVC.m in Sources */,
+				D18CD1361E2768D600DBEFD4 /* XZMasterOrderSuccessRateVC.m in Sources */,
 				D195902B1DE3FFF100C06A05 /* MJPhotoProgressView.m in Sources */,
 				D1958FD61DE3F81600C06A05 /* JCHATDetailsInfoViewController.m in Sources */,
 				D12F74E41DDEB8E9003E2A0B /* XZAddBankCardCell.m in Sources */,
+				D18CD1391E2768FE00DBEFD4 /* XZMasterOrderEvaluateLevelVC.m in Sources */,
 				D12F74E61DDEB8E9003E2A0B /* XZMyEvaluateCell.m in Sources */,
 				D115931B1DA8E181004A7B86 /* Reachability.m in Sources */,
 				D1958FD81DE3F81600C06A05 /* JCHATFriendDetailViewController.m in Sources */,
@@ -4328,6 +4389,7 @@
 				D11592C31DA8CF1E004A7B86 /* AppDelegate+AppLifeCircle.m in Sources */,
 				D113CC2C1DACCC950067A965 /* XZFindTable.m in Sources */,
 				D19590781DE4010500C06A05 /* UIImage +ResizeMagick.m in Sources */,
+				D18CD1441E276B9200DBEFD4 /* XZMasterOrderDYYVCViewController.m in Sources */,
 				D12F74EC1DDEB900003E2A0B /* XZMyEvaluateModel.m in Sources */,
 				D11593231DA8E181004A7B86 /* Tool.m in Sources */,
 				D11EAB341DC8786F0053B114 /* XZMessageDetailListCell.m in Sources */,

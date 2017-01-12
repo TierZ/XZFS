@@ -7,9 +7,11 @@
 //
 
 #import "XZMasterOrderCell.h"
+#import "XZMasterModel.h"
 /**
  大师端 我的订单 已约见
  */
 @interface XZYYJCell : XZMasterOrderCell
-
+@property (nonatomic,strong)XZMasterOrderModel * model;
+@property (nonatomic,strong)NSIndexPath * indexPath;
 @end

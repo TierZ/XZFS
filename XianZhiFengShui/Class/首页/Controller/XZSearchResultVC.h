@@ -8,6 +8,6 @@
 
 #import "BaseContentController.h"
 
-@interface XZSearchResultVC : BaseContentController
+@interface XZSearchResultVC : BaseViewController
 - (instancetype)initWithKeyWord:(NSString*)keyword;
 @end

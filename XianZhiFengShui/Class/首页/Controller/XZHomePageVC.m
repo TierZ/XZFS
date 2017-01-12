@@ -37,6 +37,7 @@
 }
 
 -(void)setupNavi{
+    self.leftButton.hidden = YES;
     UIButton * searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = CGRectMake(75, 31, SCREENWIDTH-125, 25);
     searchBtn.layer.masksToBounds = YES;
@@ -91,7 +92,7 @@
     dispatch_group_async(group, queue, ^{
        
         XZHomeService * homeMasterService = [[XZHomeService alloc]init];
-       [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:_cityCode keyWord:@"全部" searchType:1 userCode:userCodeStr view:self.mainView successBlock:^(NSArray *data) {
+       [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:_cityCode keyWord:@"" searchType:1 userCode:userCodeStr view:self.mainView successBlock:^(NSArray *data) {
               self.masters = [NSMutableArray arrayWithArray:data];
              dispatch_semaphore_signal(semaphore);
         } failBlock:^(NSError *error) {
@@ -131,28 +132,11 @@
     // 2. 创建控制器
     _searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"搜索大师、话题" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         
-        NSDictionary * dic = GETUserdefault(@"userInfos");
-        NSString * userCodeStr = KISDictionaryHaveKey(dic, @"bizCode");
-        XZHomeService * homeMasterService = [[XZHomeService alloc]init];
-        [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:@"11000" keyWord:searchText searchType:1 userCode:userCodeStr view:self.mainView successBlock:^(NSArray *data) {
-            searchViewController.searchSuggestions = data;
-//            if (_searchTable.data.count<=0) {
-//                [_searchTable showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^{
-//                    [self searchWithKeyWord:_keyword];
-//                } btnBlock:nil];
-//            }else{
-//                [_searchTable hideNoDataView];
-//            }
-            NSLog(@"dataarray = %@",data);
-        } failBlock:^(NSError *error) {
-//            [_searchTable showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^{
-//                [self searchWithKeyWord:_keyword];
-//            } btnBlock:nil];
-            NSLog(@"error= %@",error);
+        XZSearchResultVC * resultVC = [[XZSearchResultVC alloc]initWithKeyWord:searchText];
+        [searchViewController dismissViewControllerAnimated:NO completion:^{
+             [self.navigationController pushViewController:resultVC animated:YES];
         }];
-        
-//        XZSearchResultVC * resultVC = [[XZSearchResultVC alloc]initWithKeyWord:searchText];
-//        [searchViewController.navigationController pushViewController:resultVC animated:YES];
+       
     }];
     // 3. 设置风格
     _searchViewController.searchHistoryStyle = PYHotSearchStyleDefault;
@@ -185,38 +169,6 @@
 //        });
 //    }
 }
-
-/** 返回用户自定义搜索建议Cell */
-- (UITableViewCell *)searchSuggestionView:(UITableView *)searchSuggestionView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    XZTheMasterCell * cell = [searchSuggestionView dequeueReusableCellWithIdentifier:@"searchCellId"];
-    if (!cell) {
-        cell = [[XZTheMasterCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"searchCellId"];
-    }
-    [cell refreshMasterCellWithModel:_searchViewController.searchSuggestions [indexPath.row]];
-    
-//    [cell agreeMasterWithBlock:^(XZTheMasterModel *model) {
-//        if (weakSelf.block) {
-//            weakSelf.block(model.masterCode,indexPath);
-//        }
-//    }];
-    return cell;
-
-}
-/** 返回用户自定义搜索建议cell的rows */
-- (NSInteger)searchSuggestionView:(UITableView *)searchSuggestionView numberOfRowsInSection:(NSInteger)section{
-    return _searchViewController.searchSuggestions.count;
-}
-/** 返回用户自定义搜索建议cell的section */
-- (NSInteger)numberOfSectionsInSearchSuggestionView:(UITableView *)searchSuggestionView{
-    return 1;
-}
-/** 返回用户自定义搜索建议cell高度 */
-- (CGFloat)searchSuggestionView:(UITableView *)searchSuggestionView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
-//    UITableViewCell * cell = [self tableView:searchSuggestionView cellForRowAtIndexPath:indexPath];
-//    return cell.height;
-}
-
 #pragma mark  getter
 -(XZHomeView *)home{
     if (!_home) {

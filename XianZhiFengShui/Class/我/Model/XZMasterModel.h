@@ -32,6 +32,7 @@
 @property (nonatomic,copy)NSString * location;
 @property (nonatomic,copy)NSString * price;
 @property (nonatomic,copy)NSString * appointTime;
+@property (nonatomic,copy)NSString * cancelTime;//取消时间
 @property (nonatomic,copy)NSString * cancelReason;//取消原因
-
+@property (nonatomic,copy)NSString * cancelPerson;//取消人
 @end

@@ -11,7 +11,7 @@
 #import "XZMyMasterFinishedView.h"
 #import "XZFindService.h"
 #import "UIButton+XZImageTitleSpacing.h"
-#import "XZMasterServiceVC.h"
+#import "XZMasterOrderVC.h"
 @interface XZMyMasterVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UIButton*wantBtn;//想参加的
 @property (nonatomic,strong)UIButton * finishedBtn;//完成的
@@ -39,7 +39,7 @@
 }
 
 -(void)clickRightButton{
-    [self.navigationController pushViewController:[[XZMasterServiceVC alloc]init] animated:YES];
+    [self.navigationController pushViewController:[[XZMasterOrderVC alloc]init] animated:YES];
 }
 
 -(void)setupSeg{
