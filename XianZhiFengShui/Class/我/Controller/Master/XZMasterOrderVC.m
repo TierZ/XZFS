@@ -11,6 +11,8 @@
 #import "XZMasterOrderYYJVC.h"
 #import "XZMasterOrderYYYVC.h"
 #import "XZMasterOrderYQXVC.h"
+#import "XZMasterOrderEvaluateLevelVC.h"
+#import "XZMasterOrderSuccessRateVC.h"
 @interface XZMasterOrderVC ()<UIScrollViewDelegate>
 @property (nonatomic,strong)UIScrollView * scroll;
 @property (nonatomic,strong)UISegmentedControl * seg;
@@ -88,8 +90,10 @@
 }
 -(void)evaluateLevel:(UIButton*)sender{
     NSLog(@"跳转到评价星级");
+    [self.navigationController pushViewController:[[XZMasterOrderEvaluateLevelVC alloc]init] animated:YES];
 }
 -(void)successRate:(UIButton*)sender{
+    [self.navigationController pushViewController:[[XZMasterOrderSuccessRateVC alloc]init] animated:YES];
     NSLog(@"跳转到成交率");
 }
 #pragma mark scrollDelegate

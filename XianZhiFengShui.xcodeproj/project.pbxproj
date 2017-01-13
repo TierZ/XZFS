@@ -256,6 +256,7 @@
 		D18CD14A1E2789B400DBEFD4 /* XZMasterOrderYYJVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1491E2789B400DBEFD4 /* XZMasterOrderYYJVC.m */; };
 		D18CD14D1E278A9100DBEFD4 /* XZMasterOrderYQXVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD14C1E278A9100DBEFD4 /* XZMasterOrderYQXVC.m */; };
 		D18CD14F1E278DB300DBEFD4 /* MasterSelfList.plist in Resources */ = {isa = PBXBuildFile; fileRef = D18CD14E1E278DB300DBEFD4 /* MasterSelfList.plist */; };
+		D18CD1531E28AAD300DBEFD4 /* ArcView.m in Sources */ = {isa = PBXBuildFile; fileRef = D18CD1521E28AAD300DBEFD4 /* ArcView.m */; };
 		D18DD7071DF16780003A6E21 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D18DD7061DF16780003A6E21 /* libc++.tbd */; };
 		D18FF42A1E1248E900479E37 /* coin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4281E1248E900479E37 /* coin@2x.png */; };
 		D18FF42B1E1248E900479E37 /* coin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D18FF4291E1248E900479E37 /* coin@3x.png */; };
@@ -1077,6 +1078,8 @@
 		D18CD14B1E278A9100DBEFD4 /* XZMasterOrderYQXVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterOrderYQXVC.h; sourceTree = "<group>"; };
 		D18CD14C1E278A9100DBEFD4 /* XZMasterOrderYQXVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterOrderYQXVC.m; sourceTree = "<group>"; };
 		D18CD14E1E278DB300DBEFD4 /* MasterSelfList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MasterSelfList.plist; sourceTree = "<group>"; };
+		D18CD1511E28AAD300DBEFD4 /* ArcView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArcView.h; sourceTree = "<group>"; };
+		D18CD1521E28AAD300DBEFD4 /* ArcView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArcView.m; sourceTree = "<group>"; };
 		D18DD7061DF16780003A6E21 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D18FF4281E1248E900479E37 /* coin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@2x.png"; sourceTree = "<group>"; };
 		D18FF4291E1248E900479E37 /* coin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coin@3x.png"; sourceTree = "<group>"; };
@@ -2040,6 +2043,7 @@
 		D11592BF1DA8CF1E004A7B86 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				D18CD1501E28AAD300DBEFD4 /* 圆形图 */,
 				D18CD11E1E2393C300DBEFD4 /* SwpNetworking */,
 				D18FF44B1E1CBB4600479E37 /* 控制台打印中文 */,
 				D1D6A2BB1E0A1F4100215CEA /* 三方分享 */,
@@ -2488,6 +2492,15 @@
 				D18CD1241E2393C300DBEFD4 /* SwpNetworkingVariableType.m */,
 			);
 			path = SwpNetworking;
+			sourceTree = "<group>";
+		};
+		D18CD1501E28AAD300DBEFD4 /* 圆形图 */ = {
+			isa = PBXGroup;
+			children = (
+				D18CD1511E28AAD300DBEFD4 /* ArcView.h */,
+				D18CD1521E28AAD300DBEFD4 /* ArcView.m */,
+			);
+			path = "圆形图";
 			sourceTree = "<group>";
 		};
 		D18FF44B1E1CBB4600479E37 /* 控制台打印中文 */ = {
@@ -4337,6 +4350,7 @@
 				D113CC2F1DADD43D0067A965 /* XZLectureCell.m in Sources */,
 				D18CD1271E2393C300DBEFD4 /* SwpNetworkingVariableType.m in Sources */,
 				D1958FEC1DE3F81600C06A05 /* JCHATLoadMessageTableViewCell.m in Sources */,
+				D18CD1531E28AAD300DBEFD4 /* ArcView.m in Sources */,
 				D12EE7DC1DB4A28A00C9A0F3 /* XZChangePwdVC.m in Sources */,
 				D11592CB1DA8D1BF004A7B86 /* Custom_tabbar.m in Sources */,
 				D1FDA7B91DDC07D50029977E /* XZJoinedThemeListCell.m in Sources */,

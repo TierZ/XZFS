@@ -6,6 +6,16 @@
 //  Copyright © 2016年 XianZhiFengShui. All rights reserved.
 //
 
+/**
+ iPad Air {{0, 0}, {768, 1024}}
+ iphone4s {{0, 0}, {320, 480}}     960*640
+ iphone5 5s {{0, 0}, {320, 568}}      1136*640
+ iphone6 6s {{0, 0}, {375, 667}}     1334*750
+ iphone6Plus 6sPlus {{0, 0}, {414, 736}}  1920*1080
+ Apple Watch 1.65英寸 320*640
+ */
+
+
 #ifndef XZConfig_h
 #define XZConfig_h
 
@@ -20,7 +30,6 @@
 #define DEBUG_SWITH 1// 控制 log日志的输出 0为不打印log日志 1为打印log日志
 #define TEST_LINE 1// 控制 正式线和测试线 1为测试线 0为正式线
 
-//#define XZBASEURL @"http://123.56.162.170:8082/api/"
 #define XZBASEURL @"http://api.xianzhifengshui.com"
 
 
@@ -94,8 +103,8 @@
 #define XZFS_TEXTBLACKCOLOR XZFS_HEX_RGB(@"#000000")//黑色颜色
 
 /** 视图字体适配系数 add by lf */
-#define XZFS_VIEW_SCALE      (SGLC_IS_IPHONE6_PLUS?1.2:1.0)
-#define XZFS_FONT_SCALE      (SGLC_IS_IPHONE6_PLUS?1.2:1.0)
+#define XZFS_VIEW_SCALE      (SGLC_IS_IPHONE_PLUS?1.2:1.0)
+#define XZFS_FONT_SCALE      (SGLC_IS_IPHONE_PLUS?1.2:1.0)
 
 /** px 值的转换 */
 #define XZFS_FONT_PX(pxValue)  ((pxValue)/2.0)
