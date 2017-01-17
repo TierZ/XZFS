@@ -153,9 +153,12 @@
     }
 }
 
+#pragma mark 支付
 -(void)withdrawMoney:(UIButton*)sender{
     NSLog(@"withdraw money = %@",_moneyTf.text);
 }
+
+#pragma mark private
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

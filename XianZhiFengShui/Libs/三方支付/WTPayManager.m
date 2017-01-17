@@ -181,12 +181,12 @@ static WTPayManager * _instance;
 + (void)weixinPayWithOrderItem:(WTPayOrderItem *)orderItem
 {
     PayReq *request = [[PayReq alloc] init];
-    request.partnerId = @"10000100";
-    request.prepayId= @"1101000000140415649af9fc314aa427";
+    request.partnerId = @"1397428402";
+    request.prepayId= @"wx201701161651378acc00bbd10160013710";
     request.package = @"Sign=WXPay";
     request.nonceStr= @"a462b76e7436e98e0ed6e13c64b4fd1c";
     request.timeStamp= 1397527777;
-    request.sign= @"582282D72DD2B03AD892830965F428CB16E7A256";
+    request.sign= @"4CF52F9ECA12F5D0DEF1083C8A698BA5";
     BOOL success = [WXApi sendReq:request];
                 if(!success){
                     NSLog(@"调微信失败");

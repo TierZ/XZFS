@@ -12,6 +12,8 @@ typedef NS_ENUM(NSUInteger, XZMyAccountTag) {
     XZAccountTag = 500,//我的账户
     XZAccountRechargeTag,//知币充值
     XZRechargeRecordTag,//知币充值记录
+    XZAccountOrderListTag,//账单列表
+    XZAccountOrderDetailTag,//账单详情
 //    XZMyCollectionLectureTag,//我收藏的讲座列表
 //    XZHelpAndFeedbackListTag,//帮助反馈导航列表
 //    XZRegistMasterTag,//成为大师
@@ -49,4 +51,24 @@ typedef NS_ENUM(NSUInteger, XZMyAccountTag) {
  @param view     。。
  */
 -(void)rechargeRecordWithUserCode:(NSString*)userCode pageNum:(int)pageNum pageSize:(int)pageSize view:(id)view;
+
+
+/**
+ 【用户】账单列表
+
+ @param pageNum  页码
+ @param pageSize 每页
+ @param usercode 用户id
+ @param view     。。
+ */
+-(void)myAccoutOrderListWithPage:(int)pageNum pageSize:(int)pageSize usercode:(NSString*)usercode view:(id)view;
+
+
+/**
+ 【用户】账单详情
+
+ @param tradeNo 订单编号
+ @param view    。。
+ */
+-(void)myAccountOrderDetailWithTradeNo:(NSString*)tradeNo view:(id)view;
 @end

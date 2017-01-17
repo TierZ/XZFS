@@ -7,7 +7,8 @@
 //
 
 #import "XZPersonCertificationVC.h"
-
+#import "ValidateRule.h"
+#import "ValidateTextField.h"
 @interface XZPersonCertificationVC ()
 
 @end
@@ -78,6 +79,9 @@
 
     NSArray * titles = @[@"真实姓名",@"身份证号"];
      NSArray * placeHolders = @[@"请输入真实姓名",@"请输入身份证号"];
+    NSArray * errMsgs = @[@"姓名格式有误",@"身份证号格式有误"];
+    NSArray * emptyMsgs = @[@"姓名不能为空",@"身份证号不能为空"];
+    NSArray * tfValidates = @[XZFS_RealNameRule,XZFS_IdentifyRule];
     for (int i = 0; i<titles.count; i++) {
         UILabel * titleLab = [[UILabel alloc]initWithFrame:CGRectMake(21, 15.5+i*45, 100, 14)];
         titleLab.font = XZFS_S_FONT(14);
@@ -93,10 +97,13 @@
             [_inputV addSubview:line];
         }
         
-        UITextField * tf = [[UITextField alloc]initWithFrame:CGRectMake(titleLab.right+35, i*45, _inputV.width-titleLab.right-35-21, 45)];
+        ValidateTextField * tf = [[ValidateTextField alloc]initWithFrame:CGRectMake(titleLab.right+35, i*45, _inputV.width-titleLab.right-35-21, 45)];
         tf.placeholder = placeHolders[i];
         tf.font = XZFS_S_FONT(14);
         tf.textColor = XZFS_TEXTBLACKCOLOR;
+        tf.errorMsg = errMsgs[i];
+        tf.emptyMsg = emptyMsgs[i];
+        tf.valldataRuleStr = tfValidates[i];
         tf.clearButtonMode = UITextFieldViewModeWhileEditing;
         [_inputV addSubview:tf];
      }
@@ -120,11 +127,27 @@
     submitBtn.layer.cornerRadius = 5;
     [submitBtn addTarget:self action:@selector(submit:) forControlEvents:UIControlEventTouchUpInside];
     [self.mainView addSubview:submitBtn];
-
 }
 
 -(void)submit:(UIButton*)sender{
-    NSLog(@"提交");
+    ValidateRule * rule = [[ValidateRule alloc]init];
+    BOOL isValidate = [rule validateResultWithView:_inputV];
+    
+    if (isValidate) {
+        
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"实名信息认证通过后将无法修改,冒用他们信息会导致账号被封禁" message:@"是否提交" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"修改信息" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {}];
+        [alert addAction:defaultAction];
+        UIAlertAction* certifyAction = [UIAlertAction actionWithTitle:@"确认提交" style:UIAlertActionStyleDestructive
+                                                              handler:^(UIAlertAction * action) {
+                                                                 NSLog(@"提交 网络请求");
+                                                              }];
+        [alert addAction:certifyAction];
+        [self presentViewController:alert animated:true completion:^{
+        }];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {

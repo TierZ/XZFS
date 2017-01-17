@@ -7,9 +7,9 @@
 //
 
 #import "XZMyAccountBillDetailVC.h"
-
+#import "XZMyAccountService.h"
 @interface XZMyAccountBillDetailVC ()
-
+@property (nonatomic,copy)NSString * tradeNo;
 @end
 
 @implementation XZMyAccountBillDetailVC{
@@ -23,12 +23,22 @@
     UILabel * _payStyle;//支付方式
 }
 
+- (instancetype)initWithTradeNo:(NSString*)tradeNo
+{
+    self = [super init];
+    if (self) {
+        _tradeNo = tradeNo;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.titelLab.text = @"账单详情";
     [self setupInfo];
     [self setupDetail];
     [self refreshDetail];
+    [self requestBillDetail];
     // Do any additional setup after loading the view.
 }
 
@@ -83,6 +93,20 @@
     _balance =(UILabel*) [_infoView viewWithTag:13];
     _payStyle =(UILabel*) [_infoView viewWithTag:14];
   
+}
+
+#pragma mark 网络
+-(void)requestBillDetail{
+    XZMyAccountService  * billDetail = [[XZMyAccountService alloc]initWithServiceTag:XZAccountOrderDetailTag];
+    billDetail.delegate = self;
+    [billDetail myAccountOrderDetailWithTradeNo:_tradeNo view:self.mainView];
+}
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    NSLog(@"详情 = %@",succeedHandle);
+}
+
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+    
 }
 
 -(void)refreshDetail{

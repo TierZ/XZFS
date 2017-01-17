@@ -161,31 +161,31 @@
 /**
  获取列表数据
 
- @param style     类型（最火，本地，全部）
+ @param style     类型
  @param page      页码
  @param isrefresh 是否刷新
  */
 -(void)loadDataWithStyle:(MasterSelect)style page:(int)page isRefresh:(BOOL) isrefresh{
     int serviceTag;
+    int orderType; //（最火，本地，全部）
     XZFindTable * masterTable;
-    NSString *keyWord;
     switch (style) {
         case MasterHot:{
             serviceTag=XZMasterListHot;
             masterTable = _hotMaster;
-            keyWord = @"最火";
+            orderType = 3;
         }
             break;
         case MasterLocal:{
             serviceTag=XZMasterListLocal;
             masterTable = _localMaster;
-            keyWord = @"本地";
+            orderType = 2;
         }
             break;
         case MasterAll:{
             serviceTag=XZMasterListAll;
             masterTable = _allMaster;
-            keyWord = @"所有";
+            orderType = 1;
         }
             break;
         default:
@@ -195,7 +195,7 @@
     if ((page==1&& masterTable.data.count<=0)||isrefresh) {
         XZFindService * masterService = [[XZFindService alloc]initWithServiceTag:serviceTag];
         masterService.delegate = self;
-        [masterService masterListWithPageNum:page PageSize:10 cityCode:@"110000" keyWord:keyWord searchType:1 userCode:_userCode view:self];
+        [masterService masterListWithPageNum:page PageSize:10 cityCode:@"110000" keyWord:@"" searchType:1 userCode:_userCode orderType:orderType view:self];
     }
   
 }

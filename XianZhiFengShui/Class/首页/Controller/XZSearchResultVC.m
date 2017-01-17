@@ -73,7 +73,7 @@
     NSDictionary * dic = GETUserdefault(@"userInfos");
     NSString * userCodeStr = KISDictionaryHaveKey(dic, @"bizCode");
     XZHomeService * homeMasterService = [[XZHomeService alloc]init];
-    [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:@"110000" keyWord:keyWord searchType:1 userCode:userCodeStr view:self.mainView successBlock:^(NSArray *data) {
+    [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:@"110000" keyWord:keyWord searchType:1 userCode:userCodeStr orderType:3 view:self.mainView successBlock:^(NSArray *data) {
         if (weakSelf.searchRefresh) {
             [_searchTable.dataArray removeAllObjects];
         }

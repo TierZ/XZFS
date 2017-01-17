@@ -8,6 +8,9 @@
 
 #import "BaseContentController.h"
 
+/**
+ 我的账单列表
+ */
 @interface XZMyAccountBillVC : BaseContentController
 
 @end

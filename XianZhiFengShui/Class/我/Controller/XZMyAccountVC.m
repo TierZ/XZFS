@@ -13,6 +13,8 @@
 #import "XZWithdrawVC.h"
 #import "UIButton+XZImageTitleSpacing.h"
 #import "XZMyAccountService.h"
+#import "XZPersonCertificationVC.h"
+#import "XZPayPwdVC.h"
 
 @interface XZMyAccountVC ()
 @property (nonatomic,strong)UILabel * myBalance;
@@ -100,9 +102,7 @@
         label.textColor = XZFS_TEXTBLACKCOLOR;
         label.font = XZFS_S_FONT(14);
         [btn addSubview:label];
-  
     }
-
 }
 
 
@@ -113,8 +113,13 @@
         case 0:
             [self.navigationController pushViewController:[[XZRechargeVC alloc]init] animated:YES];
             break;
-        case 1:
-            [self.navigationController pushViewController:[[XZWithdrawVC alloc]init] animated:YES];
+        case 1:{
+            BOOL isValidated = [self certifyInfo];
+            if (isValidated) {
+                [self.navigationController pushViewController:[[XZWithdrawVC alloc]init] animated:YES];
+            }
+            
+        }
             break;
             
         default:
@@ -124,7 +129,6 @@
 }
 
 -(void)listClick:(UIButton*)sender{
-    NSLog(@"btn.tag = %ld",(long)sender.tag);
     if (sender.tag==11) {
         XZMyBankCardVC  * myBankCard = [[XZMyBankCardVC alloc]init];
         [self.navigationController pushViewController:myBankCard animated:YES];
@@ -148,6 +152,41 @@
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
 NSLog(@"failHandle = %@",failHandle);
 }
+
+#pragma mark private
+-(BOOL)certifyInfo{
+    NSDictionary * userInfos = GETUserdefault(@"userInfos");
+    if ([[userInfos objectForKey:@"isRealCertify"]boolValue]) {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"您未进行实名认证，是否去认证" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"暂不提现" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {}];
+        [alert addAction:defaultAction];
+        UIAlertAction* certifyAction = [UIAlertAction actionWithTitle:@"去认证" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+                                                                  [self.navigationController pushViewController:[[XZPersonCertificationVC alloc]init] animated:YES];
+                                                              }];
+        [alert addAction:certifyAction];
+        [self presentViewController:alert animated:true completion:^{
+        }];
+        return NO;
+    }else if (![[userInfos objectForKey:@"isPayPwd"]boolValue]){
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"您未设置支付密码，是否前往设置" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {}];
+        [alert addAction:defaultAction];
+        UIAlertAction* certifyAction = [UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+                                                                  [self.navigationController pushViewController:[[XZPayPwdVC alloc]init] animated:YES];
+                                                              }];
+        [alert addAction:certifyAction];
+        [self presentViewController:alert animated:true completion:^{
+        }];
+        return NO;
+    }
+    return YES;
+}
+
+
 #pragma mark getter
 
 -(UILabel *)myBalance{

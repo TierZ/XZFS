@@ -12,5 +12,5 @@
 #import "BaseContentController.h"
 
 @interface XZMyAccountBillDetailVC : BaseContentController
-
+- (instancetype)initWithTradeNo:(NSString*)tradeNo;
 @end

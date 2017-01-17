@@ -425,7 +425,7 @@
 }
 
 #pragma mark  获取ip地址
-- (NSString *)getIPAddress:(BOOL)preferIPv4
++ (NSString *)getIPAddress:(BOOL)preferIPv4
 {
     NSArray *searchArray = preferIPv4 ?
     @[ IOS_VPN @"/" IP_ADDR_IPv4, IOS_VPN @"/" IP_ADDR_IPv6, IOS_WIFI @"/" IP_ADDR_IPv4, IOS_WIFI @"/" IP_ADDR_IPv6, IOS_CELLULAR @"/" IP_ADDR_IPv4, IOS_CELLULAR @"/" IP_ADDR_IPv6 ] :
@@ -442,7 +442,7 @@
      } ];
     return address ? address : @"0.0.0.0";
 }
-- (NSDictionary *)getIPAddresses
++(NSDictionary *)getIPAddresses
 {
     NSMutableDictionary *addresses = [NSMutableDictionary dictionaryWithCapacity:8];
     

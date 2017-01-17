@@ -75,16 +75,13 @@
     [view addSubview:tableHead];
     self.mySelfTable.tableHeaderView = view;
     NSLog(@"headview = %@",view);
-    
 }
 
 -(void)initData{
-     NSString *meListPath = [[NSBundle mainBundle] pathForResource:@"MySelfList" ofType:@"plist"];
-//    NSString *meListPath = [[NSBundle mainBundle] pathForResource:@"MasterSelfList" ofType:@"plist"];
+//     NSString *meListPath = [[NSBundle mainBundle] pathForResource:@"MySelfList" ofType:@"plist"];
+    NSString *meListPath = [[NSBundle mainBundle] pathForResource:@"MasterSelfList" ofType:@"plist"];
     self.listArray = [[NSArray alloc]initWithContentsOfFile:meListPath];
     NSLog(@"listArray = %@",self.listArray);
-    
-    
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{

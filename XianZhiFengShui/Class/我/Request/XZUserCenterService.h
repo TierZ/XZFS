@@ -13,6 +13,7 @@ typedef NS_ENUM(NSUInteger, XZUserCenterServiceTag) {
     XZMyCollectionLectureTag,//我收藏的讲座列表
     XZHelpAndFeedbackListTag,//帮助反馈导航列表
      XZRegistMasterTag,//成为大师
+    XZSaveUserInfoTag,//保存信息
 };
 #import "BasicService.h"
 

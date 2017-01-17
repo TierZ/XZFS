@@ -74,6 +74,6 @@
 
  @return <#return value description#>
  */
-- (NSDictionary *)getIPAddresses;
-- (NSString *)getIPAddress:(BOOL)preferIPv4;
++ (NSDictionary *)getIPAddresses;
++ (NSString *)getIPAddress:(BOOL)preferIPv4;
 @end

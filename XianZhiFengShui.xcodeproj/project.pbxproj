@@ -221,6 +221,8 @@
 		D16921431DD303F900867011 /* XZMasterCertainInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D16921421DD303F900867011 /* XZMasterCertainInfo.m */; };
 		D16921461DD3048300867011 /* XZMasterAudit.m in Sources */ = {isa = PBXBuildFile; fileRef = D16921451DD3048300867011 /* XZMasterAudit.m */; };
 		D16921491DD9728600867011 /* XZMyFocusThemeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D16921481DD9728600867011 /* XZMyFocusThemeCell.m */; };
+		D174B8E11E2DE8D90082074C /* XZPayPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B8E01E2DE8D90082074C /* XZPayPwdVC.m */; };
+		D174B8E41E2E05D90082074C /* XZDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B8E31E2E05D90082074C /* XZDrawView.m */; };
 		D180AD891DFE444E0043FB61 /* XZOrderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD881DFE444E0043FB61 /* XZOrderFooterView.m */; };
 		D180AD8C1DFE53D30043FB61 /* XZOrderHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD8B1DFE53D30043FB61 /* XZOrderHeaderView.m */; };
 		D180AD8F1DFE7AB20043FB61 /* XZShoppingCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD8E1DFE7AB20043FB61 /* XZShoppingCartHeaderView.m */; };
@@ -1016,6 +1018,10 @@
 		D16921451DD3048300867011 /* XZMasterAudit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterAudit.m; sourceTree = "<group>"; };
 		D16921471DD9728600867011 /* XZMyFocusThemeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMyFocusThemeCell.h; sourceTree = "<group>"; };
 		D16921481DD9728600867011 /* XZMyFocusThemeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMyFocusThemeCell.m; sourceTree = "<group>"; };
+		D174B8DF1E2DE8D90082074C /* XZPayPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZPayPwdVC.h; sourceTree = "<group>"; };
+		D174B8E01E2DE8D90082074C /* XZPayPwdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZPayPwdVC.m; sourceTree = "<group>"; };
+		D174B8E21E2E05D90082074C /* XZDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZDrawView.h; sourceTree = "<group>"; };
+		D174B8E31E2E05D90082074C /* XZDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZDrawView.m; sourceTree = "<group>"; };
 		D180AD871DFE444E0043FB61 /* XZOrderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZOrderFooterView.h; sourceTree = "<group>"; };
 		D180AD881DFE444E0043FB61 /* XZOrderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZOrderFooterView.m; sourceTree = "<group>"; };
 		D180AD8A1DFE53D30043FB61 /* XZOrderHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZOrderHeaderView.h; sourceTree = "<group>"; };
@@ -1927,6 +1933,8 @@
 				D132980C1DDED0A500DD3C20 /* XZMyMasterWantedView.m */,
 				D132980E1DDED0C200DD3C20 /* XZMyMasterFinishedView.h */,
 				D132980F1DDED0C200DD3C20 /* XZMyMasterFinishedView.m */,
+				D174B8E21E2E05D90082074C /* XZDrawView.h */,
+				D174B8E31E2E05D90082074C /* XZDrawView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2833,6 +2841,8 @@
 				D113CC401DAF3FCE0067A965 /* XZRechargeVC.m */,
 				D1B4DEBB1DCB361000BD1757 /* XZWithdrawVC.h */,
 				D1B4DEBC1DCB361000BD1757 /* XZWithdrawVC.m */,
+				D174B8DF1E2DE8D90082074C /* XZPayPwdVC.h */,
+				D174B8E01E2DE8D90082074C /* XZPayPwdVC.m */,
 				D113CC421DAF40050067A965 /* XZRegistMasterVC.h */,
 				D113CC431DAF40050067A965 /* XZRegistMasterVC.m */,
 				D195913D1DE43A3900C06A05 /* XZPersonCertificationVC.h */,
@@ -4435,7 +4445,9 @@
 				D12F74E51DDEB8E9003E2A0B /* XZMyAccountBillCell.m in Sources */,
 				D19590A31DE40E6200C06A05 /* MASConstraintMaker.m in Sources */,
 				D191C7AA1DAB3FD000496906 /* XZFindVC.m in Sources */,
+				D174B8E11E2DE8D90082074C /* XZPayPwdVC.m in Sources */,
 				D129AA8E1DBE06B600DA2A6D /* XZHomeCellManager.m in Sources */,
+				D174B8E41E2E05D90082074C /* XZDrawView.m in Sources */,
 				D129AAAD1DBF35D200DA2A6D /* XZMasterInfoBaseCel.m in Sources */,
 				D19590771DE4010500C06A05 /* NSString+MessageInputView.m in Sources */,
 				D128ACA91DC0A249002392E0 /* JJPhotoManeger.m in Sources */,
