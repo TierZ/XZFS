@@ -19,15 +19,14 @@
     NSString * _name;
     NSString * _info;
     NSString * _location;
-    
-    
+    HeaderDetailStyle _style;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame style:(HeaderDetailStyle)style
 {
     self = [super initWithFrame:frame];
     if (self) {
-
+        _style = style;
         [self setupView];
     }
     return self;
@@ -65,11 +64,14 @@
 
 -(void)refreshInfoWithDic:(NSDictionary*)dic{
     if (dic) {
-        self.nameLab.text = [dic objectForKey:@"name"];
-//        self.nameLab.text = @"张三丰";
-        self.infoLab.text = [dic objectForKey:@"desc"];
+        if (_style==MasterHeaderDetail) {
+            self.nameLab.text = [dic objectForKey:@"name"];
+            self.infoLab.text = [dic objectForKey:@"desc"];
+        }else if (_style==LectureHeaderDetail){
+            self.nameLab.text = [dic objectForKey:@"masterName"];
+        self.infoLab.text = [dic objectForKey:@"masterDesc"];
+        }
         self.locationLab.text = [dic objectForKey:@"address"];
-//        self.locationLab.text = @"北京 东直门大街 xx路 xx号";
         [self setupAutoHeightWithBottomViewsArray:@[self.locationIv,self.locationLab] bottomMargin:10];
     }
 }
@@ -110,7 +112,7 @@
 -(UILabel *)locationLab{
     if (!_locationLab) {
         _locationLab = [[UILabel alloc]init];
-        _locationLab.backgroundColor = [UIColor yellowColor];
+        _locationLab.backgroundColor = [UIColor clearColor];
         _locationLab.textColor =  XZFS_TEXTBLACKCOLOR;
         _locationLab.textAlignment =NSTextAlignmentLeft;
         _locationLab.font = XZFS_S_FONT(10.5);

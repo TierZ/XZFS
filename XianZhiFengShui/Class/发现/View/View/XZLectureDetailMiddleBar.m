@@ -11,6 +11,7 @@
 #import "UIButton+XZImageTitleSpacing.h"
 @implementation XZLectureDetailMiddleBar{
     UILabel * _levelLab;
+    UIImageView * _levelIv;
     LPLevelView * _starLevel;
     UIButton * _appointmentBtn;
     UIButton * _collectionBtn;
@@ -64,7 +65,10 @@
 }
 
 -(void)refreshWithDic:(NSDictionary*)dic{
-
+    _levelLab.text = [dic objectForKey:@"level"];
+    _starLevel.level = _levelLab.text.intValue;
+    [_appointmentBtn setTitle:[dic objectForKey:@"appoint"] forState:UIControlStateNormal];
+    [_collectionBtn setTitle:[dic objectForKey:@"collection"] forState:UIControlStateNormal];
 
 }
 

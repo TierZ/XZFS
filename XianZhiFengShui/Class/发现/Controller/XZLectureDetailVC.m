@@ -55,13 +55,12 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     [self setupNavi];
     [self setupMainScroll];
     [self setupBaseView];
-    [self setupLectureInfo];
+    
     [self setupMasterInfo];
     [self setupBottomBtn];
-    
-    //    [self layoutView];
+    [self setupLectureInfo];
+    [self layoutView];
     [self requestLectureInfo];
-    [self updateData];
     // Do any additional setup after loading the view.
 }
 
@@ -82,16 +81,16 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     [_mainScroll addSubview:_baseInfo];
     
     _headView = [[UIImageView alloc]init];
-    _headView.backgroundColor = [UIColor redColor];
+    _headView.backgroundColor = [UIColor whiteColor];
     _headView.tag = 10;
     [_baseInfo addSubview:_headView];
     
-    self.headInfo = [[XZMasterDetailInfo alloc]init];
+    self.headInfo = [[XZMasterDetailInfo alloc]initWithFrame:CGRectZero style:LectureHeaderDetail];
     self.headInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
     [_baseInfo addSubview:self.headInfo];
     
     self.middleBar = [[XZLectureDetailMiddleBar alloc]initWithFrame:CGRectMake(0, 165, SCREENWIDTH, 35)];
-    self.middleBar.backgroundColor = [UIColor yellowColor];
+    self.middleBar.backgroundColor = [UIColor whiteColor];
     [_baseInfo addSubview:self.middleBar];
     
     _firstLine = [[UIView alloc]init];
@@ -112,7 +111,7 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     _smallInfo.backgroundColor = RandomColor(1);
     
     _lectureDetail = [[UILabel alloc]init];
-    _lectureDetail.backgroundColor = [UIColor greenColor];
+    _lectureDetail.backgroundColor = [UIColor clearColor];
     _lectureDetail.textColor =  XZFS_TEXTLIGHTGRAYCOLOR;
     _lectureDetail.textAlignment =NSTextAlignmentLeft;
     _lectureDetail.font = XZFS_S_FONT(12);
@@ -174,99 +173,33 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     [self.mainView sd_addSubviews:@[ _collectLecture,_enrollBtn]];
     
     _collectLecture.frame = CGRectMake(0, SCREENHEIGHT-45-XZFS_STATUS_BAR_H, SCREENWIDTH*0.6, 45);
-    _enrollBtn.frame = CGRectMake(_collectLecture.right_sd, SCREENHEIGHT-45-XZFS_STATUS_BAR_H, SCREENWIDTH*0.4, 45);
+    _enrollBtn.frame = CGRectMake(_collectLecture.right, SCREENHEIGHT-45-XZFS_STATUS_BAR_H, SCREENWIDTH*0.4, 45);
 }
 
 -(void)layoutView{
-    _mainScroll.sd_layout
-    .leftSpaceToView(self.mainView,0)
-    .rightSpaceToView(self.mainView,0)
-    .topSpaceToView(self.mainView,0)
-    .bottomSpaceToView(self.mainView,45);
-    
-    _baseInfo.sd_layout
-    .leftSpaceToView(_mainScroll,0)
-    .rightSpaceToView(_mainScroll,0)
-    .topSpaceToView(_mainScroll,0)
-    .heightIs(202);
-    
-    _headView.sd_layout
-    .leftEqualToView(_baseInfo)
-    .rightEqualToView(_baseInfo)
-    .topSpaceToView(_baseInfo,0)
-    .heightIs(165);
-    
-    _headInfo.sd_layout
-    .rightSpaceToView(_baseInfo,15)
-    .widthIs(95)
-    .topSpaceToView(_baseInfo,18)
-    .heightIs(_headView.height-18*2);
-    
-    //    _middleBar.sd_layout
-    //    .leftEqualToView(_baseInfo)
-    //    .rightEqualToView(_baseInfo)
-    //    .topSpaceToView(_baseInfo,165)
-    //    .widthIs(SCREENWIDTH)
-    //    .heightIs(35);
-    
-    _firstLine.sd_layout
-    .leftEqualToView(self.mainScroll)
-    .rightEqualToView(self.mainScroll)
-    .widthIs(SCREENWIDTH)
-    .heightIs(7)
-    .topSpaceToView(_baseInfo,0);
+    _mainScroll.frame = CGRectMake(0, 0, SCREENWIDTH, XZFS_MainView_H-45);
+    _baseInfo.frame = CGRectMake(0, 0, SCREENWIDTH, 202);
+    _headView.frame = CGRectMake(0, _baseInfo.bottom, SCREENWIDTH, 165);
+    _headInfo.frame = CGRectMake(_headView.width-95-15, 18, 95, _headView.height-18*2);
+
+    _firstLine.frame = CGRectMake(0, _baseInfo.bottom, SCREENWIDTH, 7);
+
+ 
     
     // 讲座详情
-    
-    _lectureTitle.sd_layout
-    .leftEqualToView(self.mainScroll)
-    .rightEqualToView(self.mainScroll)
-    .topSpaceToView(_firstLine,14)
-    .heightIs(14);
-    
-    _smallInfo.sd_layout
-    .leftEqualToView(self.mainScroll)
-    .rightEqualToView(self.mainScroll)
-    .topSpaceToView(_lectureTitle,14)
-    .heightIs(14);
+   _lectureTitle.frame = CGRectMake(0, _firstLine.bottom+15, SCREENWIDTH, 14);
+    _smallInfo.frame = CGRectMake(0, _lectureTitle.bottom+14, SCREENWIDTH, 14);
+
+    _lectureDetail.frame = CGRectMake(20, _smallInfo.bottom+14, SCREENWIDTH-20*2, maxContentLabelHeight);
+    _showAllBtn.frame = CGRectMake(0, _lectureDetail.bottom+20, SCREENWIDTH, showAllBtnHeight);
     //
-    _lectureDetail.sd_layout
-    .leftSpaceToView(self.mainScroll,20)
-    .rightSpaceToView(self.mainScroll,20)
-    .topSpaceToView(_smallInfo,14)
-    .autoHeightRatio(0)
-    .maxHeightIs(maxContentLabelHeight);
-    //
-    _showAllBtn.sd_layout
-    .leftEqualToView(self.mainScroll)
-    .rightEqualToView(self.mainScroll)
-    .topSpaceToView(_lectureDetail,20)
-    .heightIs(showAllBtnHeight);
-    
     
     //关于大师
-    
-    _secondLine.sd_layout
-    .leftEqualToView(self.mainScroll)
-    .rightEqualToView(self.mainScroll)
-    .widthIs(SCREENWIDTH)
-    .heightIs(7)
-    .topSpaceToView(_showAllBtn,16);
-    
-    _masterTitle.sd_layout
-    .leftSpaceToView(_mainScroll,20)
-    .rightSpaceToView(_mainScroll,20)
-    .topSpaceToView(_secondLine,14)
-    .heightIs(14);
-    
-    _masterDetail.sd_layout
-    .leftSpaceToView(_mainScroll,20)
-    .rightSpaceToView(_mainScroll,20)
-    .topSpaceToView(_masterTitle,14)
-    .autoHeightRatio(0);
-    
-    [_mainScroll setupAutoContentSizeWithBottomView:_masterDetail bottomMargin:20];
-    
+    _secondLine.frame = CGRectMake(0, _showAllBtn.bottom+16, SCREENWIDTH, 7);
+    _masterTitle.frame = CGRectMake(20, _secondLine.bottom+14, SCREENWIDTH-20*2, 14);
+    _masterDetail.frame = CGRectMake(20, _masterTitle.bottom+14, SCREENWIDTH-40, 100);
+    _mainScroll.contentSize = CGSizeMake(SCREENWIDTH, _masterDetail.bottom);
+        
 }
 
 #pragma mark network
@@ -314,6 +247,8 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
         NSDictionary * dic = (NSDictionary*)succeedHandle;
         [_headInfo refreshInfoWithDic:dic];
         [_headInfo updateLayout];
+        [self updateDataWithDic:dic];
+//        [_middleBar refreshWithDic:dic];
     }else if ([service isKindOfClass:[XZLectureDetailData class]]){
         XZLectureDetailData * lectureData = (XZLectureDetailData*)service;
         switch (lectureData.serviceTag) {
@@ -337,14 +272,16 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
 }
 
 
--(void)updateData{
+-(void)updateDataWithDic:(NSDictionary*)dic{
+    
+    self.lectureTitle.text = KISDictionaryHaveKey(dic, @"title");
+    self.lectureDetail.text = KISDictionaryHaveKey(dic, @"desc");
+    self.masterDetail.text = KISDictionaryHaveKey(dic, @"masterDesc");
+   
     self.lectureTitle.text = @"聊聊买房的那些事";
     self.lectureDetail.text = @"MVC（Model-View-Controller）是最老牌的的思想，老牌到4人帮的书里把它归成了一种模式，其中Model就是作为数据管理者，View作为数据展示者，Controller作为数据加工者，Model和View又都是由Controller来根据业务需求调配，所以Controller还负担了一个数据流调配的功能。正在我写这篇文章的时候，我看到InfoQ发了这篇文章，里面提到了一个移动开发中的痛点是：对MVC架构划分的理解。我当时没能够去参加这个座谈会，也没办法发表个人意见，所以就只能在这里写写了。    在iOS开发领域，我们应当如何进行MVC的划分？    这里面其实有两个问题：    为什么我们会纠结于iOS开发领域中MVC的划分问题？在iOS开发领域中，怎样才算是划分的正确姿势？为什么我们会纠结于iOS开发领域中MVC的划分问题？关于这个，每个人纠结的点可能不太一样，我也不知道当时座谈会上大家的观点。但请允许我猜一下：是不是因为UIViewController中自带了一个View，且控制了View的整个生命周期（viewDidLoad,viewWillAppear...），而在常识中我们都知道Controller不应该和View有如此紧密的联系，所以才导致大家对划分产生困惑？，下面我会针对这个猜测来给出我的意见。";
     self.masterDetail.text = @"MVVM去年在业界讨论得非常多，无论国内还是国外都讨论得非常热烈，尤其是在ReactiveCocoa这个库成熟之后，ViewModel和View的信号机制在iOS下终于有了一个相对优雅的实现。MVVM本质上也是从MVC中派生出来的思想，MVVM着重想要解决的问题是尽可能地减少Controller的任务。不管MVVM也好，MVCS也好，他们的共识都是Controller会随着软件的成长，变很大很难维护很难测试。只不过两种架构思路的前提不同，MVCS是认为Controller做了一部分Model的事情，要把它拆出来变成Store，MVVM是认为Controller做了太多数据加工的事情，所以MVVM把数据加工的任务从Controller中解放了出来，使得Controller只需要专注于数据调配的工作，ViewModel则去负责数据加工并通过通知机制让View响应ViewModel的改变。MVVM是基于胖Model的架构思路建立的，然后在胖Model中拆出两部分：Model和ViewModel。关于这个观点我要做一个额外解释：胖Model做的事情是先为Controller减负，然后由于Model变胖，再在此基础上拆出ViewModel，跟业界普遍认知的MVVM本质上是为Controller减负这个说法并不矛盾，因为胖Model做的事情也是为Controller减负。另外，我前面说MVVM把数据加工的任务从Controller中解放出来，跟MVVM拆分的是胖Model也不矛盾。要做到解放Controller，首先你得有个胖Model，然后再把这个胖Model拆成Model和ViewModel。";
-    [self textlengthWithText:self.lectureDetail.text];
-    
-    
-    [self layoutView];
+     [self textlengthWithText:self.lectureDetail.text];
 }
 
 #pragma mark private
@@ -369,10 +306,10 @@ CGFloat showAllBtnHeight = 12; // 讲座介绍 高度
     //    [_lectureInfo setupAutoHeightWithBottomView:_showAllBtn bottomMargin:showAllBtnHeight];
     
     //    [_mainScroll layoutSubviews];
-    _lectureDetail.sd_layout.maxHeightIs(maxContentLabelHeight);
-    [_lectureDetail updateLayout];
-    [_mainScroll updateLayout];
-    //    [self layoutView];
+//    _lectureDetail.sd_layout.maxHeightIs(maxContentLabelHeight);
+//    [_lectureDetail updateLayout];
+//    [_mainScroll updateLayout];
+        [self layoutView];
 }
 
 -(void)collectLecture:(UIButton*)sender{

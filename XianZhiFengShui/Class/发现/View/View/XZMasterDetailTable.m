@@ -14,6 +14,7 @@
 
 #import "XZArticleDetailVC.h"
 #import "XZPayVC.h"
+#import "XZLoginVC.h"
 
 
 NSString * const MasterServiceCellId = @"MasterServiceCellId";
@@ -71,11 +72,21 @@ NSString * const MasterArticleCellId = @"MasterArticleCellId";
             if (!cell) {
                 cell = [[XZMasterServicesCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
             }
+            BOOL isLogin = [[GETUserdefault(@"userInfos")objectForKey:@"isLogin"]boolValue];
             __weak typeof(self)weakSelf = self;
-            [cell appointWithBlock:^(XZMasterInfoServiceModel *model) {
-                XZPayVC * payVC = [[XZPayVC alloc]initWithPayStyle:XZMasterPay];
-                [weakSelf.currentVC.navigationController pushViewController:payVC animated:YES];
-            }];
+                [cell appointWithBlock:^(XZMasterInfoServiceModel *model) {
+                    if (isLogin) {
+                        XZPayVC * payVC = [[XZPayVC alloc]initWithPayStyle:XZMasterPay];
+                        [weakSelf.currentVC.navigationController pushViewController:payVC animated:YES];
+                    }else{
+                        [ToastManager showToastOnView:self position:CSToastPositionCenter flag:NO message:@"还未登录，请先去登录"];
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];
+                            nav.navigationBar.hidden = YES;
+                            [weakSelf.currentVC.navigationController presentViewController:nav animated:YES completion:nil];
+                        });
+                    }
+                }];
             cell.model =self.data [indexPath.row];
             return cell;
         }

@@ -215,7 +215,7 @@
         UILabel * headTitle = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, headview.width, 43)];
         headTitle.backgroundColor = [UIColor whiteColor];
         headTitle.textColor = XZFS_TEXTBLACKCOLOR;
-        headTitle.font = XZFS_S_FONT(20);
+        headTitle.font = XZFS_S_FONT(14);
         headTitle.textAlignment = NSTextAlignmentCenter;
         headTitle.text  =headTitleArray[section-1];
         [headview addSubview:headTitle];
@@ -224,7 +224,9 @@
             seeAnotherBtn.frame = CGRectMake(SCREENWIDTH-70-20, 11.5, 70, 20);
             [seeAnotherBtn setTitle:@"换一批" forState:UIControlStateNormal];
             [seeAnotherBtn setTitleColor:XZFS_TEXTBLACKCOLOR forState:UIControlStateNormal];
-            seeAnotherBtn.titleLabel.font = XZFS_S_FONT(20);
+            [seeAnotherBtn setImage:XZFS_IMAGE_NAMED(@"huanyipi") forState:UIControlStateNormal];
+            seeAnotherBtn.titleLabel.font = XZFS_S_FONT(14);
+            [seeAnotherBtn layoutButtonWithEdgeInsetsStyle:XZButtonEdgeInsetsStyleLeft imageTitleSpace:5];
             [seeAnotherBtn addTarget:self action:@selector(seeAnother:) forControlEvents:UIControlEventTouchUpInside];
             [headview addSubview:seeAnotherBtn];
         }

@@ -91,16 +91,26 @@
 
 -(void)setupBlock{
     [_masterService refreshDataWithBlock:^(MasterDetailType type,int page,BOOL isrefresh) {
-        
+        [_masterService.table endRefreshFooter];
+        [_masterService.table endRefreshHeader];
+    }];
+    
+    [_masterEvaluate refreshDataWithBlock:^(MasterDetailType type, int page, BOOL isrefresh) {
+        [_masterEvaluate.table endRefreshFooter];
+        [_masterEvaluate.table endRefreshHeader];
     }];
     
     [_masterArticle refreshDataWithBlock:^(MasterDetailType type,int page,BOOL isrefresh) {
         XZMasterDetailListData * articleListData =[[XZMasterDetailListData alloc]initWithServiceTag:XZMasterArticleList];
+        
+        NSMutableArray * articleMoreList = [NSMutableArray array];
         [articleListData articleListWithMasterCode:self.masterCode pageNum:page pageSize:10 cityCode:@"110000" view:self successBlock:^(NSArray *data) {
+            
             if (isrefresh) {
-                [_masterArticle.data removeAllObjects];
+                [articleMoreList removeAllObjects];
             }
-            [_masterArticle.data addObjectsFromArray:data];
+            [articleMoreList addObjectsFromArray:data];
+            [_masterArticle.data addObjectsFromArray:articleMoreList];
             [_masterArticle.table endRefreshFooter];
             [_masterArticle.table endRefreshHeader];
             if (data.count<=0) {
@@ -129,9 +139,9 @@
 #pragma mark data
 -(void)setupOriginData:(NSDictionary*)dic{
     if (dic) {
-        NSArray * serviceArr = [dic objectForKey:@"serviceType"];
-        NSArray * evaluateArr = [dic objectForKey:@"evaluateList"];
-        NSArray * articleArr = [dic objectForKey:@"articleList"];
+        NSArray * serviceArr = [dic objectForKey:@"serviceTypeList"];
+        NSArray * evaluateArr = [[dic objectForKey:@"evaluate"]objectForKey:@"list"];
+        NSArray * articleArr = [[dic objectForKey:@"article"]objectForKey:@"list"];
         
         for ( int i = 0; i<serviceArr.count; i++) {
             XZMasterInfoServiceModel * model =[XZMasterInfoServiceModel modelWithDictionary:serviceArr[i]];
@@ -163,9 +173,5 @@
 #pragma mark scrollDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     _masterInfoSeg.selectedSegmentIndex = scrollView.contentOffset.x/SCREENWIDTH;
-    
 }
-
-
-
 @end

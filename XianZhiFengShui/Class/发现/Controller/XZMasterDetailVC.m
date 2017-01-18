@@ -12,6 +12,7 @@
 #import "XZMasterDetailInfo2.h"//中间
 #import "XZMasterDetailInfo3.h"//主要部分
 #import "XZFindService.h"
+#import "XZLoginVC.h"
 
 @interface XZMasterDetailVC ()
 @property (nonatomic,strong)XZMasterDetailInfo * headInfo;//头部信息
@@ -52,7 +53,7 @@
     headView.tag = 10;
     [self.mainView addSubview:headView];
     
-    self.headInfo = [[XZMasterDetailInfo alloc]initWithFrame:CGRectMake(headView.width-95-15, 18, 95, headView.height-18*2)];
+    self.headInfo = [[XZMasterDetailInfo alloc]initWithFrame:CGRectMake(headView.width-95-15, 18, 95, headView.height-18*2) style:MasterHeaderDetail];
     self.headInfo.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
     [headView addSubview:self.headInfo];
 }
@@ -103,7 +104,22 @@
     }else{
         type = 1;
     }
-    [self collectionMasterWithType:type];
+    NSDictionary  * dic  = GETUserdefault(@"userInfos");
+    BOOL isLogin = [[dic objectForKey:@"isLogin"]boolValue];
+    if (isLogin) {
+         [self collectionMasterWithType:type];
+    }else{
+        [ToastManager showToastOnView:self.mainView position:CSToastPositionCenter flag:NO message:@"还未登录，请先去登录"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UINavigationController * navi = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];
+            navi.navigationBar.hidden = YES;
+            [self.navigationController presentViewController:navi animated:YES completion:nil];
+
+            
+        });
+    }
+    
+   
 }
 
 #pragma mark 网络
@@ -133,7 +149,6 @@
     [pointOfPraiseService pointOfPraiseMasterWithCityCode:@"110000" masterCode:self.masterCode userCode:userCode view:self.mainView];
     
 }
-
 
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
     XZFindService * masterService = (XZFindService*)service;

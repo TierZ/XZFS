@@ -51,7 +51,7 @@
     [self.navView addSubview:searchBtn];
     [searchBtn addTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.rightButton.backgroundColor = [UIColor redColor];
+    [self.rightButton setImage:XZFS_IMAGE_NAMED(@"xiaoxi_wu") forState:UIControlStateNormal];
     
 }
 
@@ -146,7 +146,15 @@
 }
 
 -(void)clickRightButton{
-    [self.navigationController pushViewController:[[XZMessagesVC alloc]init] animated:YES];
+    NSDictionary * dic = GETUserdefault(@"userInfos");
+    BOOL isLogin = [[dic objectForKey:@"isLogin"]boolValue];
+    if (isLogin) {
+        [self.navigationController pushViewController:[[XZMessagesVC alloc]init] animated:YES];
+    }else{
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];
+            nav.navigationBar.hidden = YES;
+            [self.navigationController presentViewController:nav animated:YES completion:nil];
+    }
 }
 
 #pragma mark - PYSearchViewControllerDelegate
@@ -193,12 +201,7 @@
 //    }
 //    return _headArray;
 //}
-//-(void)click{
-//   
-//    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];
-//    nav.navigationBar.hidden = YES;
-//    [self.navigationController presentViewController:nav animated:YES completion:nil];
-//}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

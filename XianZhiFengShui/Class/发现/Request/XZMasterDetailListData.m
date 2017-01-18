@@ -26,7 +26,7 @@ static NSString * XZGetMasterOrderPay= @"/master/order/pay";
     [dic setObject:masterCode forKey:@"masterCode"];
     NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
-    [self postRequestWithUrl:XZGetMasterArticleList parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+    [self postRequestWithUrl:XZGetMasterArticleList parmater:lastDic view:view isOpenHUD:NO Block:^(NSDictionary *data) {
         NSArray * arr = [[data objectForKey:@"data"]objectForKey:@"list"];
         NSMutableArray * dataArr = [NSMutableArray array];
         for (int i = 0; i<arr.count; i++) {

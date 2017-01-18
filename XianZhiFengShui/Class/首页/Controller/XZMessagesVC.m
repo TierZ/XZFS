@@ -34,11 +34,13 @@
 
 
 -(void)loadData{
+    NSArray * titleIcons = @[@"huodongxiaoxi_wu",@"fuwuxiaoxi_wu",@"xitongxiaoxi_wu"];
+    NSArray * titles = @[@"先知活动",@"服务通知",@"系统消息"];
     for (int i = 0; i<3; i++) {
         XZMessageModel * model = [[XZMessageModel alloc]init];
-        model.icon = @"pic1.jpg";
+        model.icon = titleIcons[i];
         model.time = @"2016-10-11 13:20";
-        model.title = @"先知活动";
+        model.title = titles[i];
         model.detail = @"学习iOS开发一般都是从UI开始的，从只知道从IB拖控件，到知道怎么在方法里写代码，然后会显示什么样的视图，产生什么样的事件，等等";
         [self.messages addObject:model];
     }
