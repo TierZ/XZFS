@@ -67,8 +67,10 @@
 -(void)refreshWithDic:(NSDictionary*)dic{
     _levelLab.text = [dic objectForKey:@"level"];
     _starLevel.level = _levelLab.text.intValue;
-    [_appointmentBtn setTitle:[dic objectForKey:@"appoint"] forState:UIControlStateNormal];
-    [_collectionBtn setTitle:[dic objectForKey:@"collection"] forState:UIControlStateNormal];
+    NSString * appoint = [NSString stringWithFormat:@"%@",[dic objectForKey:@"appoint"]]?:@"--";
+    NSString * collection =[NSString stringWithFormat:@"%@",[dic objectForKey:@"collection"]] ?:@"--";
+    [_appointmentBtn setTitle:appoint forState:UIControlStateNormal];
+    [_collectionBtn setTitle:collection forState:UIControlStateNormal];
 
 }
 

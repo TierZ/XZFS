@@ -17,11 +17,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.yyyTable.frame = CGRectMake(0, 0, SCREENWIDTH, self.view.height);
     self.yyyTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.yyyTable];
+    self.yyyTable.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0,0,0,0));
     [self.yyyTable registerClass:[XZYYYCell class] forCellReuseIdentifier:@"XZYyyCellId"];
-    [self setupData];
+     __weak typeof(self)weakSelf = self;
+    [self.yyyTable refreshListWithBlock:^(int page, BOOL isRefresh) {
+        [weakSelf setupData];
+    }];
 }
 
 -(void)setupData{

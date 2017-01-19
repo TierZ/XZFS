@@ -11,6 +11,8 @@
 #import "XZLectureCell.h"
 #import "SDCycleScrollView.h"
 #import "UIButton+XZImageTitleSpacing.h"
+#import "XZLectureDetailVC.h"
+#import "XZMasterDetailVC.h"
 @interface XZHomeView ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -200,6 +202,30 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch (indexPath.section) {
+        case 0:{
+            
+        }
+            break;
+        case 1:{
+            XZTheMasterModel * model = self.xzHomeData [indexPath.section+1][indexPath.row];
+            XZMasterDetailVC * detailvc = [[XZMasterDetailVC alloc]initWithMasterCode:model.masterCode];
+            [self.curretnVC.navigationController pushViewController:detailvc animated:YES
+             ];
+        }
+            break;
+        case 2:{
+              XZTheMasterModel * model = self.xzHomeData [indexPath.section+1][indexPath.row];
+            XZLectureDetailVC * detailvc = [[XZLectureDetailVC alloc]initWithModel:model];
+            [self.curretnVC.navigationController pushViewController:detailvc animated:YES
+             ];
+
+        }
+            break;
+            
+        default:
+            break;
+    }
     
 }
 

@@ -57,6 +57,7 @@
 
 -(void)setUpHomeView{
     [self.view addSubview:self.home];
+    self.home.curretnVC = self;
     __weak typeof(self)weakSelf =self;
     [self.home.xzHomeTable refreshListWithBlock:^(int page, BOOL isRefresh) {
         [weakSelf initData];

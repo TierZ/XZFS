@@ -257,6 +257,10 @@
 		D174B9271E2F184D0082074C /* yinzhaifengshui@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D174B9051E2F184D0082074C /* yinzhaifengshui@3x.png */; };
 		D174B9281E2F184D0082074C /* zhougongjiemeng@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D174B9061E2F184D0082074C /* zhougongjiemeng@2x.png */; };
 		D174B9291E2F184D0082074C /* zhougongjiemeng@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D174B9071E2F184D0082074C /* zhougongjiemeng@3x.png */; };
+		D174B92C1E3096D30082074C /* XZLectureDetailSmallBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B92B1E3096D30082074C /* XZLectureDetailSmallBar.m */; };
+		D174B92E1E3099690082074C /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = D174B92D1E3099690082074C /* calendar.png */; };
+		D174B9341E30BC580082074C /* FPSUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B9311E30BC580082074C /* FPSUtil.m */; };
+		D174B9351E30BC580082074C /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B9331E30BC580082074C /* YYFPSLabel.m */; };
 		D180AD891DFE444E0043FB61 /* XZOrderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD881DFE444E0043FB61 /* XZOrderFooterView.m */; };
 		D180AD8C1DFE53D30043FB61 /* XZOrderHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD8B1DFE53D30043FB61 /* XZOrderHeaderView.m */; };
 		D180AD8F1DFE7AB20043FB61 /* XZShoppingCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD8E1DFE7AB20043FB61 /* XZShoppingCartHeaderView.m */; };
@@ -1090,6 +1094,13 @@
 		D174B9051E2F184D0082074C /* yinzhaifengshui@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yinzhaifengshui@3x.png"; sourceTree = "<group>"; };
 		D174B9061E2F184D0082074C /* zhougongjiemeng@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhougongjiemeng@2x.png"; sourceTree = "<group>"; };
 		D174B9071E2F184D0082074C /* zhougongjiemeng@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhougongjiemeng@3x.png"; sourceTree = "<group>"; };
+		D174B92A1E3096D30082074C /* XZLectureDetailSmallBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZLectureDetailSmallBar.h; sourceTree = "<group>"; };
+		D174B92B1E3096D30082074C /* XZLectureDetailSmallBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZLectureDetailSmallBar.m; sourceTree = "<group>"; };
+		D174B92D1E3099690082074C /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
+		D174B9301E30BC580082074C /* FPSUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPSUtil.h; sourceTree = "<group>"; };
+		D174B9311E30BC580082074C /* FPSUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPSUtil.m; sourceTree = "<group>"; };
+		D174B9321E30BC580082074C /* YYFPSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYFPSLabel.h; sourceTree = "<group>"; };
+		D174B9331E30BC580082074C /* YYFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYFPSLabel.m; sourceTree = "<group>"; };
 		D180AD871DFE444E0043FB61 /* XZOrderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZOrderFooterView.h; sourceTree = "<group>"; };
 		D180AD881DFE444E0043FB61 /* XZOrderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZOrderFooterView.m; sourceTree = "<group>"; };
 		D180AD8A1DFE53D30043FB61 /* XZOrderHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZOrderHeaderView.h; sourceTree = "<group>"; };
@@ -1950,6 +1961,8 @@
 				D129AAAF1DBF583B00DA2A6D /* XZMasterDetailTable.m */,
 				D1D6A2C21E0A5FE500215CEA /* XZLectureDetailMiddleBar.h */,
 				D1D6A2C31E0A5FE500215CEA /* XZLectureDetailMiddleBar.m */,
+				D174B92A1E3096D30082074C /* XZLectureDetailSmallBar.h */,
+				D174B92B1E3096D30082074C /* XZLectureDetailSmallBar.m */,
 				D18FF43B1E1BACF200479E37 /* XZPayTopView.h */,
 				D18FF43C1E1BACF200479E37 /* XZPayTopView.m */,
 				D18FF43E1E1BB2E600479E37 /* XZPayMiddleView.h */,
@@ -2119,6 +2132,7 @@
 		D11592BF1DA8CF1E004A7B86 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				D174B92F1E30BC580082074C /* FPSTool */,
 				D18CD1501E28AAD300DBEFD4 /* 圆形图 */,
 				D18CD11E1E2393C300DBEFD4 /* SwpNetworking */,
 				D18FF44B1E1CBB4600479E37 /* 控制台打印中文 */,
@@ -2579,6 +2593,17 @@
 				D174B9071E2F184D0082074C /* zhougongjiemeng@3x.png */,
 			);
 			path = "首页";
+			sourceTree = "<group>";
+		};
+		D174B92F1E30BC580082074C /* FPSTool */ = {
+			isa = PBXGroup;
+			children = (
+				D174B9301E30BC580082074C /* FPSUtil.h */,
+				D174B9311E30BC580082074C /* FPSUtil.m */,
+				D174B9321E30BC580082074C /* YYFPSLabel.h */,
+				D174B9331E30BC580082074C /* YYFPSLabel.m */,
+			);
+			path = FPSTool;
 			sourceTree = "<group>";
 		};
 		D180ADA61DFFC7400043FB61 /* 数据库操作 */ = {
@@ -3500,6 +3525,7 @@
 		D1A26AE71DF554080092BADB /* 发现 */ = {
 			isa = PBXGroup;
 			children = (
+				D174B92D1E3099690082074C /* calendar.png */,
 				D18FF4281E1248E900479E37 /* coin@2x.png */,
 				D18FF4291E1248E900479E37 /* coin@3x.png */,
 				D1D6A2C51E0A646D00215CEA /* star_yellow@2x.png */,
@@ -4048,6 +4074,7 @@
 				D1A26BC21DF9678A0092BADB /* gouwuche_small@2x.png in Resources */,
 				D1A26AEF1DF554080092BADB /* fatie@3x.png in Resources */,
 				D1A26BCD1DF9678A0092BADB /* weixuanzhong@3x.png in Resources */,
+				D174B92E1E3099690082074C /* calendar.png in Resources */,
 				D19591391DE4191C00C06A05 /* 切图_41.png in Resources */,
 				D19591341DE4191C00C06A05 /* video_40@3x.png in Resources */,
 				D19591231DE4191C00C06A05 /* point_41@2x.png in Resources */,
@@ -4349,6 +4376,7 @@
 				D113CC3B1DAF3F8C0067A965 /* XZMyLectureVC.m in Sources */,
 				D1131A361DEE83BE00E1398D /* JCHATAlbumTableViewCell.m in Sources */,
 				D128ACB21DC0A249002392E0 /* MShowGroupAllSet.m in Sources */,
+				D174B92C1E3096D30082074C /* XZLectureDetailSmallBar.m in Sources */,
 				D128ACA61DC0A249002392E0 /* JJMainScrollView.m in Sources */,
 				D18FF45B1E1CC44A00479E37 /* XZMasterAddServiceVC.m in Sources */,
 				D16921401DD303BC00867011 /* XZMasterIntroduce.m in Sources */,
@@ -4464,6 +4492,7 @@
 				D12F74DD1DDEB8D0003E2A0B /* XZMyEvaluateVC.m in Sources */,
 				D113CC411DAF3FCE0067A965 /* XZRechargeVC.m in Sources */,
 				D1958FF21DE3F81600C06A05 /* JCHATShowTimeCell.m in Sources */,
+				D174B9341E30BC580082074C /* FPSUtil.m in Sources */,
 				D1A26BD61DF96DC90092BADB /* XZGoodsLayout.m in Sources */,
 				D12F5BD01DC1D6490035335E /* XZThemeDetailVC.m in Sources */,
 				D1D6A29C1E027ED100215CEA /* NSDataEx.m in Sources */,
@@ -4548,6 +4577,7 @@
 				D18CD1391E2768FE00DBEFD4 /* XZMasterOrderEvaluateLevelVC.m in Sources */,
 				D12F74E61DDEB8E9003E2A0B /* XZMyEvaluateCell.m in Sources */,
 				D115931B1DA8E181004A7B86 /* Reachability.m in Sources */,
+				D174B9351E30BC580082074C /* YYFPSLabel.m in Sources */,
 				D1958FD81DE3F81600C06A05 /* JCHATFriendDetailViewController.m in Sources */,
 				D113CC351DAE18260067A965 /* XZThemeCell.m in Sources */,
 				D1F2FB361DEE85F700EFC19B /* JCHATConversationController.m in Sources */,

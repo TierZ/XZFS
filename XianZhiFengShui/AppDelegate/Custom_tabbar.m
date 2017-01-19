@@ -94,7 +94,10 @@ static Custom_tabbar *s_tabbar = NULL;
     
     
 }
-
+-(void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    [FPSUtil showFPS];
+}
 - (void)when_tabbar_is_unselected
 {
 	for(UIView *view in self.view.subviews)

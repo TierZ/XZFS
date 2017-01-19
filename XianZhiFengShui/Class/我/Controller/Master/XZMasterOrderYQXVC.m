@@ -17,11 +17,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.yqxTable.frame = CGRectMake(0, 0, SCREENWIDTH, self.view.height);
     self.yqxTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.yqxTable];
+    self.yqxTable.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0,0,0,0));
+
     [self.yqxTable registerClass:[XZYQXCell class] forCellReuseIdentifier:@"XZYqxCellId"];
-    [self setupData];
+     __weak typeof(self)weakSelf = self;
+    [self.yqxTable refreshListWithBlock:^(int page, BOOL isRefresh) {
+          [weakSelf setupData];
+    }];
+  
 }
 
 -(void)setupData{

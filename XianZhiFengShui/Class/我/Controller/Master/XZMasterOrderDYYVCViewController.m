@@ -17,12 +17,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.dyyTable.frame = CGRectMake(0, 0, SCREENWIDTH, self.view.height);
+//    self.dyyTable.frame = CGRectMake(0, 0, SCREENWIDTH, self.view.height);
     self.dyyTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.dyyTable];
+    self.dyyTable.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0,0,0,0));
     [self.dyyTable registerClass:[XZDYYCell class] forCellReuseIdentifier:@"XZDyyCellId"];
-    [self setupData];
-    NSLog(@"self.frame**** = %@",NSStringFromCGRect(self.dyyTable.frame));
+    __weak typeof(self)weakSelf = self;
+    [self.dyyTable refreshListWithBlock:^(int page, BOOL isRefresh) {
+        [weakSelf setupData];
+    }];
 }
 
 -(void)setupData{

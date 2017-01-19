@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FPSUtil.h"
+
 
 @interface Custom_tabbar : UITabBarController{
     

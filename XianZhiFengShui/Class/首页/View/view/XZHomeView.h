@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "XZTheMasterModel.h"
 #import "XZRefreshTable.h"
+#import "XZHomePageVC.h"
 @interface XZHomeView : UIView
 @property (nonatomic,strong)XZRefreshTable * xzHomeTable;
 @property (nonatomic,strong)NSMutableArray * xzHomeData;
-
+@property (nonatomic,weak)XZHomePageVC * curretnVC;
 -(void)refreshHeadView;
 @end
