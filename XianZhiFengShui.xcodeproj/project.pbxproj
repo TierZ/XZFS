@@ -261,6 +261,8 @@
 		D174B92E1E3099690082074C /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = D174B92D1E3099690082074C /* calendar.png */; };
 		D174B9341E30BC580082074C /* FPSUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B9311E30BC580082074C /* FPSUtil.m */; };
 		D174B9351E30BC580082074C /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B9331E30BC580082074C /* YYFPSLabel.m */; };
+		D174B9381E31B8390082074C /* XZMyMasterFinishedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B9371E31B8390082074C /* XZMyMasterFinishedVC.m */; };
+		D174B93B1E31B8650082074C /* XZMyMasterWantedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B93A1E31B8650082074C /* XZMyMasterWantedVC.m */; };
 		D180AD891DFE444E0043FB61 /* XZOrderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD881DFE444E0043FB61 /* XZOrderFooterView.m */; };
 		D180AD8C1DFE53D30043FB61 /* XZOrderHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD8B1DFE53D30043FB61 /* XZOrderHeaderView.m */; };
 		D180AD8F1DFE7AB20043FB61 /* XZShoppingCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD8E1DFE7AB20043FB61 /* XZShoppingCartHeaderView.m */; };
@@ -1101,6 +1103,10 @@
 		D174B9311E30BC580082074C /* FPSUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPSUtil.m; sourceTree = "<group>"; };
 		D174B9321E30BC580082074C /* YYFPSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYFPSLabel.h; sourceTree = "<group>"; };
 		D174B9331E30BC580082074C /* YYFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYFPSLabel.m; sourceTree = "<group>"; };
+		D174B9361E31B8390082074C /* XZMyMasterFinishedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMyMasterFinishedVC.h; sourceTree = "<group>"; };
+		D174B9371E31B8390082074C /* XZMyMasterFinishedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMyMasterFinishedVC.m; sourceTree = "<group>"; };
+		D174B9391E31B8650082074C /* XZMyMasterWantedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMyMasterWantedVC.h; sourceTree = "<group>"; };
+		D174B93A1E31B8650082074C /* XZMyMasterWantedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMyMasterWantedVC.m; sourceTree = "<group>"; };
 		D180AD871DFE444E0043FB61 /* XZOrderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZOrderFooterView.h; sourceTree = "<group>"; };
 		D180AD881DFE444E0043FB61 /* XZOrderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZOrderFooterView.m; sourceTree = "<group>"; };
 		D180AD8A1DFE53D30043FB61 /* XZOrderHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZOrderHeaderView.h; sourceTree = "<group>"; };
@@ -2964,6 +2970,10 @@
 				D191C7A51DAB3FD000496906 /* XZAboutMeVC.m */,
 				D113CC361DAF3F6D0067A965 /* XZMyMasterVC.h */,
 				D113CC371DAF3F6D0067A965 /* XZMyMasterVC.m */,
+				D174B9361E31B8390082074C /* XZMyMasterFinishedVC.h */,
+				D174B9371E31B8390082074C /* XZMyMasterFinishedVC.m */,
+				D174B9391E31B8650082074C /* XZMyMasterWantedVC.h */,
+				D174B93A1E31B8650082074C /* XZMyMasterWantedVC.m */,
 				D113CC391DAF3F8C0067A965 /* XZMyLectureVC.h */,
 				D113CC3A1DAF3F8C0067A965 /* XZMyLectureVC.m */,
 				D113CC3C1DAF3FA80067A965 /* XZMyThemeVC.h */,
@@ -4528,6 +4538,7 @@
 				D128AC5F1DC073B5002392E0 /* XZPostTopicVC.m in Sources */,
 				D180ADA11DFFAB450043FB61 /* XZOrderDetailCell.m in Sources */,
 				D19F5DC21DE54ED1001F5EB0 /* XZFeedBackVC.m in Sources */,
+				D174B9381E31B8390082074C /* XZMyMasterFinishedVC.m in Sources */,
 				D18FF4651E1E33A300479E37 /* XZInvestFriendsVC.m in Sources */,
 				D18CD14A1E2789B400DBEFD4 /* XZMasterOrderYYJVC.m in Sources */,
 				D113CC2F1DADD43D0067A965 /* XZLectureCell.m in Sources */,
@@ -4631,6 +4642,7 @@
 				D191C7AB1DAB3FD000496906 /* XZMallVC.m in Sources */,
 				D1958FF41DE3F81600C06A05 /* JCHATAudioPlayerHelper.m in Sources */,
 				D1C2A8801DAA576000ADDAF1 /* ValidateTextField.m in Sources */,
+				D174B93B1E31B8650082074C /* XZMyMasterWantedVC.m in Sources */,
 				D1958FF81DE3F81600C06A05 /* JCHATFootTableViewCell.m in Sources */,
 				D18CD12A1E24E3F700DBEFD4 /* XZMyAccountService.m in Sources */,
 				D1958FF51DE3F81600C06A05 /* JCHATChatTable.m in Sources */,

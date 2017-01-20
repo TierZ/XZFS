@@ -92,7 +92,7 @@
     });
     dispatch_group_async(group, queue, ^{
         XZHomeService * homeMasterService = [[XZHomeService alloc]init];
-       [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:_cityCode keyWord:@"" searchType:1 userCode:userCodeStr orderType:3 view:self.mainView successBlock:^(NSArray *data) {
+       [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:_cityCode keyWord:@"" searchType:5 userCode:userCodeStr orderType:3 view:self.mainView successBlock:^(NSArray *data) {
               self.masters = [NSMutableArray arrayWithArray:data];
              dispatch_semaphore_signal(semaphore);
         } failBlock:^(NSError *error) {

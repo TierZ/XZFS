@@ -43,7 +43,7 @@ typedef NS_ENUM(NSUInteger, XZHomeServiceTag) {
  @param pageSize   每页数量
  @param cityCode   城市
  @param keyWord    关键字（本地，全部，最热） 当searchType=1时有效
- @param searchType 1表示默认列表；2表示预约（进行中）的大师列表；3表示预约（已完成）的大师列表；4表示收藏（想约）的大师列表，默认值为1
+ @param searchType 1表示默认列表；2表示预约（进行中）的大师列表；3表示预约（已完成）的大师列表；4表示收藏（想约）的大师列表，5推荐的大师列表 默认值为1
  @param userCode   用户id   当searchType字段值为2/3时，如果不传此字段或此字段为空，则返回错误信息、没有收藏大师时返回一个空的JsonObject对象；
  @param orderType 排序字段：1表示全部；2表示本地；3表示最火	当searchType=1或searchType=5时有效；默认值为3
  @param successBlock 成功

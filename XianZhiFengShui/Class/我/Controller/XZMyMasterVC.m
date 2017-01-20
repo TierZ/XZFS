@@ -12,6 +12,10 @@
 #import "XZFindService.h"
 #import "UIButton+XZImageTitleSpacing.h"
 #import "XZMasterOrderVC.h"
+
+#import "XZMyMasterFinishedVC.h"
+#import "XZMyMasterWantedVC.h"
+
 @interface XZMyMasterVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UIButton*wantBtn;//想参加的
 @property (nonatomic,strong)UIButton * finishedBtn;//完成的
@@ -20,6 +24,7 @@
 @property (nonatomic,strong)UIScrollView * selectScroll;
 @property (nonatomic,strong)XZMyMasterWantedView * wantView;
 @property (nonatomic,strong)XZMyMasterFinishedView * finishView;
+
 @end
 
 @implementation XZMyMasterVC{
@@ -57,13 +62,23 @@
     [self.mainView addSubview:self.selectScroll];
     self.selectScroll.contentSize = CGSizeMake(self.selectScroll.width*2, self.selectScroll.height);
     
-    self.finishView = [[XZMyMasterFinishedView alloc]initWithFrame:CGRectMake(0, 0, self.selectScroll.width, self.selectScroll.height)];
-    self.finishView.weakSelfVC = self;
-    [self.selectScroll addSubview:self.finishView];
+    XZMyMasterFinishedVC * finishVC = [[XZMyMasterFinishedVC alloc]init];
+    finishVC.view.frame =CGRectMake(0, 0, self.selectScroll.width, self.selectScroll.height);
+    [self addChildViewController:finishVC];
+    [self.selectScroll addSubview:finishVC.view];
     
-    self.wantView = [[XZMyMasterWantedView alloc]initWithFrame:CGRectMake(self.selectScroll.width, 0, self.selectScroll.width, self.selectScroll.height)];
-     self.wantView.weakSelfVC = self;
-    [self.selectScroll addSubview:self.wantView];
+    XZMyMasterWantedVC * wantVC = [[XZMyMasterWantedVC alloc]init];
+    wantVC.view.frame = CGRectMake(self.selectScroll.width, 0, self.selectScroll.width, self.selectScroll.height);
+    [self addChildViewController:wantVC];
+    [self.selectScroll addSubview:wantVC.view];
+    
+//    self.finishView = [[XZMyMasterFinishedView alloc]initWithFrame:CGRectMake(0, 0, self.selectScroll.width, self.selectScroll.height)];
+//    self.finishView.weakSelfVC = self;
+//    [self.selectScroll addSubview:self.finishView];
+    
+//    self.wantView = [[XZMyMasterWantedView alloc]initWithFrame:CGRectMake(self.selectScroll.width, 0, self.selectScroll.width, self.selectScroll.height)];
+//     self.wantView.weakSelfVC = self;
+//    [self.selectScroll addSubview:self.wantView];
 
 }
 
