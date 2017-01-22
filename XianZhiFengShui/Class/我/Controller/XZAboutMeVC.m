@@ -134,7 +134,7 @@
     
     BaseLoginController * jumpClass = [[currentClass alloc]init];
     if ([jumpClass respondsToSelector:@selector(setIsUserLogin:)]) {
-        jumpClass.isUserLogin = YES;
+//        jumpClass.isUserLogin = YES;
         if (jumpClass.isUserLogin) {
             jumpClass.titelLab.text = [dic objectForKey:@"title"];
             if ([jumpClass isKindOfClass:[XZMyCouponVC class ]]) {

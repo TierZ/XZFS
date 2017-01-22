@@ -11,5 +11,5 @@
  我约过的大师
  */
 @interface XZMyMasterFinishedVC : UIViewController
-
+-(void)selectDataIsFinished:(BOOL)isFinished;
 @end

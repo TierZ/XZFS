@@ -11,7 +11,10 @@ static NSString * MySignUpLectureService = @"/lectures/signUp/list";
 static NSString * MyCollectionLectureService = @"/lectures/collection/list";
 static NSString * HelpAndFeedbackListService = @"/helpAndFeedback/list";
 static NSString * RegistMasterService = @"/master/authentication/toBeMaster";
+static NSString * MyMasterService = @"/master/list";
+
 #import "XZUserCenterService.h"
+#import "XZTheMasterModel.h"
 
 @implementation XZUserCenterService
 
@@ -68,6 +71,7 @@ static NSString * RegistMasterService = @"/master/authentication/toBeMaster";
     
     [self postRequestWithUrl:MyCollectionLectureService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         NSLog(@"MyCollectionLectureService-------%@",data)
+        
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
             [self.delegate netSucceedWithHandle:[[data objectForKey:@"data"] objectForKey:@"list"] dataService:self];
         }
@@ -127,9 +131,127 @@ static NSString * RegistMasterService = @"/master/authentication/toBeMaster";
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
             [self.delegate netFailedWithHandle:error dataService:self];
         }
-        
     }];
+}
+
+#pragma mark 我的大师 （进行中）
+-(void)myFinishingMasterWithUserCode:(NSString*)userCode pageNum:(int)pageNum PageSize:(int)PageSize cityCode:(NSString*)cityCode view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    NSString * userCodeStr = userCode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
+     [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:[NSNumber numberWithInteger:2] forKey:@"searchType"];
+    [dic setObject:[NSNumber numberWithInt:pageNum] forKey:@"pageNum"];
+    [dic setObject:[NSNumber numberWithInt:PageSize] forKey:@"pageSize"];
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
     
+    [self postRequestWithUrl:MyMasterService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        NSLog(@"我的大师 进行中------%@",data)
+
+        if ([[[data objectForKey:@"data"] objectForKey:@"list"] isKindOfClass:[NSArray class]]) {
+            NSArray * array = [[data objectForKey:@"data"] objectForKey:@"list"];
+            NSMutableArray * lastArray = [NSMutableArray array];
+            for (int i = 0; i<array.count; i++) {
+                XZTheMasterModel * model = [XZTheMasterModel modelWithJSON:array[i]];
+                model.isFinished = NO;
+                [lastArray addObject:model];
+            }
+            if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+                [self.delegate netSucceedWithHandle:lastArray dataService:self];
+            }
+        }else{
+            NSError * error;
+            if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+                [self.delegate netFailedWithHandle:error dataService:self];
+            }
+            NSLog(@"返回的数据不是数组");
+        }
+
+    } failBlock:^(NSError *error) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+}
+
+#pragma mark 我的大师 （已结束）
+-(void)myFinishedMasterWithUserCode:(NSString*)userCode pageNum:(int)pageNum PageSize:(int)PageSize cityCode:(NSString*)cityCode view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    NSString * userCodeStr = userCode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
+    [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:[NSNumber numberWithInteger:3] forKey:@"searchType"];
+    [dic setObject:[NSNumber numberWithInt:pageNum] forKey:@"pageNum"];
+    [dic setObject:[NSNumber numberWithInt:PageSize] forKey:@"pageSize"];
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:MyMasterService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        NSLog(@"我的大师 （已结束）-------%@",data)
+        
+        if ([[[data objectForKey:@"data"] objectForKey:@"list"] isKindOfClass:[NSArray class]]) {
+            NSArray * array = [[data objectForKey:@"data"] objectForKey:@"list"];
+            NSMutableArray * lastArray = [NSMutableArray array];
+            for (int i = 0; i<array.count; i++) {
+                XZTheMasterModel * model = [XZTheMasterModel modelWithJSON:array[i]];
+                model.isFinished = YES;
+                [lastArray addObject:model];
+            }
+            if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+                [self.delegate netSucceedWithHandle:lastArray dataService:self];
+            }
+        }else{
+            NSError * error;
+            if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+                [self.delegate netFailedWithHandle:error dataService:self];
+            }
+            NSLog(@"返回的数据不是数组");
+        }
+        
+    } failBlock:^(NSError *error) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+}
+
+#pragma mark 我的大师 （想约的）
+-(void)myWantMasterWithUserCode:(NSString*)userCode pageNum:(int)pageNum PageSize:(int)PageSize cityCode:(NSString*)cityCode view:(id)view{
+    NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithCapacity:1];
+    NSString * userCodeStr = userCode?:@"";
+    [dic setObject:userCodeStr forKey:@"userCode"];
+    [dic setObject:[NSNumber numberWithInt:pageNum] forKey:@"pageNum"];
+    [dic setObject:[NSNumber numberWithInt:PageSize] forKey:@"pageSize"];
+    [dic setObject:cityCode forKey:@"cityCode"];
+    [dic setObject:[NSNumber numberWithInteger:4] forKey:@"searchType"];
+
+    NSDictionary * lastDic = [self dataEncryptionWithDic:dic];
+    
+    [self postRequestWithUrl:MyMasterService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
+        NSLog(@"我的大师 想约-------%@",data)
+        if ([[[data objectForKey:@"data"] objectForKey:@"list"] isKindOfClass:[NSArray class]]) {
+            NSArray * array = [[data objectForKey:@"data"] objectForKey:@"list"];
+            NSMutableArray * lastArray = [NSMutableArray array];
+            for (int i = 0; i<array.count; i++) {
+                XZTheMasterModel * model = [XZTheMasterModel modelWithJSON:array[i]];
+                [lastArray addObject:model];
+            }
+            if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
+                [self.delegate netSucceedWithHandle:lastArray dataService:self];
+            }
+        }else{
+            NSError * error;
+            if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+                [self.delegate netFailedWithHandle:error dataService:self];
+            }
+            NSLog(@"返回的数据不是数组");
+        }
+
+    } failBlock:^(NSError *error) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
+            [self.delegate netFailedWithHandle:error dataService:self];
+        }
+    }];
+
 }
 
 @end

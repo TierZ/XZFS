@@ -10,8 +10,8 @@
 #import "XZRefreshTable.h"
 #import "XZTheMasterCell.h"
 #import "XZMasterDetailVC.h"
-
-@interface XZMyMasterWantedVC ()<UITableViewDelegate,UITableViewDataSource>
+#import "XZUserCenterService.h"
+@interface XZMyMasterWantedVC ()<UITableViewDelegate,UITableViewDataSource,DataReturnDelegate>
 @property (nonatomic,strong)XZRefreshTable * hopeTable;//
 @end
 
@@ -22,33 +22,52 @@
     
     [self.view addSubview:self.hopeTable];
     self.hopeTable.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0, 0, 0, 0));
-    
-    [self loadData];
+    __weak typeof(self)weakSelf = self;
+    [self.hopeTable refreshListWithBlock:^(int page, BOOL isRefresh) {
+        [weakSelf loadDataWithPage:page];
+    }];
 }
--(void)loadData{
-    for (int i = 0; i<20; i++) {
-        XZTheMasterModel * model = [[XZTheMasterModel alloc]init];
-        model.icon = @"http://navatar.shagualicai.cn/uid/150922010117012662";
-        model.name = @"张三丰";
-        model.level = @"V1";
-        model.singleVolume = @"82单";
-        model.pointOfPraise = @"99";
-        model.type  =@[@"上知天文",@"下晓地理",@"古往今来",@"无所不知"];
-        model.summary  =@"我是张三丰，zhang。。。。。爱撒大声地阿萨德阿达";
-        if (i%5==0) {
-            model.type  =@[@"上知天文",@"下晓地理",@"古往今来",@"无所不知",@"无所不晓",@"前知三百年",@"后知五百载"];
-            model.summary  =@"张三丰，文始派传人，武当派祖师。名君宝，字全一[1]  ，（此为一说，另一说法为君宝）别号葆和容忍。元末明初儒者、武当山道士。善书画，工诗词。另有一说其为福建邵武人，名子冲，一名元实，三丰其号";
-        }
-        if (i==7) {
-            model.type = @[@"宋小宝",@"赵四",@"刘能",@"小沈阳"];
-        }
-        [self.hopeTable.dataArray addObject:model];
+-(void)loadDataWithPage:(int)page{
+    XZUserCenterService * myWantService = [[XZUserCenterService alloc]initWithServiceTag:XZMyMasterWantedTag];
+    myWantService.delegate = self;
+    NSString * userCode = [GETUserdefault(@"userInfos")objectForKey:@"bizCode"];
+    [myWantService myWantMasterWithUserCode:userCode pageNum:page PageSize:10 cityCode:@"110000" view:self.hopeTable];
+
+}
+
+-(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
+    NSArray * array = (NSArray*)succeedHandle;
+    [self showDataAfterNetRequestWithArray:array];
+}
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+    [self showDataAfterNetRequestWithArray:@[]];
+}
+#pragma mark private
+/**
+ 网络请求后 显示数据
+ 
+ @param array      请求下来的数字
+ */
+-(void)showDataAfterNetRequestWithArray:(NSArray*)array{
+    if (self.hopeTable.row==1) {
+        [self.hopeTable.dataArray removeAllObjects];
     }
+    [self.hopeTable.dataArray addObjectsFromArray:array];
     [self.hopeTable reloadData];
-    [self.hopeTable.mj_header endRefreshing];
+    [self.hopeTable endRefreshHeader];
+    [self.hopeTable endRefreshFooter];
+    if (array.count<=0) {
+        self.hopeTable.mj_footer.hidden = YES;
+    }
+    __weak typeof(self)weakSelf = self;
+    if (self.hopeTable.dataArray.count<=0) {
+        [self.hopeTable showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^{
+            [weakSelf loadDataWithPage:1];
+                } btnBlock:nil];
+    }else{
+        [self.hopeTable hideNoDataView];
+    }
 }
-
-
 #pragma mark table 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.hopeTable.dataArray.count;

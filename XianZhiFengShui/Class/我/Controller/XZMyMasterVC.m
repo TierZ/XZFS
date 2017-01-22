@@ -24,7 +24,7 @@
 @property (nonatomic,strong)UIScrollView * selectScroll;
 @property (nonatomic,strong)XZMyMasterWantedView * wantView;
 @property (nonatomic,strong)XZMyMasterFinishedView * finishView;
-
+@property (nonatomic,strong)  XZMyMasterFinishedVC * finishVC ;
 @end
 
 @implementation XZMyMasterVC{
@@ -62,10 +62,10 @@
     [self.mainView addSubview:self.selectScroll];
     self.selectScroll.contentSize = CGSizeMake(self.selectScroll.width*2, self.selectScroll.height);
     
-    XZMyMasterFinishedVC * finishVC = [[XZMyMasterFinishedVC alloc]init];
-    finishVC.view.frame =CGRectMake(0, 0, self.selectScroll.width, self.selectScroll.height);
-    [self addChildViewController:finishVC];
-    [self.selectScroll addSubview:finishVC.view];
+    self.finishVC = [[XZMyMasterFinishedVC alloc]init];
+    self.finishVC.view.frame =CGRectMake(0, 0, self.selectScroll.width, self.selectScroll.height);
+    [self addChildViewController:self.finishVC];
+    [self.selectScroll addSubview:self.finishVC.view];
     
     XZMyMasterWantedVC * wantVC = [[XZMyMasterWantedVC alloc]init];
     wantVC.view.frame = CGRectMake(self.selectScroll.width, 0, self.selectScroll.width, self.selectScroll.height);
@@ -168,7 +168,9 @@
     isShowSelectList = NO;
     selectList.hidden = !isShowSelectList;
     tmpTag = 1;
-
+    BOOL isFinished = indexPath.row==0?NO:YES;
+    [self.finishVC selectDataIsFinished:isFinished];
+    
 }
 
 

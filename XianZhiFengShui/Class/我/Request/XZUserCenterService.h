@@ -14,6 +14,9 @@ typedef NS_ENUM(NSUInteger, XZUserCenterServiceTag) {
     XZHelpAndFeedbackListTag,//帮助反馈导航列表
      XZRegistMasterTag,//成为大师
     XZSaveUserInfoTag,//保存信息
+    XZMyMasterWantedTag,//我的大师 想约的
+    XZMyMasterFinishedTag,//我的大师 完成的
+    XZMyMasterFinishingTag,//我的大师 正在进行中的
 };
 #import "BasicService.h"
 
@@ -83,4 +86,38 @@ typedef NS_ENUM(NSUInteger, XZUserCenterServiceTag) {
  @param view        。。
  */
 -(void)RegistMasterWithCityCode:(NSString*)cityCode masterCode:(NSString*)masterCode name:(NSString*)name phoneNo:(NSString*)phoneNo email:(NSString*)email city:(NSString*)city company:(NSString*)company position:(NSString*)position nickname:(NSString*)nickname sex:(NSString*)sex title:(NSString*)title summary:(NSString*)summary descr:(NSString*)descr icon:(NSString*)icon serviceType:(NSArray*)serviceType photoList:(NSArray*)photoList idcardList:(NSArray*)idcardList view:(id)view;
+
+/**
+ 我约过的大师(searchType = 2 预约（进行中）的大师列表)
+ 
+ @param userCode   用户id
+ @param pageNum    页码
+ @param PageSize   每页
+ @param cityCode   城市
+ @param view       。。
+ */
+-(void)myFinishingMasterWithUserCode:(NSString*)userCode pageNum:(int)pageNum PageSize:(int)PageSize cityCode:(NSString*)cityCode view:(id)view;
+/**
+ 我约过的大师(searchType = 3 预约（已完成）的大师列表)
+
+ @param userCode   用户id
+ @param pageNum    页码
+ @param PageSize   每页
+ @param cityCode   城市
+ @param view       。。
+ */
+-(void)myFinishedMasterWithUserCode:(NSString*)userCode pageNum:(int)pageNum PageSize:(int)PageSize cityCode:(NSString*)cityCode view:(id)view;
+
+/**
+ 我想约的大师 (searchType 4)
+
+ @param userCode   用户id
+ @param pageNum    页码
+ @param PageSize   每页
+ @param cityCode   城市
+ @param view       。。
+ */
+-(void)myWantMasterWithUserCode:(NSString*)userCode pageNum:(int)pageNum PageSize:(int)PageSize cityCode:(NSString*)cityCode view:(id)view;
+
+
 @end
