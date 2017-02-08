@@ -153,44 +153,76 @@
     static NSString * masterCellId = @"homeMasterCellId";
     static NSString * lectureCellId = @"homeLectureCellId";
     
-    switch (indexPath.section) {
-        case 0:{
-            UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:stylesCellId];
-            if (!cell) {
-                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stylesCellId];
-            }
-            NSDictionary * tagsDic = self.xzHomeData[indexPath.section+1];
-            UIView * styleView = [self setUpStyleCellWithItems:[tagsDic objectForKey:@"tags"]];
-            [cell.contentView addSubview:styleView];
-            cell.height = styleView.bottom;
-            return cell;
+    if (indexPath.section==0) {
+        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:stylesCellId];
+        if (!cell) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stylesCellId];
         }
-            break;
-        case 1:{
-            XZTheMasterCell * cell = [tableView dequeueReusableCellWithIdentifier:masterCellId];
-            if (!cell) {
-                cell = [[XZTheMasterCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:masterCellId];
-            }
-            
-            [cell refreshMasterCellWithModel:self.xzHomeData [indexPath.section+1][indexPath.row]];
-            return cell;
+        NSDictionary * tagsDic = self.xzHomeData[indexPath.section+1];
+        UIView * styleView = [self setUpStyleCellWithItems:[tagsDic objectForKey:@"tags"]];
+        [cell.contentView addSubview:styleView];
+        cell.height = styleView.bottom;
+        return cell;
+    }else if (indexPath.section==1){
+        XZTheMasterCell * cell = [tableView dequeueReusableCellWithIdentifier:masterCellId];
+        if (!cell) {
+            cell = [[XZTheMasterCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:masterCellId];
         }
-            break;
-        case 2:{
-            XZLectureCell * cell = [tableView dequeueReusableCellWithIdentifier:lectureCellId];
-            if (!cell) {
-                cell = [[XZLectureCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:lectureCellId];
-            }
-            
-            [cell refreshLectureCellWithModel:self.xzHomeData [indexPath.section+1][indexPath.row]];
-            return cell;
+        
+        [cell refreshMasterCellWithModel:self.xzHomeData [indexPath.section+1][indexPath.row]];
+        return cell;
+    }else{
+        XZLectureCell * cell = [tableView dequeueReusableCellWithIdentifier:lectureCellId];
+        if (!cell) {
+            cell = [[XZLectureCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:lectureCellId];
         }
-            break;
-            
-        default:
-            return nil;
-            break;
+        
+        [cell refreshLectureCellWithModel:self.xzHomeData [indexPath.section+1][indexPath.row]];
+        return cell;
+
     }
+    
+//    switch (indexPath.section) {
+//        case 0:{
+//            UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:stylesCellId];
+//            if (!cell) {
+//                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stylesCellId];
+//            }
+//            NSDictionary * tagsDic = self.xzHomeData[indexPath.section+1];
+//            UIView * styleView = [self setUpStyleCellWithItems:[tagsDic objectForKey:@"tags"]];
+//            [cell.contentView addSubview:styleView];
+//            cell.height = styleView.bottom;
+//            return cell;
+//        }
+//            break;
+//        case 1:{
+//            XZTheMasterCell * cell = [tableView dequeueReusableCellWithIdentifier:masterCellId];
+//            if (!cell) {
+//                cell = [[XZTheMasterCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:masterCellId];
+//            }
+//            
+//            [cell refreshMasterCellWithModel:self.xzHomeData [indexPath.section+1][indexPath.row]];
+//            return cell;
+//        }
+//            break;
+//        case 2:{
+//            XZLectureCell * cell = [tableView dequeueReusableCellWithIdentifier:lectureCellId];
+//            if (!cell) {
+//                cell = [[XZLectureCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:lectureCellId];
+//            }
+//            
+//            [cell refreshLectureCellWithModel:self.xzHomeData [indexPath.section+1][indexPath.row]];
+//            return cell;
+//        }
+//            break;
+//            
+//        default:{
+//            UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"otherCell"];
+//            return cell;
+//        }
+//            
+//            break;
+//    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==2) {

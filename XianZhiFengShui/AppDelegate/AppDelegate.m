@@ -47,10 +47,10 @@
     if ([options[UIApplicationOpenURLOptionsSourceApplicationKey] isEqualToString:@"com.sina.weibo"]) {
         NSLog(@"新浪微博~");
         
-        return [WeiboSDK handleOpenURL:url delegate:[WTThirdPartyLoginManager shareWTThirdPartyLoginManager]];
+        return [WeiboSDK handleOpenURL:url delegate:[[WTThirdPartyLoginManager alloc]init]];
     }else if ([options[UIApplicationOpenURLOptionsSourceApplicationKey] isEqualToString:@"com.tencent.xin"]){
         
-        return [WXApi handleOpenURL:url delegate:[WTThirdPartyLoginManager shareWTThirdPartyLoginManager]];
+        return [WXApi handleOpenURL:url delegate:[[WTThirdPartyLoginManager alloc]init]];
     }else if ([options[UIApplicationOpenURLOptionsSourceApplicationKey] isEqualToString:@"com.tencent.mqq"]){
         
                 [WTShareManager didReceiveTencentUrl:url];
@@ -66,11 +66,11 @@
     
     if ([sourceApplication isEqualToString:@"com.sina.weibo"]) {
         
-        return [WeiboSDK handleOpenURL:url delegate:[WTThirdPartyLoginManager shareWTThirdPartyLoginManager]];
+        return [WeiboSDK handleOpenURL:url delegate:[[WTThirdPartyLoginManager alloc]init]];
         
     }else if ([sourceApplication isEqualToString:@"com.tencent.xin"]){
         
-        return [WXApi handleOpenURL:url delegate:[WTThirdPartyLoginManager shareWTThirdPartyLoginManager]];
+        return [WXApi handleOpenURL:url delegate:[[WTThirdPartyLoginManager alloc]init]];
         
     }else if ([sourceApplication isEqualToString:@"com.tencent.mqq"]){
         

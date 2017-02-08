@@ -9,12 +9,15 @@
 #import "XZEditInfoVC.h"
 #import <AVFoundation/AVFoundation.h>
 #import "ActionSheet_UIPickerView.h"
+#import "XZEditInfoCell.h"
+
 @interface XZEditInfoVC ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ActionSheet_UIPickerViewDelegate>
 @property (nonatomic,strong)UITableView * editTable;
 @property (nonatomic,strong)NSArray * editItems;
 @property (nonatomic,strong)NSArray * pickerArr;
 @property (nonatomic,strong)ActionSheet_UIPickerView * sexPicker;
 @property (nonatomic,strong)NSIndexPath * selectIndex;
+@property (nonatomic,strong)NSMutableDictionary * detailsDic;
 @end
 
 @implementation XZEditInfoVC{
@@ -23,7 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _sexStr = @"";
     self.editTable.frame = CGRectMake(0, 7, SCREENWIDTH, SCREENHEIGHT-XZFS_STATUS_BAR_H-7);
     [self.mainView addSubview:self.editTable];
     UIView * footV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 85)];
@@ -40,9 +43,6 @@
     footBtn.layer.cornerRadius = 5;
     [footV addSubview:footBtn];
     self.editTable.tableFooterView = footV;
-
-    
-    
 }
 
 #pragma mark table
@@ -51,7 +51,8 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    
+    XZEditInfoCell * cell = [[XZEditInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"editInfoCellId"];
     cell.textLabel.text = self.editItems[indexPath.row];
     cell.textLabel.font = XZFS_S_FONT(13);
     cell.textLabel.textColor = XZFS_TEXTLIGHTGRAYCOLOR;
@@ -62,18 +63,20 @@
         iv.layer.masksToBounds = YES;
         iv.layer.cornerRadius = 20;
         [cell.contentView addSubview:iv];
+        cell.editTf.hidden = YES;
     }else{
-        UITextField * tf = [[UITextField alloc]initWithFrame:CGRectMake(120, 15, cell.width-130, 14)];
-        tf.textColor = XZFS_TEXTBLACKCOLOR;
-        tf.font = XZFS_S_FONT(14);
-        [cell.contentView addSubview:tf];
+        cell.editTf.hidden = NO;
+        [cell editInfoWithBlock:^(NSString *editInfo) {
+            NSLog(@"editInfo = %@",editInfo);
+            [self.detailsDic setObject:editInfo forKey:cell.textLabel.text];
+        }];
         if (indexPath.row==3) {
-            tf.userInteractionEnabled = NO;
-            tf.text = _sexStr;
+            cell.editTf.userInteractionEnabled = NO;
+            cell.editTf.text = _sexStr;
+            [self.detailsDic setObject:cell.editTf.text forKey:cell.textLabel.text];
+
         }
     }
-    
-    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -96,7 +99,7 @@
         
         NSLog(@"上传图片。。");
     }else{
-    
+        
     }
 }
 
@@ -169,7 +172,12 @@
 }
 
 - (void)actionDoneWithPick:(UIPickerView *)pick {
-    [self.editTable reloadRow:3 inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+  
+    NSLog(@"_sex = %@",_sexStr);
+    if ([_sexStr isEqualToString:@""]) {
+        _sexStr = @"男";
+    }
+      [self.editTable reloadRow:3 inSection:0 withRowAnimation:UITableViewRowAnimationNone];
     [self.sexPicker dismiss:self];
 }
 
@@ -222,7 +230,7 @@
     CGImageRelease(imageRef);
     
     __block NSData * imageData = UIImageJPEGRepresentation(nowImage, 0.0);
-    
+    [_detailsDic setObject:@"头像链接" forKey:@"头像"];
     
 //    NSDictionary *dic;
 //    MBProgressHUD *mbd = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -255,7 +263,13 @@
 
 #pragma mark action
 -(void)saveInfo{
-
+    NSLog(@"detailInfo = %@",_detailsDic);
+    for (NSString * editItem in self.editItems) {
+        if ([[_detailsDic objectForKey:editItem]isEqualToString:@""]) {
+            [ToastManager showToastOnView:self.mainView position:CSToastPositionCenter flag:NO message:[NSString stringWithFormat:@"%@不能为空哦~",editItem]];
+            return;
+        }
+    }
     NSLog(@"保存信息");
 }
 
@@ -302,6 +316,15 @@
         _pickerArr = [NSArray arrayWithObjects:@"男",@"女",@"保密" ,nil];
     }
     return _pickerArr;
+}
+-(NSMutableDictionary *)detailsDic{
+    if (!_detailsDic) {
+        _detailsDic = [NSMutableDictionary dictionary];
+        for (int i = 0; i<self.editItems.count; i++) {
+            [_detailsDic setObject:@"" forKey:self.editItems[i]];
+        }
+    }
+    return _detailsDic;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

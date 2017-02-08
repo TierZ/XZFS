@@ -95,6 +95,15 @@
 }
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
     NSLog(@"successHanderl = %@",succeedHandle);
+    NSDictionary * dic = (NSDictionary*)succeedHandle;
+    NSDictionary * data = [dic objectForKey:@"data"];
+    BOOL isAffect = [KISDictionaryHaveKey(data, @"affect")boolValue];
+    if (isAffect) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            SETUserdefault(@{}, @"userInfos");
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        });
+    }
 }
 
 #pragma mark getter

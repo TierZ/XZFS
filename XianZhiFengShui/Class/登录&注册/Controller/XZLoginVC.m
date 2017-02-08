@@ -159,7 +159,6 @@
         loginType = WTLoginTypeWeiXin;
         thirdType = @"W";
     }
-   
     [WTThirdPartyLoginManager getUserInfoWithWTLoginType:loginType result:^(NSDictionary *LoginResult, NSString *error) {
         if (LoginResult) {
             NSLog(@"🐒🐒🐒🐒🐒🐒🐒🐒-----%@", LoginResult);

@@ -673,6 +673,9 @@
 		D1D6A2C41E0A5FE500215CEA /* XZLectureDetailMiddleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D6A2C31E0A5FE500215CEA /* XZLectureDetailMiddleBar.m */; };
 		D1D6A2C71E0A646E00215CEA /* star_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1D6A2C51E0A646D00215CEA /* star_yellow@2x.png */; };
 		D1D6A2C81E0A646E00215CEA /* star_yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1D6A2C61E0A646E00215CEA /* star_yellow@3x.png */; };
+		D1D7A9641E4AF72300DE8BC9 /* XZEditInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D7A9631E4AF72300DE8BC9 /* XZEditInfoCell.m */; };
+		D1D7A9681E4B02CA00DE8BC9 /* JXTAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D7A9671E4B02CA00DE8BC9 /* JXTAlertController.m */; };
+		D1D7A96E1E4B1F0600DE8BC9 /* XZDataPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D7A96D1E4B1F0600DE8BC9 /* XZDataPickerView.m */; };
 		D1F2FB361DEE85F700EFC19B /* JCHATConversationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB351DEE85F700EFC19B /* JCHATConversationController.m */; };
 		D1F2FB391DEFE9A500EFC19B /* XZResetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB381DEFE9A500EFC19B /* XZResetPwdVC.m */; };
 		D1F2FB3C1DF02C1F00EFC19B /* UIButton+XZImageTitleSpacing.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F2FB3B1DF02C1F00EFC19B /* UIButton+XZImageTitleSpacing.m */; };
@@ -1762,6 +1765,12 @@
 		D1D6A2C31E0A5FE500215CEA /* XZLectureDetailMiddleBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZLectureDetailMiddleBar.m; sourceTree = "<group>"; };
 		D1D6A2C51E0A646D00215CEA /* star_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_yellow@2x.png"; sourceTree = "<group>"; };
 		D1D6A2C61E0A646E00215CEA /* star_yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_yellow@3x.png"; sourceTree = "<group>"; };
+		D1D7A9621E4AF72200DE8BC9 /* XZEditInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZEditInfoCell.h; sourceTree = "<group>"; };
+		D1D7A9631E4AF72300DE8BC9 /* XZEditInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZEditInfoCell.m; sourceTree = "<group>"; };
+		D1D7A9661E4B02CA00DE8BC9 /* JXTAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXTAlertController.h; sourceTree = "<group>"; };
+		D1D7A9671E4B02CA00DE8BC9 /* JXTAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXTAlertController.m; sourceTree = "<group>"; };
+		D1D7A96C1E4B1F0600DE8BC9 /* XZDataPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZDataPickerView.h; sourceTree = "<group>"; };
+		D1D7A96D1E4B1F0600DE8BC9 /* XZDataPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZDataPickerView.m; sourceTree = "<group>"; };
 		D1F2FB341DEE85F700EFC19B /* JCHATConversationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATConversationController.h; sourceTree = "<group>"; };
 		D1F2FB351DEE85F700EFC19B /* JCHATConversationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHATConversationController.m; sourceTree = "<group>"; };
 		D1F2FB371DEFE9A500EFC19B /* XZResetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZResetPwdVC.h; sourceTree = "<group>"; };
@@ -1999,6 +2008,8 @@
 				D101106F1DDC42C900F435AF /* XZMyMasterFinishedCell.m */,
 				84F9C4311DDCBAD3000EF201 /* XZMyBankCardCell.h */,
 				84F9C4321DDCBAD3000EF201 /* XZMyBankCardCell.m */,
+				D1D7A9621E4AF72200DE8BC9 /* XZEditInfoCell.h */,
+				D1D7A9631E4AF72300DE8BC9 /* XZEditInfoCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2022,6 +2033,8 @@
 				D132980F1DDED0C200DD3C20 /* XZMyMasterFinishedView.m */,
 				D174B8E21E2E05D90082074C /* XZDrawView.h */,
 				D174B8E31E2E05D90082074C /* XZDrawView.m */,
+				D1D7A96C1E4B1F0600DE8BC9 /* XZDataPickerView.h */,
+				D1D7A96D1E4B1F0600DE8BC9 /* XZDataPickerView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2138,6 +2151,7 @@
 		D11592BF1DA8CF1E004A7B86 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				D1D7A9651E4B02CA00DE8BC9 /* AlertController */,
 				D174B92F1E30BC580082074C /* FPSTool */,
 				D18CD1501E28AAD300DBEFD4 /* 圆形图 */,
 				D18CD11E1E2393C300DBEFD4 /* SwpNetworking */,
@@ -3789,6 +3803,15 @@
 			path = "三方分享";
 			sourceTree = "<group>";
 		};
+		D1D7A9651E4B02CA00DE8BC9 /* AlertController */ = {
+			isa = PBXGroup;
+			children = (
+				D1D7A9661E4B02CA00DE8BC9 /* JXTAlertController.h */,
+				D1D7A9671E4B02CA00DE8BC9 /* JXTAlertController.m */,
+			);
+			path = AlertController;
+			sourceTree = "<group>";
+		};
 		D1F2FB3D1DF14B6E00EFC19B /* 三方登录 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4437,6 +4460,7 @@
 				D129AA941DBEFB3800DA2A6D /* XZMasterDetailVC.m in Sources */,
 				D180ADBA1E0110F80043FB61 /* ActionSheet_UIPickerView.m in Sources */,
 				D128ACB31DC0A249002392E0 /* SDBaseProgressView.m in Sources */,
+				D1D7A96E1E4B1F0600DE8BC9 /* XZDataPickerView.m in Sources */,
 				D19590A41DE40E6200C06A05 /* MASLayoutConstraint.m in Sources */,
 				D18FF4531E1CBB4600479E37 /* NSDictionary+HYBUnicodeReadable.m in Sources */,
 				D19590061DE3F81600C06A05 /* XHVoiceCommonHelper.m in Sources */,
@@ -4582,6 +4606,7 @@
 				D11592851DA8CEA6004A7B86 /* ViewController.m in Sources */,
 				D1F2FB391DEFE9A500EFC19B /* XZResetPwdVC.m in Sources */,
 				D18CD1361E2768D600DBEFD4 /* XZMasterOrderSuccessRateVC.m in Sources */,
+				D1D7A9641E4AF72300DE8BC9 /* XZEditInfoCell.m in Sources */,
 				D195902B1DE3FFF100C06A05 /* MJPhotoProgressView.m in Sources */,
 				D1958FD61DE3F81600C06A05 /* JCHATDetailsInfoViewController.m in Sources */,
 				D12F74E41DDEB8E9003E2A0B /* XZAddBankCardCell.m in Sources */,
@@ -4657,6 +4682,7 @@
 				D1958FDC1DE3F81600C06A05 /* JCHATGroupSettingCtl.m in Sources */,
 				D19590041DE3F81600C06A05 /* JCHATToolBar.m in Sources */,
 				D1958FE81DE3F81600C06A05 /* JCHATGroupMemberCollectionViewCell.m in Sources */,
+				D1D7A9681E4B02CA00DE8BC9 /* JXTAlertController.m in Sources */,
 				D180AD921DFE8B7C0043FB61 /* XZAddressListVC.m in Sources */,
 				D18FF43D1E1BACF200479E37 /* XZPayTopView.m in Sources */,
 			);
@@ -4800,6 +4826,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = XianZhiFengShui/XianZhiFengShui.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = YLFS2B77AN;
 				ENABLE_BITCODE = NO;
@@ -4896,6 +4923,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = XianZhiFengShui/XianZhiFengShui.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = YLFS2B77AN;
 				ENABLE_BITCODE = NO;

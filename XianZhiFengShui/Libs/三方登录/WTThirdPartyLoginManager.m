@@ -56,6 +56,14 @@ static WTThirdPartyLoginManager * _instance;
     });
     return _instance;
 }
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setRegisterApps];
+    }
+    return self;
+}
 - (id)copyWithZone:(nullable NSZone *)zone
 {
     return _instance;
@@ -114,7 +122,7 @@ static WTThirdPartyLoginManager * _instance;
     
     if (resp.errCode == WTLoginWeiXinErrCodeSuccess) {
         NSString *code = aresp.code;
-        [[WTThirdPartyLoginManager shareWTThirdPartyLoginManager] getWeiXinUserInfoWithCode:code];
+        [[[WTThirdPartyLoginManager alloc]init] getWeiXinUserInfoWithCode:code];
     }else{
         
         if (self.resultBlock)

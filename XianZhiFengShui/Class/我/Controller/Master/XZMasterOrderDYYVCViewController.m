@@ -9,6 +9,8 @@
 #import "XZMasterOrderDYYVCViewController.h"
 #import "XZRefreshTable.h"
 #import "XZDYYCell.h"
+#import "JXTAlertController.h"
+#import "XZDataPickerView.h"
 @interface XZMasterOrderDYYVCViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)XZRefreshTable * dyyTable;
 @end
@@ -49,6 +51,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     XZDYYCell * cell = [tableView dequeueReusableCellWithIdentifier:@"XZDyyCellId" forIndexPath:indexPath];
     cell.model = self.dyyTable.dataArray[indexPath.row];
+    __weak typeof(self)weakSelf = self;
+    [cell appointNowWithBlock:^(XZMasterOrderModel *model, NSIndexPath *index) {
+        __strong typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf jxt_showAlertWithTitle:@"提示" message:@"请在沟通中与用户确定具体约见时间，并在结束会话后点击[提交约见时间]按钮录入系统，否则平台不承认订单有效，影响您的收益" appearanceProcess:^(JXTAlertController * _Nonnull alertMaker) {
+            alertMaker.
+            addActionCancelTitle(@"知道了");
+        } actionsBlock:^(NSInteger buttonIndex, UIAlertAction * _Nonnull action, JXTAlertController * _Nonnull alertSelf) {
+            if (buttonIndex == 0) {
+                NSLog(@"跳转到 私信界面。。。");
+            }
+        }];
+
+    }];
+    [cell submitAppointTimeWithBlock:^(XZMasterOrderModel *model, NSIndexPath *index) {
+          __strong typeof(weakSelf)strongSelf = weakSelf;
+        XZDataPickerView * datePicker = [[XZDataPickerView alloc]initWithFrame:CGRectMake(0,0, SCREENWIDTH, SCREENHEIGHT)];
+        [strongSelf.parentViewController.view addSubview:datePicker];
+        NSLog(@"显示时间选择器，提交时间..待办");
+    }];
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

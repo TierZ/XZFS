@@ -68,6 +68,7 @@
 // 数据请求
 -(void)initData
 {
+    [self.home.xzHomeData removeAllObjects];
     NSDictionary * dic = GETUserdefault(@"userInfos");
     NSString * userCodeStr = KISDictionaryHaveKey(dic, @"bizCode");
         // 创建信号量
@@ -84,9 +85,12 @@
             NSArray * naviMenuList = [dic objectForKey:@"naviMenuList"];
             self.headArray = @[carouselList,@{@"tags":naviMenuList}];
             dispatch_semaphore_signal(semaphore);
+            NSLog(@"No.1 成功");
         } failBlock:^(NSError *error) {
              self.headArray = @[@[],@{@"tags":@[]}];
+//             [self.home.xzHomeTable.mj_header endRefreshing];
            dispatch_semaphore_signal(semaphore);
+             NSLog(@"No.1 失败");
         }];
 
     });
@@ -95,9 +99,12 @@
        [ homeMasterService masterListWithPageNum:1 PageSize:10 cityCode:_cityCode keyWord:@"" searchType:5 userCode:userCodeStr orderType:3 view:self.mainView successBlock:^(NSArray *data) {
               self.masters = [NSMutableArray arrayWithArray:data];
              dispatch_semaphore_signal(semaphore);
+            NSLog(@"No.2 成功");
         } failBlock:^(NSError *error) {
             self.masters = [NSMutableArray arrayWithArray:@[]];
+//             [self.home.xzHomeTable.mj_header endRefreshing];
              dispatch_semaphore_signal(semaphore);
+             NSLog(@"No.2 失败");
         }];
        
     });
@@ -106,9 +113,12 @@
         [homeLectureService lectureListWithPageNum:1 PageSize:10 userCode:userCodeStr cityCode:_cityCode view:self.mainView successBlock:^(NSArray *data) {
             self.lectures = [NSMutableArray arrayWithArray:data];
             dispatch_semaphore_signal(semaphore);
+             NSLog(@"No.3 成功");
         } failBlock:^(NSError *error) {
             self.lectures = [NSMutableArray arrayWithArray:@[]];
+//             [self.home.xzHomeTable.mj_header endRefreshing];
             dispatch_semaphore_signal(semaphore);
+             NSLog(@"No.3 失败");
         }];
     });
     
@@ -117,12 +127,15 @@
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-        [self.home.xzHomeData addObjectsFromArray:self.headArray];
-        [self.home.xzHomeData addObjectsFromArray:@[self.masters,self.lectures]];
-        [self.home.xzHomeTable reloadData];
-        [self.home refreshHeadView];
-        [self.home.xzHomeTable.mj_header endRefreshing];
-    });
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.home.xzHomeData addObjectsFromArray:self.headArray];
+            [self.home.xzHomeData addObjectsFromArray:@[self.masters,self.lectures]];
+            [self.home.xzHomeTable reloadData];
+            [self.home refreshHeadView];
+            [self.home.xzHomeTable.mj_header endRefreshing];
+            NSLog(@"最终结果");
+        });
+          });
 }
 #pragma mark action
 -(void)search:(UIButton*)sender{
@@ -162,19 +175,6 @@
 - (void)searchViewController:(PYSearchViewController *)searchViewController searchTextDidChange:(UISearchBar *)seachBar searchText:(NSString *)searchText
 {
     NSLog(@"$$$$$searchtext&&&& = %@",searchText);
-    
-//    if (searchText.length) { // 与搜索条件再搜索
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 搜素完毕
-//            // 显示建议搜索结果
-//            NSMutableArray *searchSuggestionsM = [NSMutableArray array];
-//            for (int i = 0; i < arc4random_uniform(5) + 10; i++) {
-//                NSString *searchSuggestion = [NSString stringWithFormat:@"搜索建议 %d", i];
-//                [searchSuggestionsM addObject:searchSuggestion];
-//            }
-//            // 返回
-//            searchViewController.searchSuggestions = searchSuggestionsM;
-//        });
-//    }
 }
 #pragma mark  getter
 -(XZHomeView *)home{

@@ -25,6 +25,12 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    NSDictionary * dic = GETUserdefault(@"userInfos");
+    
+    BOOL isLogin = [[dic objectForKey:@"isLogin"]boolValue];
+    [tableHead refreshInfoWithLogin:isLogin];
+
+    
     __weak typeof(self)weakSelf = self;
     [tableHead editInfoWithBlock:^{
         XZEditInfoVC * editVC = [[XZEditInfoVC alloc]init];
@@ -52,7 +58,28 @@
     [self initData];
     [self.mySelfTable reloadData];
     
+//    NSArray*array = @[@1,@[@4,@3],@6,@[@5,@[@1,@0]]];
+//    NSArray * result = [self resultWithArray:@[]];
+//    NSLog(@"result = %@",result);
+    
 }
+
+//-(NSArray*)resultWithArray:(NSArray*)array{
+//    NSMutableArray * result = [NSMutableArray array];
+//    [self allObjectWithArray:array resultArr:result];
+//    return result;
+//}
+//
+//-(void)allObjectWithArray:(NSArray*)array resultArr :(NSMutableArray*)result{
+//    for (int i = 0; i<array.count; i++) {
+//        if ([array[i] isKindOfClass:[NSArray class]]) {
+//            [self allObjectWithArray:array[i] resultArr:result];
+//        }else{
+//            [result addObject:array[i]];
+//        }
+//    }
+//
+//}
 
 -(void)initNavi{
     self.navView.hidden = YES;
@@ -66,20 +93,19 @@
     
      tableHead = [[XZAboutMeHeadView alloc]initWithFrame:CGRectMake(0, 0, self.mySelfTable.width, 185)];
     tableHead.backgroundColor = XZFS_HEX_RGB(@"#FE5100");
-    NSDictionary * dic = GETUserdefault(@"userInfos");
-    
-    BOOL isLogin = [[dic objectForKey:@"isLogin"]boolValue];
-    [tableHead refreshInfoWithLogin:isLogin];
+//    NSDictionary * dic = GETUserdefault(@"userInfos");
+//    
+//    BOOL isLogin = [[dic objectForKey:@"isLogin"]boolValue];
+//    [tableHead refreshInfoWithLogin:isLogin];
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.mySelfTable.width, 185)];
     view.backgroundColor = [UIColor clearColor];
     [view addSubview:tableHead];
     self.mySelfTable.tableHeaderView = view;
-    NSLog(@"headview = %@",view);
 }
 
 -(void)initData{
-     NSString *meListPath = [[NSBundle mainBundle] pathForResource:@"MySelfList" ofType:@"plist"];
-//    NSString *meListPath = [[NSBundle mainBundle] pathForResource:@"MasterSelfList" ofType:@"plist"];
+//     NSString *meListPath = [[NSBundle mainBundle] pathForResource:@"MySelfList" ofType:@"plist"];
+    NSString *meListPath = [[NSBundle mainBundle] pathForResource:@"MasterSelfList" ofType:@"plist"];
     self.listArray = [[NSArray alloc]initWithContentsOfFile:meListPath];
     NSLog(@"listArray = %@",self.listArray);
 }
@@ -90,7 +116,6 @@
     if (yOffset<0) {
 
         tableHead.transform = CGAffineTransformMakeScale((185-scrollView.contentOffset.y)/185, (185-scrollView.contentOffset.y)/185);
-        
         CGFloat totalOffset = 185 + ABS(yOffset);
         CGFloat f = totalOffset / 185;
         //拉伸后的图片的frame应该是同比例缩放。
@@ -109,7 +134,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     static NSString * meListCellId = @"meListCellId";
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:meListCellId];
     if (!cell) {

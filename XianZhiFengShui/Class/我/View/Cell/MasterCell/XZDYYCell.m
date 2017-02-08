@@ -89,10 +89,24 @@
 
 -(void)appointNow:(UIButton*)sender{
     NSLog(@"立即约见");
+    if (self.appointNowBlock) {
+        self.appointNowBlock(self.model,self.indexPath);
+    }
 }
 -(void)submitTime:(UIButton*)sender{
     NSLog(@"提交约见时间");
+    if (self.submitAppointTimeBlock) {
+        self.submitAppointTimeBlock(self.model,self.indexPath);
+    }
 }
+
+-(void)appointNowWithBlock:(AppointNowBlock)block{
+    self.appointNowBlock = block;
+}
+-(void)submitAppointTimeWithBlock:(SubmitAppointTimeBlock)block{
+    self.submitAppointTimeBlock = block;
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

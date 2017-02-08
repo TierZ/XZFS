@@ -10,6 +10,7 @@
 #import "XZMasterServiceCell.h"
 #import "XZRefreshTable.h"
 #import "XZMasterAddServiceVC.h"
+#import "JXTAlertController.h"
 #define BottomHeight 45
 @interface XZMasterServiceVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)XZRefreshTable * serviceTable;
@@ -86,11 +87,27 @@
     XZMasterServiceCell * cell = [tableView dequeueReusableCellWithIdentifier:@"serviceIdentifier" forIndexPath:indexPath];
     cell.model = self.serviceTable.dataArray[indexPath.row];
     cell.indexPath = indexPath;
+    __weak typeof(self)weakSelf = self;
     [cell modifyServiceWithBlock:^(XZMasterModel *model, NSIndexPath *indexPath) {
+        __strong typeof(weakSelf)strongSelf = weakSelf;
+       XZMasterAddServiceVC * modifyService =  [[XZMasterAddServiceVC alloc]init];
+        [strongSelf.navigationController pushViewController:modifyService animated:YES];
         NSLog(@"进行修改服务的操作");
     }];
     [cell deleteServiceWithBlock:^(XZMasterModel *model, NSIndexPath *indexPath) {
         NSLog(@"进行删除服务的操作");
+        [self jxt_showAlertWithTitle:@"提示" message:@"确定要删除该服务项目吗" appearanceProcess:^(JXTAlertController * _Nonnull alertMaker) {
+            alertMaker.
+            addActionCancelTitle(@"确定").
+            addActionDestructiveTitle(@"取消");
+        } actionsBlock:^(NSInteger buttonIndex, UIAlertAction * _Nonnull action, JXTAlertController * _Nonnull alertSelf) {
+            if (buttonIndex == 0) {
+                NSLog(@"确定");
+            }
+            else if (buttonIndex == 1) {
+                NSLog(@"取消");
+            }
+        }];
     }];
     return cell;
 }
