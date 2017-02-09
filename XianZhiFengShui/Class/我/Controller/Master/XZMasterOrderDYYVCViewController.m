@@ -69,6 +69,19 @@
         XZDataPickerView * datePicker = [[XZDataPickerView alloc]initWithFrame:CGRectMake(0,0, SCREENWIDTH, SCREENHEIGHT)];
         [strongSelf.parentViewController.view addSubview:datePicker];
         NSLog(@"显示时间选择器，提交时间..待办");
+        [datePicker selectDateWithBlock:^(NSDate * startDate,NSDate * endDate) {
+            NSLog(@"时间间隔== %@--%@",startDate,endDate);
+        [strongSelf jxt_showAlertWithTitle:@"提示" message:  [NSString stringWithFormat:@"您提交的约见时间为 %@ 至%@",startDate,endDate] appearanceProcess:^(JXTAlertController * _Nonnull alertMaker) {
+                alertMaker.
+                addActionCancelTitle(@"确认"). addActionDefaultTitle(@"取消");
+            } actionsBlock:^(NSInteger buttonIndex, UIAlertAction * _Nonnull action, JXTAlertController * _Nonnull alertSelf) {
+                if (buttonIndex == 0) {
+                    datePicker.hidden = YES;
+                    [datePicker removeFromSuperview];
+                    NSLog(@"刷新界面");
+                }
+            }];
+        }];
     }];
     return cell;
 }
