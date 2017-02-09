@@ -65,6 +65,12 @@
 
 -(void)evaluate:(UIButton*)sender{
     NSLog(@"完成约见要评价");
+    if (self.block) {
+        self.block(self.model,self.indexPath);
+    }
+}
+-(void)yyjCellWantEvaluateWithBlock:(YYJCellWantEvaluateBlock)block{
+    self.block = block;
 }
 
 -(void)setModel:(XZMasterOrderModel *)model{

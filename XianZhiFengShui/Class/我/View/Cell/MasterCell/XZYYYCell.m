@@ -123,17 +123,31 @@
 
 -(void)sendMsg:(UIButton*)sender{
     NSLog(@"发消息");
+    if (self.block) {
+        self.block(self.model,self.indexPath,YYYCellBtnSendMsg);
+    }
 }
 -(void)modifyAppointTime:(UIButton*)sender{
     NSLog(@"修改约见时间");
+    if (self.block) {
+        self.block(self.model,self.indexPath,YYYCellBtnModify);
+    }
 }
 -(void)cancelAppoint:(UIButton*)sender{
     NSLog(@"取消约见");
+    if (self.block) {
+        self.block(self.model,self.indexPath,YYYCellBtnCancel);
+    }
 }
 -(void)appointSucceed:(UIButton*)sender{
     NSLog(@"约见成功");
+    if (self.block) {
+        self.block(self.model,self.indexPath,YYYCellBtnOk);
+    }
 }
-
+-(void)yyycellBtnClickWithBlock:(YYYCellBtnActionBlock)block{
+    self.block = block;
+}
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

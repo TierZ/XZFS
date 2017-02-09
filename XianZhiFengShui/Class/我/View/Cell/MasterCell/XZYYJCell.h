@@ -11,7 +11,14 @@
 /**
  大师端 我的订单 已约见
  */
+
+
+typedef void(^YYJCellWantEvaluateBlock)(XZMasterOrderModel * model,NSIndexPath * indexPath);
+
 @interface XZYYJCell : XZMasterOrderCell
 @property (nonatomic,strong)XZMasterOrderModel * model;
 @property (nonatomic,strong)NSIndexPath * indexPath;
+
+@property (nonatomic,copy)YYJCellWantEvaluateBlock block;
+-(void)yyjCellWantEvaluateWithBlock:(YYJCellWantEvaluateBlock)block;
 @end

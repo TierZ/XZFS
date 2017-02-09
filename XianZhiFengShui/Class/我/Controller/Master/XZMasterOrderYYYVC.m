@@ -9,6 +9,8 @@
 #import "XZMasterOrderYYYVC.h"
 #import "XZRefreshTable.h"
 #import "XZYYYCell.h"
+#import "JXTAlertController.h"
+#import "XZDataPickerView.h"
 @interface XZMasterOrderYYYVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)XZRefreshTable * yyyTable;
 @end
@@ -49,6 +51,78 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     XZYYYCell * cell = [tableView dequeueReusableCellWithIdentifier:@"XZYyyCellId" forIndexPath:indexPath];
     cell.model = self.yyyTable.dataArray[indexPath.row];
+    
+    __weak typeof(self)weakSelf = self;
+   
+    [cell yyycellBtnClickWithBlock:^(XZMasterOrderModel *model, NSIndexPath *indexPath, YYYCellBtnType type) {
+        __strong typeof(weakSelf)strongSelf = weakSelf;
+        switch (type) {
+            case YYYCellBtnSendMsg:{
+                NSLog(@"发送消息，跳转到消息界面");
+            }
+                break;
+            case YYYCellBtnModify:{
+                NSLog(@"修改时间");
+                 int modifyCount  = arc4random()%2;
+                if (modifyCount>1) {
+                    [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:NO message:@"您已修改过约见时间，不可再次修改"];
+                }else{
+                    modifyCount+=1;
+                    [strongSelf jxt_showAlertWithTitle:@"提示" message:@"每个客户只能修改一次约见时间\n请与客户有效沟通\n以免影响您的收入" appearanceProcess:^(JXTAlertController * _Nonnull alertMaker) {
+                        alertMaker.addActionDefaultTitle(@"知道了");
+                    } actionsBlock:^(NSInteger buttonIndex, UIAlertAction * _Nonnull action, JXTAlertController * _Nonnull alertSelf) {
+                        if (buttonIndex ==0) {
+                            XZDataPickerView * datePicker = [[XZDataPickerView alloc]initWithFrame:CGRectMake(0,0, SCREENWIDTH, SCREENHEIGHT)];
+                            [strongSelf.parentViewController.view addSubview:datePicker];
+                            NSLog(@"显示时间选择器，提交时间..待办");
+                            [datePicker selectDateWithBlock:^(NSDate * startDate,NSDate * endDate) {
+                                NSLog(@"时间间隔== %@--%@",startDate,endDate);
+                                [strongSelf jxt_showAlertWithTitle:@"提示" message:  [NSString stringWithFormat:@"您提交的约见时间为 %@ 至%@",startDate,endDate] appearanceProcess:^(JXTAlertController * _Nonnull alertMaker) {
+                                    alertMaker.
+                                    addActionCancelTitle(@"确认"). addActionDefaultTitle(@"取消");
+                                } actionsBlock:^(NSInteger buttonIndex, UIAlertAction * _Nonnull action, JXTAlertController * _Nonnull alertSelf) {
+                                    if (buttonIndex == 0) {
+                                        datePicker.hidden = YES;
+                                        [datePicker removeFromSuperview];
+                                        NSLog(@"刷新界面");
+                                    }
+                                }];
+                            }];
+                        }
+                    }];
+                }
+            
+            }
+                break;
+            case YYYCellBtnCancel:{
+                NSLog(@"取消约见");
+                [strongSelf jxt_showAlertWithTitle:@"提示" message:@"是否取消约见" appearanceProcess:^(JXTAlertController * _Nonnull alertMaker) {
+                    alertMaker.addActionDefaultTitle(@"不取消").addActionDefaultTitle(@"仍然取消");
+                } actionsBlock:^(NSInteger buttonIndex, UIAlertAction * _Nonnull action, JXTAlertController * _Nonnull alertSelf) {
+                    if (buttonIndex ==1) {
+                        NSLog(@"刷新界面 取消约见");
+                    }
+                }];
+            }
+                break;
+            case YYYCellBtnOk:{
+                NSLog(@"完成约见");
+                [strongSelf jxt_showAlertWithTitle:@"提示" message:@"请确认您已如期约见客户。\n如果虚报，一经查实将永久封号" appearanceProcess:^(JXTAlertController * _Nonnull alertMaker) {
+                    alertMaker.addActionDefaultTitle(@"取消").addActionDefaultTitle(@"确认");
+                } actionsBlock:^(NSInteger buttonIndex, UIAlertAction * _Nonnull action, JXTAlertController * _Nonnull alertSelf) {
+                    if (buttonIndex ==1) {
+                        NSLog(@"刷新界面 完成约见");
+                    }
+                }];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }];
+    
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

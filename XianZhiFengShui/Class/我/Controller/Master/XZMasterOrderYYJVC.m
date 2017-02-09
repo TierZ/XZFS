@@ -50,6 +50,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     XZYYJCell * cell = [tableView dequeueReusableCellWithIdentifier:@"XZYyjCellId" forIndexPath:indexPath];
     cell.model = self.yyjTable.dataArray[indexPath.row];
+    [cell yyjCellWantEvaluateWithBlock:^(XZMasterOrderModel *model, NSIndexPath *indexPath) {
+       
+        [ToastManager  showToastOnView:self.view position:CSToastPositionCenter flag:YES message:@"已通知客户去为您的服务作评价~"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             NSLog(@"点击跳转至私信页面，给用户发服务通知消息：客户您好，大师***为您提供的***服务已完成，请点击链接为大师服务作评价。同时boast提示大师：已通知客户去为您的服务作评价~");
+        });
+    }];
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
