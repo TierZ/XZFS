@@ -19,24 +19,35 @@
     UILabel * _rateLab;//成交率
     UILabel * _avgRate;//平均成交率
     UILabel * _rankRateLab;//排名
+    
+    UIScrollView * _mainScroll;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.titelLab.text = @"成交率";
+    [self setupMainScroll];
     [self setupHeader];
     [self setupTips];
     // Do any additional setup after loading the view.
 }
 
+-(void)setupMainScroll{
+    _mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, XZFS_MainView_H)];
+    _mainScroll.backgroundColor = [UIColor clearColor];
+  [self.mainView addSubview:_mainScroll];
+    _mainScroll.userInteractionEnabled = YES;
+}
 -(void)setupHeader{
     float widthScale = SCREENWIDTH/375;
     float heightScale =  SCREENHEIGHT/667;
     
+    
     _header = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 375*widthScale, 745/2.0*heightScale)];
     _header.image = XZFS_IMAGE_NAMED(@"chengjiaolv");
     _header.backgroundColor = [UIColor clearColor];
-    [self.mainView addSubview:_header];
+    _header.userInteractionEnabled = YES;
+    [_mainScroll addSubview:_header];
     
     _seg =[[UISegmentedControl alloc]initWithItems:@[@"年成交率",@"月成交率"]];
     _seg.frame = CGRectMake((_header.width-135)/2, 25*heightScale, 135, 24);
@@ -89,7 +100,7 @@
 -(void)setupTips{
     UIView * tipHeader = [[UIView alloc]initWithFrame:CGRectMake(0, _header.bottom+10, SCREENWIDTH, 30)];
     tipHeader.backgroundColor = [UIColor whiteColor];
-    [self.mainView addSubview:tipHeader];
+    [_mainScroll addSubview:tipHeader];
     
     UIView * line = [[UIView alloc]initWithFrame:CGRectMake(0, 15, SCREENWIDTH, 0.5)];
     line.backgroundColor = XZFS_HEX_RGB(@"#EEEFEF");
@@ -107,11 +118,11 @@
     tips.backgroundColor = [UIColor whiteColor];
     tips.frame = CGRectMake(20, tipHeader.bottom, SCREENWIDTH-20*2, 95);
     [tips sizeToFit];
-    [self.mainView addSubview:tips];
+    [_mainScroll addSubview:tips];
     UIView * tipsBgV = [[UIView alloc]initWithFrame:CGRectMake(0, tipHeader.bottom, SCREENWIDTH, tips.height)];
     tipsBgV.backgroundColor = [UIColor whiteColor];
-    [self.mainView insertSubview:tipsBgV belowSubview:tips];
-    
+    [_mainScroll insertSubview:tipsBgV belowSubview:tips];
+    _mainScroll.contentSize = CGSizeMake(SCREENWIDTH, tips.bottom+10);
 }
 
 #pragma mark action

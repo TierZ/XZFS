@@ -19,23 +19,29 @@
     UILabel * _evaluateLab;//评价内容
     UILabel * _avgLevel;//平均星级
     UILabel * _rankRateLab;//排名
+    UIScrollView * _mainScrll;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.titelLab.text = @"评价星级";
+    [self setupMainScroll];
     [self setupHeader];
     [self setupTips];
     // Do any additional setup after loading the view.
 }
-
+-(void)setupMainScroll{
+    _mainScrll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, XZFS_MainView_H)];
+    _mainScrll.backgroundColor = [UIColor clearColor];
+    [self.mainView addSubview:_mainScrll];
+}
 -(void)setupHeader{
     float widthScale = SCREENWIDTH/375;
     float heightScale =  SCREENHEIGHT/667;
     
     _header = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 375*widthScale, 745/2.0*heightScale)];
     _header.image = XZFS_IMAGE_NAMED(@"chengjiaolv");
-    [self.mainView addSubview:_header];
+    [_mainScrll addSubview:_header];
     
     UILabel * titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 30*heightScale, SCREENWIDTH, 17)];
     titleLab.text = @"近100评价订单平均星级";
@@ -84,7 +90,7 @@
 -(void)setupTips{
     UIView * tipHeader = [[UIView alloc]initWithFrame:CGRectMake(0, _header.bottom+10, SCREENWIDTH, 30)];
     tipHeader.backgroundColor = [UIColor whiteColor];
-    [self.mainView addSubview:tipHeader];
+    [_mainScrll addSubview:tipHeader];
 
     UIView * line = [[UIView alloc]initWithFrame:CGRectMake(0, 15, SCREENWIDTH, 0.5)];
     line.backgroundColor = XZFS_HEX_RGB(@"#EEEFEF");
@@ -102,11 +108,11 @@
     tips.backgroundColor = [UIColor whiteColor];
     tips.frame = CGRectMake(20, tipHeader.bottom, SCREENWIDTH-20*2, 95);
     [tips sizeToFit];
-    [self.mainView addSubview:tips];
+    [_mainScrll addSubview:tips];
     UIView * tipsBgV = [[UIView alloc]initWithFrame:CGRectMake(0, tipHeader.bottom, SCREENWIDTH, tips.height)];
     tipsBgV.backgroundColor = [UIColor whiteColor];
-    [self.mainView insertSubview:tipsBgV belowSubview:tips];
-
+    [_mainScrll insertSubview:tipsBgV belowSubview:tips];
+    _mainScrll.contentSize = CGSizeMake(SCREENWIDTH, tips.bottom+10);
 }
 
 #pragma mark private
