@@ -49,19 +49,20 @@
     
     [_withdrawView addSubview:withdrawLab];
     
+    float spaceWidth = (SCREENWIDTH-withdrawLab.right-94-77)/3.0;
+    
      aliPayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [aliPayBtn setTitle:@"支付宝账户" forState:UIControlStateNormal];
     [aliPayBtn setTitleColor:XZFS_HEX_RGB(@"#D5D5D6") forState:UIControlStateNormal];
     [aliPayBtn setTitleColor:XZFS_TEXTORANGECOLOR forState:UIControlStateSelected];
     aliPayBtn.titleLabel.font = XZFS_S_FONT(14);
-    aliPayBtn.frame = CGRectMake(withdrawLab.right+33, 12.5, 94, 23);
+    aliPayBtn.frame = CGRectMake(withdrawLab.right+spaceWidth, 12.5, 94, 23);
     aliPayBtn.layer.masksToBounds = YES;
     aliPayBtn.layer.cornerRadius = 4;
     aliPayBtn.layer.borderWidth = 1;
     aliPayBtn.tag = 10;
     aliPayBtn.selected = YES;
-
-        aliPayBtn.layer.borderColor = XZFS_TEXTORANGECOLOR.CGColor;
+    aliPayBtn.layer.borderColor = XZFS_TEXTORANGECOLOR.CGColor;
 
 
     [aliPayBtn addTarget:self action:@selector(payStyle:) forControlEvents:UIControlEventTouchUpInside];
@@ -73,7 +74,7 @@
     [wechatPayBtn setTitleColor:XZFS_HEX_RGB(@"#D5D5D6") forState:UIControlStateNormal];
     [wechatPayBtn setTitleColor:XZFS_TEXTORANGECOLOR forState:UIControlStateSelected];
     wechatPayBtn.titleLabel.font = XZFS_S_FONT(14);
-    wechatPayBtn.frame = CGRectMake(aliPayBtn.right+33, 12.5, 77, 23);
+    wechatPayBtn.frame = CGRectMake(aliPayBtn.right+spaceWidth, 12.5, 77, 23);
     wechatPayBtn.layer.masksToBounds = YES;
     wechatPayBtn.layer.cornerRadius = 4;
     wechatPayBtn.layer.borderWidth = 1;
@@ -108,12 +109,13 @@
 }
 
 -(void)setupBottom{
-    UILabel * tips = [[UILabel alloc]initWithFrame:CGRectMake(0, _moneyView.bottom+13, SCREENWIDTH, 11)];
+    UILabel * tips = [[UILabel alloc]initWithFrame:CGRectMake(11, _moneyView.bottom+13, SCREENWIDTH-22, 40)];
     tips.font = XZFS_S_FONT(11);
     tips.textAlignment = NSTextAlignmentCenter;
+    tips.numberOfLines = 0;
     tips.textColor = XZFS_HEX_RGB(@"#FB5652");
     tips.text = @"提现金额大于5元时，可进行提现操作，不满200元，须扣除5元手续费";
-    
+    [tips sizeToFit];
     [self.mainView addSubview:tips];
     
     _withdrawBtn = [UIButton buttonWithType:UIButtonTypeCustom];

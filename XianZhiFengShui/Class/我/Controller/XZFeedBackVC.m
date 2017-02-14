@@ -57,9 +57,11 @@
     UILabel * contentLab = [UILabel new];
     contentLab.text = @"请输入您的意见和建议，我们将为您提供更好的服务";
     contentLab.textColor = XZFS_TEXTBLACKCOLOR;
+    contentLab.numberOfLines = 0;
     contentLab.font = XZFS_S_FONT(13);
-    contentLab.frame = CGRectMake(20, emailTf.bottom+12, SCREENWIDTH-40, 13);
+    contentLab.frame = CGRectMake(20, emailTf.bottom+12, SCREENWIDTH-40, 30);
     [self.mainView addSubview:contentLab];
+    [contentLab sizeToFit];
     
     feedBackTv = [UITextView new];
     feedBackTv.backgroundColor = [UIColor whiteColor];

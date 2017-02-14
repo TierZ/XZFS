@@ -11,7 +11,6 @@
 #import "XZMyMasterFinishedView.h"
 #import "XZFindService.h"
 #import "UIButton+XZImageTitleSpacing.h"
-#import "XZMasterOrderVC.h"
 
 #import "XZMyMasterFinishedVC.h"
 #import "XZMyMasterWantedVC.h"
@@ -25,6 +24,7 @@
 @property (nonatomic,strong)XZMyMasterWantedView * wantView;
 @property (nonatomic,strong)XZMyMasterFinishedView * finishView;
 @property (nonatomic,strong)  XZMyMasterFinishedVC * finishVC ;
+@property (nonatomic,strong)  XZMyMasterWantedVC * wantVC;
 @end
 
 @implementation XZMyMasterVC{
@@ -40,11 +40,9 @@
     isShowSelectList = NO;
     tmpTag = 1;
     [self setupSelectList];
-    self.rightButton.backgroundColor = [UIColor redColor];
 }
 
 -(void)clickRightButton{
-    [self.navigationController pushViewController:[[XZMasterOrderVC alloc]init] animated:YES];
 }
 
 -(void)setupSeg{
@@ -67,19 +65,7 @@
     [self addChildViewController:self.finishVC];
     [self.selectScroll addSubview:self.finishVC.view];
     
-    XZMyMasterWantedVC * wantVC = [[XZMyMasterWantedVC alloc]init];
-    wantVC.view.frame = CGRectMake(self.selectScroll.width, 0, self.selectScroll.width, self.selectScroll.height);
-    [self addChildViewController:wantVC];
-    [self.selectScroll addSubview:wantVC.view];
-    
-//    self.finishView = [[XZMyMasterFinishedView alloc]initWithFrame:CGRectMake(0, 0, self.selectScroll.width, self.selectScroll.height)];
-//    self.finishView.weakSelfVC = self;
-//    [self.selectScroll addSubview:self.finishView];
-    
-//    self.wantView = [[XZMyMasterWantedView alloc]initWithFrame:CGRectMake(self.selectScroll.width, 0, self.selectScroll.width, self.selectScroll.height)];
-//     self.wantView.weakSelfVC = self;
-//    [self.selectScroll addSubview:self.wantView];
-
+   
 }
 
 -(void)setupSelectList{
@@ -99,15 +85,17 @@
 -(void)selectWant{
     isShowSelectList = NO;
     selectList.hidden = !isShowSelectList;
-    tmpTag = 0;
+    tmpTag = 1;
       [self.finishedBtn setImage:XZFS_IMAGE_NAMED(@"xiangxia") forState:UIControlStateNormal];
     self.finishedBtn.selected = NO;
     self.wantBtn.selected = YES;
     [self.selectScroll setContentOffset:CGPointMake(self.selectScroll.width, 0) animated:YES];
 }
 -(void)selectFinished{
+    if (self.wantBtn.selected) {
+        tmpTag-=1;
+    }
     tmpTag++;
-    
     NSLog(@"tmptag = %d",tmpTag);
     if (tmpTag>1) {
         isShowSelectList = tmpTag%2==0?YES:NO;
@@ -133,6 +121,12 @@
     }else if (offsetX==SCREENWIDTH){
         self.finishedBtn.selected = NO;
         self.wantBtn.selected = YES;
+    if (!self.wantVC) {
+            self.wantVC = [[XZMyMasterWantedVC alloc]init];
+            self.wantVC.view.frame = CGRectMake(self.selectScroll.width, 0, self.selectScroll.width, self.selectScroll.height);
+            [self addChildViewController:self.wantVC];
+            [self.selectScroll addSubview:self.wantVC.view];
+        }
     }
     
     CGRect frame = self.lineView.frame;
@@ -170,6 +164,7 @@
     tmpTag = 1;
     BOOL isFinished = indexPath.row==0?NO:YES;
     [self.finishVC selectDataIsFinished:isFinished];
+    NSLog(@"请求数据。。已约见/进行中");
     
 }
 

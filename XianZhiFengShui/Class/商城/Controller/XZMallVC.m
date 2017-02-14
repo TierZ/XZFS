@@ -61,18 +61,18 @@
     
     XZShoppingCartVC * cartVC = [[XZShoppingCartVC alloc]init];
     [self addChildViewController:cartVC];
-    cartVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH,SCREENHEIGHT-XZFS_STATUS_BAR_H-XZFS_Bottom_H-35-80 );
+    cartVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH,XZFS_MainView_H-XZFS_Bottom_H-self.seg.bottom-1 );
     [self.scroll addSubview:cartVC.view];
     
     
     XZMallGoodsVC * collectionVC = [[XZMallGoodsVC alloc]initWithCollection:YES];
     [self addChildViewController:collectionVC];
-    collectionVC.view.frame = CGRectMake(SCREENWIDTH*2, 0, SCREENWIDTH,SCREENHEIGHT-XZFS_STATUS_BAR_H-XZFS_Bottom_H-35-80 );
+    collectionVC.view.frame =CGRectMake(SCREENWIDTH*2, 0, SCREENWIDTH,XZFS_MainView_H-XZFS_Bottom_H-self.seg.bottom-1 );
     [self.scroll addSubview:collectionVC.view];
     
     XZOrderVC * orderVC = [[XZOrderVC alloc]init];
     [self addChildViewController:orderVC];
-    orderVC.view.frame = CGRectMake(SCREENWIDTH*3, 0, SCREENWIDTH,SCREENHEIGHT-XZFS_STATUS_BAR_H-XZFS_Bottom_H-35-80 );
+    orderVC.view.frame = CGRectMake(SCREENWIDTH*3, 0, SCREENWIDTH,XZFS_MainView_H-XZFS_Bottom_H-self.seg.bottom-1 );
     [self.scroll addSubview:orderVC.view];
     
     

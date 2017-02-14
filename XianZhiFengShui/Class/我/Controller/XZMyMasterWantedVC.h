@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-/**
+/*
  我的大师 想约的
  */
 @interface XZMyMasterWantedVC : UIViewController

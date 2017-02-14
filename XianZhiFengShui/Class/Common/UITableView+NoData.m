@@ -61,8 +61,8 @@
 #define imgViewH    SGLC_VIEW_PX(240)
 #define btnViewW    SGLC_VIEW_PX(260)
 #define btnViewH    SGLC_VIEW_PX(80)
-#define labViewW    SGLC_VIEW_PX(360)
-#define labViewH    SGLC_VIEW_PX(70)
+#define labViewW    SGLC_VIEW_PX(640)
+#define labViewH    SGLC_VIEW_PX(100)
 #define  bgViewW    SGLC_VIEW_PX(400)
 #define  bgViewH    SGLC_VIEW_PX(482)
 @interface NoDataView()
@@ -107,7 +107,7 @@
 }
 - (NSDictionary *)messageDic {
     if (!_messageDic) {
-        _messageDic = @{@"250":@"暂无内容", \
+        _messageDic = @{@"250":@"暂无内容 ", \
                        @"251":@"一点消息都没有", \
                        @"252":@"网络请求失败,请检查您的网络", \
                        @"253":@"暂无评论", \
@@ -194,7 +194,7 @@
     _msgLabel.backgroundColor = [UIColor clearColor];
     _msgLabel.font = XZFS_S_FONT(15);
     _msgLabel.textColor = XZFS_HEX_RGB(@"#999999");
-    _msgLabel.text = message?message:self.messageDic[index];
+    _msgLabel.text = message?message:[NSString stringWithFormat:@"%@\n点击屏幕重试一下吧~",self.messageDic[index]];
     _msgLabel.textAlignment = NSTextAlignmentCenter;
     [bgView addSubview:_msgLabel];
     

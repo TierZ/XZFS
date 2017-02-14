@@ -30,6 +30,7 @@
     self.orderTable.delegate = self;
     self.orderTable.dataSource = self;
     [self.view addSubview:self.orderTable];
+      self.orderTable.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0,0,0,0));
 }
 
 -(void)setupData{

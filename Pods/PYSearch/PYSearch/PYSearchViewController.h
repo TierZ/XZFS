@@ -52,18 +52,6 @@ typedef NS_ENUM(NSInteger, PYSearchResultShowMode) { // 搜索结果显示方式
 /** 返回用户自定义搜索建议cell高度 */
 - (CGFloat)searchSuggestionView:(UITableView *)searchSuggestionView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 
-/**
- *  自定义搜索结果Cell的数据源方法
- */
-/** 返回用户自定义搜索结果Cell */
-- (UITableViewCell *)searchResultView:(UITableView *)searchResultView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
-/** 返回用户自定义搜索结果cell的rows */
-- (NSInteger)searchResultView:(UITableView *)searchResultView numberOfRowsInSection:(NSInteger)section;
-/** 返回用户自定义搜索结果cell的section */
-- (NSInteger)numberOfSectionsInSearchSearchResultView:(UITableView *)searchSuggestionView;
-/** 返回用户自定义搜索结果cell高度 */
-- (CGFloat)searchResultView:(UITableView *)searchResultView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
-
 @end
 
 @protocol PYSearchViewControllerDelegate <NSObject, UITableViewDelegate>
@@ -79,13 +67,18 @@ typedef NS_ENUM(NSInteger, PYSearchResultShowMode) { // 搜索结果显示方式
 /** 点击搜索建议时调用，如果实现该代理方法则点击搜索建议时searchViewController:didSearchWithsearchBar:searchText:失效 */
 - (void)searchViewController:(PYSearchViewController *)searchViewController didSelectSearchSuggestionAtIndex:(NSInteger)index searchText:(NSString *)searchText;
 /** 搜索框文本变化时，显示的搜索建议通过searchViewController的searchSuggestions赋值即可 */
-- (void)searchViewController:(PYSearchViewController *)searchViewController  searchTextDidChange:(UISearchBar *)seachBar searchText:(NSString *)searchText;
-/** 点击取消时调用 */
+- (void)searchViewController:(PYSearchViewController *)searchViewController  searchTextDidChange:(UISearchBar *)searchBar searchText:(NSString *)searchText;
+/** 点击取消时调用，如果没有实现该代理方法，默认执行：[self dismissViewControllerAnimated:YES completion:nil]; */
 - (void)didClickCancel:(PYSearchViewController *)searchViewController;
 
 @end
 
 @interface PYSearchViewController : UIViewController
+
+/** 代理 */
+@property (nonatomic, weak) id<PYSearchViewControllerDelegate> delegate;
+/** 数据源 */
+@property (nonatomic, weak) id<PYSearchViewControllerDataSource> dataSource;
 
 /** 
  * 排名标签背景色对应的16进制字符串（如：@"#ffcc99"）数组(四个颜色)
@@ -98,24 +91,37 @@ typedef NS_ENUM(NSInteger, PYSearchResultShowMode) { // 搜索结果显示方式
  * 该属性只有在设置hotSearchStyle为PYHotSearchStyleColorfulTag才生效
  */
 @property (nonatomic, strong) NSMutableArray<UIColor *> *colorPol;
+
 /** 热门搜索 */
 @property (nonatomic, copy) NSArray<NSString *> *hotSearches;
 /** 所有的热门标签 */
 @property (nonatomic, copy) NSArray<UILabel *> *hotSearchTags;
 /** 热门标签头部 */
 @property (nonatomic, weak) UILabel *hotSearchHeader;
+/** 是否显示热门搜索，默认为：YES */
+@property (nonatomic, assign) BOOL showHotSearch;
+/** 热门搜索标题 */
+@property (nonatomic, copy) NSString *hotSearchTitle;
 
 /** 所有的搜索历史标签,只有当PYSearchHistoryStyle != PYSearchHistoryStyleCell才有值 */
 @property (nonatomic, copy) NSArray<UILabel *> *searchHistoryTags;
 /** 搜索历史标题,只有当PYSearchHistoryStyle != PYSearchHistoryStyleCell才有值 */
 @property (nonatomic, weak) UILabel *searchHistoryHeader;
-/** 搜索历史缓存保存路径, 默认为PYSearchHistoriesPath(PYSearchConst.h文件中的宏定义) */
+/** 搜索历史标题 */
+@property (nonatomic, copy) NSString *searchHistoryTitle;
+/** 
+ * 是否显示搜索历史，默认为：YES
+ * 注意：当设置为NO时，搜索记录不缓存
+ */
+@property (nonatomic, assign) BOOL showSearchHistory;
+/** 搜索历史缓存保存路径, 默认为PYSEARCH_SEARCH_HISTORY_CACHE_PATH(PYSearchConst.h文件中的宏定义) */
 @property (nonatomic, copy) NSString *searchHistoriesCachePath;
-
-/** 代理 */
-@property (nonatomic, weak) id<PYSearchViewControllerDelegate> delegate;
-/** 数据源 */
-@property (nonatomic, weak) id<PYSearchViewControllerDataSource> dataSource;
+/** 搜索历史记录缓存数量，默认为20 */
+@property (nonatomic, assign) NSUInteger searchHistoriesCount;
+/** 当PYSearchHistoryStyle != PYSearchHistoryStyleCell时，搜索历史标签的清空按钮 */
+@property (nonatomic, weak) UIButton *emptyButton;
+/** 当PYSearchHistoryStyle = PYSearchHistoryStyleCell时，tableBleView底部的清空搜索历史 */
+@property (nonatomic, weak) UILabel *emptySearchHistoryLabel;
 
 /** 热门搜索风格 （默认为：PYHotSearchStyleDefault）*/
 @property (nonatomic, assign) PYHotSearchStyle hotSearchStyle;
@@ -137,13 +143,24 @@ typedef NS_ENUM(NSInteger, PYSearchResultShowMode) { // 搜索结果显示方式
 /** 搜索建议是否隐藏 默认为：NO */
 @property (nonatomic, assign) BOOL searchSuggestionHidden;
 
-/** 搜索结果控制器
+/** 
+ * 搜索结果控制器
  * 当searchResultShowMode == PYSearchResultShowModePush时，
  * 将目的控制器给该属性赋值，即Push到searchResultController控制器
  * 当searchResultShowMode == PYSearchResultShowModeEmbed时，
  * 将目的控制器给该属性赋值，即将searchResultController.view添加到self.view
  */
 @property (nonatomic, strong) UIViewController *searchResultController;
+/** 
+ * 是否显示搜索结果当搜索文本改变时（默认为NO）
+ * 该属性只要当searchResultShowMode == PYSearchResultShowModeEmbed时，才会生效
+ */
+@property (nonatomic, assign) BOOL showSearchResultWhenSearchTextChanged;
+/**
+ * 是否显示搜索结果当搜索框重新聚焦(再次成为第一响应者时)（默认为NO）
+ * 该属性只要当searchResultShowMode == PYSearchResultShowModeEmbed时，才会生效
+ */
+@property (nonatomic, assign) BOOL showSearchResultWhenSearchBarRefocused;
 
 /**
  * 快速创建PYSearchViewController对象
@@ -152,7 +169,7 @@ typedef NS_ENUM(NSInteger, PYSearchResultShowMode) { // 搜索结果显示方式
  * placeholder : searchBar占位文字
  *
  */
-+ (PYSearchViewController *)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder;
++ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder;
 
 /**
  * 快速创建PYSearchViewController对象
@@ -163,6 +180,6 @@ typedef NS_ENUM(NSInteger, PYSearchResultShowMode) { // 搜索结果显示方式
  * 注意 : delegate(代理)的优先级大于block(即实现了代理方法则block失效)
  *
  */
-+ (PYSearchViewController *)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder didSearchBlock:(PYDidSearchBlock)block;
++ (instancetype)searchViewControllerWithHotSearches:(NSArray<NSString *> *)hotSearches searchBarPlaceholder:(NSString *)placeholder didSearchBlock:(PYDidSearchBlock)block;
 
 @end

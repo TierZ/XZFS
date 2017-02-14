@@ -17,11 +17,35 @@
 
 @implementation XZMyMasterWantedVC
 
+-(void)loadData{
+    for (int i = 0; i<20; i++) {
+        XZTheMasterModel * model = [[XZTheMasterModel alloc]init];
+        model.icon = @"http://navatar.shagualicai.cn/uid/150922010117012662";
+        model.name = @"张三丰";
+        model.level = @"V1";
+        model.singleVolume = @"82单";
+        model.pointOfPraise = @"99";
+        model.type  =@[@"上知天文",@"下晓地理",@"古往今来",@"无所不知"];
+        model.summary  =@"我是张三丰，zhang。。。。。爱撒大声地阿萨德阿达";
+        if (i%5==0) {
+            model.type  =@[@"上知天文",@"下晓地理",@"古往今来",@"无所不知",@"无所不晓",@"前知三百年",@"后知五百载"];
+            model.summary  =@"张三丰，文始派传人，武当派祖师。名君宝，字全一[1]  ，（此为一说，另一说法为君宝）别号葆和容忍。元末明初儒者、武当山道士。善书画，工诗词。另有一说其为福建邵武人，名子冲，一名元实，三丰其号";
+        }
+        if (i==7) {
+            model.type = @[@"宋小宝",@"赵四",@"刘能",@"小沈阳"];
+        }
+        [self.hopeTable.dataArray addObject:model];
+    }
+    [self.hopeTable reloadData];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.view addSubview:self.hopeTable];
     self.hopeTable.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0, 0, 0, 0));
+//    [self loadData];
     __weak typeof(self)weakSelf = self;
     [self.hopeTable refreshListWithBlock:^(int page, BOOL isRefresh) {
         [weakSelf loadDataWithPage:page];
@@ -46,7 +70,7 @@
 /**
  网络请求后 显示数据
  
- @param array      请求下来的数字
+ @param array      请求下来的数组
  */
 -(void)showDataAfterNetRequestWithArray:(NSArray*)array{
     if (self.hopeTable.row==1) {

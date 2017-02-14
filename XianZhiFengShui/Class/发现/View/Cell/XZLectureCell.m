@@ -45,10 +45,10 @@
 
 -(void)layoutCell{
     self.photo.frame = CGRectMake(20, 8, 85, 85);
-    self.title.frame = CGRectMake(self.photo.right+8, 18, SCREENWIDTH-(self.photo.right+8)-80, 14);
-    self.price.frame = CGRectMake(0, 24, SCREENWIDTH-40, 11);
+    self.title.frame = CGRectMake(self.photo.right+8, 18, SCREENWIDTH-(self.photo.right+8)-50, 14);
+    self.price.frame = CGRectMake(0, 24, SCREENWIDTH-20, 11);
     self.name.frame = CGRectMake(self.title.left, self.title.bottom+13.5, SCREENWIDTH-self.title.left-80, 11);
-    self.remain.frame = CGRectMake(0, self.price.bottom+13.5, SCREENWIDTH-32, 10);
+    self.remain.frame = CGRectMake(0, self.price.bottom+13.5, SCREENWIDTH-20, 10);
     self.clock .frame = CGRectMake(self.title.left, self.name.bottom+12, 15, 15);
     self.time.frame = CGRectMake(self.clock.right+7, self.clock.top+2, 200, 11);
     self.collection.frame = CGRectMake(SCREENWIDTH-70-22, self.clock.top-5, 80, 30);

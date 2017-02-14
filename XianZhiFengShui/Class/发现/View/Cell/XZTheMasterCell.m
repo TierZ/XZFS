@@ -49,14 +49,16 @@
 }
 
 -(void)layoutCell{
-    self.photo.frame = CGRectMake(20, 10, 94, 94);
+    float itemSpace = XZFS_IS_IPHONE6_PLUS?40:12;
+    float photoWidth = XZFS_IS_IPHONE6_PLUS?94:84;
+    
+    self.photo.frame = CGRectMake(20, 10, photoWidth, photoWidth);
     self.name.frame = CGRectMake(self.photo.right+17.5, 12.5, 50, 12);
-    self.level.frame = CGRectMake(self.name.right+30, 12.5, 19, 12);
+    self.level.frame = CGRectMake(self.name.right+itemSpace, 12.5, 19, 12);
 //    self.levelLab.frame = CGRectMake(self.level.right+2, 13.5, 22, 11);
-    self.successIv.frame = CGRectMake(self.level.right+20, 12.5, 12, 10);
+    self.successIv.frame = CGRectMake(self.level.right+itemSpace, 12.5, 12, 10);
     self.successLab.frame = CGRectMake(self.successIv.right+2, 12.5, 40, 11);
-    self.agreeBtn.frame = CGRectMake(self.successLab.right-33, 8, 100, 18);
-//    self.agreeBtn.backgroundColor = [UIColor redColor];
+    self.agreeBtn.frame = CGRectMake(self.successLab.right-itemSpace, 8, 100, 18);
 //    self.agreeLab.frame = CGRectMake(self.agreeBtn.right+2, 13.5, 33, 11);
     self.tagView = [[XZTagView alloc]initWithFrame:CGRectMake(self.name.left, self.name.bottom+17.5, SCREENWIDTH-self.name.left-20 , 16) tagHeight:16];
     [self.contentView addSubview:self.tagView];
@@ -81,15 +83,17 @@
         [self.photo setImageWithURL:[NSURL URLWithString:model.icon] options:YYWebImageOptionProgressive];
         self.name.text = model.name;
         [self.name sizeToFit];
-        self.level.frame = CGRectMake(self.name.right+30, 12.5, 19, 12);
-        self.successIv.frame = CGRectMake(self.level.right+20, 12.5, 12, 10);
+        float itemSpace = XZFS_IS_IPHONE6_PLUS?40:14;
+        self.level.frame = CGRectMake(self.name.right+itemSpace, 12.5, 19, 12);
+        self.successIv.frame = CGRectMake(self.level.right+itemSpace, 12.5, 12, 10);
         self.successLab.text = [NSString stringWithFormat:@"%@单",model.singleVolume];
         [self.successLab sizeToFit];
         CGRect frame = self.successLab.frame;
         frame.origin.x = self.successIv.right+2;
         self.successLab.frame = frame;
         [self.agreeBtn setTitle:model.pointOfPraise forState:UIControlStateNormal];
-        self.agreeBtn.frame = CGRectMake(self.successLab.right-16, 8, 100, 18);
+        float agreeBtnWidth = XZFS_IS_IPHONE6_PLUS?130:100;
+        self.agreeBtn.frame = CGRectMake(self.successLab.right-16, 8, agreeBtnWidth, 18);
         if (model.pointOfPraise.intValue>0) {
             [_agreeBtn setImage:XZFS_IMAGE_NAMED(@"yidianzan") forState:UIControlStateNormal];}
         else{

@@ -68,6 +68,7 @@
     self.goodsCV.backgroundColor = [UIColor whiteColor];
     [self.goodsCV registerClass:[XZGoodsCell class] forCellWithReuseIdentifier:@"cellid"];
     [self.view addSubview:self.goodsCV];
+      self.goodsCV.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0,0,0,0));
 }
 
 -(void)setupRefresh{

@@ -23,6 +23,26 @@
 
 @implementation XZMyMasterFinishedVC
 
+-(void)loadData{
+    for (int i = 0; i<10; i++) {
+        XZTheMasterModel * model = [[XZTheMasterModel alloc]init];
+        model.icon = @"http://navatar.shagualicai.cn/uid/150922010117012662";
+        model.masterName = @"张三丰";
+        model.level = @"V1";
+        model.isFinished = NO;
+        model.startTime = @"2016-10-11 11:30";
+        model.service = @"服务项目：按时大大人家阿萨德v";
+        if (i%3==0) {
+            model.isFinished = YES;
+            model.service = @"服务项目：通古至今，上下五千年麻醉学聪明阿萨德";
+        }
+        model.price = @"￥88 知币";
+        [self.finishedMaster.dataArray addObject:model];
+    }
+    [self.finishedMaster reloadData];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.finishedMaster];
@@ -31,6 +51,8 @@
     self.finishedMaster.hidden = NO;
     self.finishedMaster.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0, 0, 0, 0));
     self.finishingMaster.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0, 0, 0, 0));
+    
+//    [self loadData];
     
     __weak typeof(self)weakSelf = self;
     [self.finishedMaster refreshListWithBlock:^(int page, BOOL isRefresh) {

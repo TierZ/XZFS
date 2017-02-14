@@ -8,7 +8,9 @@
 #import "PYSearchSuggestionViewController.h"
 #import "PYSearchConst.h"
 
-@interface PYSearchSuggestionViewController () 
+@interface PYSearchSuggestionViewController ()
+/** 记录消失前的contentInset */
+@property (nonatomic, assign) UIEdgeInsets originalContentInset;
 
 @end
 
@@ -18,23 +20,60 @@
 {
     PYSearchSuggestionViewController *searchSuggestionVC = [[PYSearchSuggestionViewController alloc] init];
     searchSuggestionVC.didSelectCellBlock = didSelectCellBlock;
+    searchSuggestionVC.automaticallyAdjustsScrollViewInsets = NO;
     return searchSuggestionVC;
 }
 
+/** 视图加载完毕 */
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     // 取消分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // 监听键盘
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboradFrameDidChange:) name:UIKeyboardDidShowNotification object:nil];
 }
 
+/** 控制器销毁 */
+- (void)dealloc
+{
+    // 移除监听
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+/** 视图即将消失 */
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    // 记录消失前的tableView.contentInset
+    self.originalContentInset = self.tableView.contentInset;
+}
+
+/** 键盘frame改变 */
+- (void)keyboradFrameDidChange:(NSNotification *)notification
+{
+    // 刷新
+    [self setSearchSuggestions:_searchSuggestions];
+}
+
+#pragma mark - setter
 - (void)setSearchSuggestions:(NSArray<NSString *> *)searchSuggestions
 {
     _searchSuggestions = [searchSuggestions copy];
     
     // 刷新数据
     [self.tableView reloadData];
+    
+    // 还原contentInset
+    if (!UIEdgeInsetsEqualToEdgeInsets(self.originalContentInset, UIEdgeInsetsZero) && !UIEdgeInsetsEqualToEdgeInsets(self.originalContentInset, UIEdgeInsetsMake(-30, 0, 30 - 64, 0))) { // originalContentInset非零 UIEdgeInsetsMake(-30, 0, 30, 0)是当键盘消失后自动调整的内边距
+        self.tableView.contentInset =  self.originalContentInset;
+    }
+    // 滚动到头部
+    self.tableView.contentOffset = CGPointMake(0, -self.tableView.contentInset.top);
 }
+
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -66,16 +105,16 @@
         cell.textLabel.font = [UIFont systemFontOfSize:14];
         cell.backgroundColor = [UIColor clearColor];
         // 添加分割线
-        UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PYSearch.bundle/cell-content-line"]];
+        UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell-content-line" inBundle:[NSBundle py_searchBundle] compatibleWithTraitCollection:nil]];
         line.py_height = 0.5;
         line.alpha = 0.7;
-        line.py_x = PYMargin;
+        line.py_x = PYSEARCH_MARGIN;
         line.py_y = 43;
         line.py_width = PYScreenW;
         [cell.contentView addSubview:line];
     }
     // 设置数据
-    cell.imageView.image = PYSearchSuggestionImage;
+    cell.imageView.image = PYSEARCH_SEARCH_SUGGESTION_IMAGE;
     cell.textLabel.text = self.searchSuggestions[indexPath.row];
     return cell;
 }

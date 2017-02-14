@@ -29,6 +29,7 @@
     self.cartTable.delegate = self;
     self.cartTable.dataSource = self;
     [self.view addSubview:self.cartTable];
+      self.cartTable.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0,0,0,0));
 }
 
 -(void)setupData{

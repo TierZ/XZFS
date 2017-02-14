@@ -32,7 +32,7 @@
     [self drawMainSeg];
     [self drawMainScroll];
     [self requestMySignUpLecture];
-    [self showData];
+//    [self showData];
     // Do any additional setup after loading the view.
 }
 
@@ -54,11 +54,11 @@
     self.joinedLecture = [[XZFindTable alloc]initWithFrame:CGRectMake(0, 0, self.selectScroll.width, self.selectScroll.height) style:XZFindLecture];
     self.joinedLecture.showLecturePrice = NO;
     self.joinedLecture.currentVC = self;
-    self.joinedLecture.backgroundColor = RandomColor(1);
+    self.joinedLecture.backgroundColor =  [UIColor whiteColor];
     [self.selectScroll addSubview:self.joinedLecture];
     
     self.wantJoinLecture = [[XZFindTable alloc]initWithFrame:CGRectMake(self.selectScroll.width, 0, self.selectScroll.width, self.selectScroll.height) style:XZFindLecture];
-    self.wantJoinLecture.backgroundColor = RandomColor(1);
+    self.wantJoinLecture.backgroundColor = [UIColor whiteColor];
     self.wantJoinLecture.currentVC = self;
 
     self.wantJoinLecture.showLecturePrice = YES;
@@ -82,8 +82,8 @@
         lecture.startTime = @"9月18日  9:00";
         lecture.remainSeats = @"余10席";
         
-//        [self.wantJoinLecture.data addObject:lecture];
-//        [self.joinedLecture.data addObject:lecture];
+        [self.wantJoinLecture.data addObject:lecture];
+        [self.joinedLecture.data addObject:lecture];
 
     }
     [self.wantJoinLecture.table reloadData];
@@ -135,14 +135,14 @@
     switch (lectureService.serviceTag) {
         case XZMySignupLectureTag:{
             NSLog(@"参加的讲座%@",succeedHandle);
-            [self.joinedLecture.table endRefreshHeader];
-            [self.joinedLecture.table endRefreshFooter];
+            NSArray * arr = (NSArray*)succeedHandle;
+            [self showDataAfterNetRequestWithArray:arr dataTable:self.joinedLecture.table];
         }
             break;
         case XZMyCollectionLectureTag:{
             NSLog(@"收藏的讲座%@",succeedHandle);
-            [self.wantJoinLecture.table endRefreshHeader];
-            [self.wantJoinLecture.table endRefreshFooter];
+            NSArray * arr = (NSArray*)succeedHandle;
+            [self showDataAfterNetRequestWithArray:arr dataTable:self.wantJoinLecture.table];
         }
             break;
             
@@ -157,14 +157,16 @@
     switch (lectureService.serviceTag) {
         case XZMySignupLectureTag:{
             NSLog(@"参加的讲座%@",failHandle);
-            [self.joinedLecture.table endRefreshHeader];
-            [self.joinedLecture.table endRefreshFooter];
+              [self showDataAfterNetRequestWithArray:@[] dataTable:self.joinedLecture.table];
+//            [self.joinedLecture.table endRefreshHeader];
+//            [self.joinedLecture.table endRefreshFooter];
         }
             break;
         case XZMyCollectionLectureTag:{
             NSLog(@"收藏的讲座%@",failHandle);
-            [self.wantJoinLecture.table endRefreshHeader];
-            [self.wantJoinLecture.table endRefreshFooter];
+              [self showDataAfterNetRequestWithArray:@[] dataTable:self.wantJoinLecture.table];
+//            [self.wantJoinLecture.table endRefreshHeader];
+//            [self.wantJoinLecture.table endRefreshFooter];
         }
             break;
             
@@ -174,6 +176,33 @@
     }
 
 }
+
+
+-(void)showDataAfterNetRequestWithArray:(NSArray*)array dataTable:(XZRefreshTable*)table{
+    if (table.row==1) {
+        [table.dataArray removeAllObjects];
+    }
+    [table.dataArray addObjectsFromArray:array];
+    [table reloadData];
+    [table endRefreshHeader];
+    [table endRefreshFooter];
+    if (array.count<=0) {
+        table.mj_footer.hidden = YES;
+    }
+    __weak typeof(self)weakSelf = self;
+    if (table.dataArray.count<=0) {
+        [table showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^{
+            if (table ==weakSelf.joinedLecture.table) {
+                [weakSelf requestMySignUpLecture];
+            }else if (table==weakSelf.wantJoinLecture.table){
+                [weakSelf requestMyCollectionLecture];
+            }
+        } btnBlock:nil];
+    }else{
+        [table hideNoDataView];
+    }
+}
+
 #pragma mark getter
 
 -(NSArray *)selectArray{

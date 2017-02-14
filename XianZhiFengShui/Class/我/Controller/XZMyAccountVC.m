@@ -169,7 +169,7 @@ NSLog(@"failHandle = %@",failHandle);
         [self presentViewController:alert animated:true completion:^{
         }];
         return NO;
-    }else if (![[userInfos objectForKey:@"isPayPwd"]boolValue]){
+    }else if ([[userInfos objectForKey:@"isPayPwd"]boolValue]){
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"您未设置支付密码，是否前往设置" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
                                                               handler:^(UIAlertAction * action) {}];

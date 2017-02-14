@@ -20,13 +20,14 @@
 }
 
 -(void)setupCell{
-    [self.contentView sd_addSubviews:@[ self.photo,self.name,self.levelIv,self.timeIv,self.timeLab,self.service,self.price]];
     
+    [self.contentView sd_addSubviews:@[ self.photo,self.name,self.levelIv,self.timeIv,self.timeLab,self.service,self.price]];
+     float photoWidth = XZFS_IS_IPHONE6_PLUS?94:84;
     self.photo.sd_layout
     .leftSpaceToView(self.contentView,20)
     .topSpaceToView(self.contentView,8)
-    .widthIs(93)
-    .heightIs(93);
+    .widthIs(photoWidth)
+    .heightIs(photoWidth);
     
     self.name.sd_layout
     .leftSpaceToView(self.photo,15)
@@ -34,8 +35,10 @@
     .heightIs(14);
     [self.name setSingleLineAutoResizeWithMaxWidth:100];
     
+    
+    float levelSpace = XZFS_IS_IPHONE6_PLUS?25:12;
     self.levelIv.sd_layout
-    .leftSpaceToView(self.name,18)
+    .leftSpaceToView(self.name,levelSpace)
     .topSpaceToView(self.contentView,21)
     .widthIs(19)
     .heightIs(12);
@@ -47,7 +50,7 @@
 //    [self.levelLab setSingleLineAutoResizeWithMaxWidth:30];
     
     self.timeIv.sd_layout
-    .leftSpaceToView(self.levelIv,18)
+    .leftSpaceToView(self.levelIv,levelSpace)
     .topSpaceToView(self.contentView,21)
     .widthIs(10)
     .heightIs(10);

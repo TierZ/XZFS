@@ -51,7 +51,13 @@ static NSString * MyMasterService = @"/master/list";
     [self postRequestWithUrl:MySignUpLectureService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         NSLog(@"MySignUpLectureService-------%@",data)
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
-            [self.delegate netSucceedWithHandle:[[data objectForKey:@"data"] objectForKey:@"list"]dataService:self];
+            NSArray * arr;
+            if ([[[data objectForKey:@"data"] objectForKey:@"list"] isKindOfClass:[NSArray class]]) {
+                arr = [[data objectForKey:@"data"] objectForKey:@"list"];
+            }else{
+                arr = [NSArray array];
+            }
+            [self.delegate netSucceedWithHandle:arr dataService:self];
         }
     } failBlock:^(NSError *error) {
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
@@ -71,9 +77,14 @@ static NSString * MyMasterService = @"/master/list";
     
     [self postRequestWithUrl:MyCollectionLectureService parmater:lastDic view:view isOpenHUD:YES Block:^(NSDictionary *data) {
         NSLog(@"MyCollectionLectureService-------%@",data)
-        
+        NSArray * arr;
+        if ([[[data objectForKey:@"data"] objectForKey:@"list"] isKindOfClass:[NSArray class]]) {
+            arr = [[data objectForKey:@"data"] objectForKey:@"list"];
+        }else{
+            arr = [NSArray array];
+        }        
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netSucceedWithHandle:dataService:)]) {
-            [self.delegate netSucceedWithHandle:[[data objectForKey:@"data"] objectForKey:@"list"] dataService:self];
+            [self.delegate netSucceedWithHandle:arr dataService:self];
         }
     } failBlock:^(NSError *error) {
         if (self.delegate &&[self.delegate respondsToSelector:@selector(netFailedWithHandle:dataService:)]) {
