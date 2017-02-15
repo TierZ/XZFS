@@ -14,6 +14,8 @@
 #import "JMessage.framework/Headers/JMessage.h"
 #import "JCHATStringUtils.h"
 
+#import "CountDownButton.h"
+
 @interface XZRegistVC ()
 @property (nonatomic,strong)UIButton * leftArrow;
 @property (nonatomic,strong)UIImageView * userNoIv;
@@ -24,16 +26,18 @@
 @property (nonatomic,strong)ValidateTextField  * userNickTf;
 @property (nonatomic,strong)ValidateTextField  * codeTf;
 @property (nonatomic,strong)UIButton * registBtn;
-@property (nonatomic,strong)UIButton * sendCodeBtn;
+@property (nonatomic,strong)CountDownButton * sendCodeBtn;
 @property (nonatomic,strong)UIButton * agreeProtocalBtn;
 @property (nonatomic,strong)UILabel * agreeProtocalLab;
 @property (nonatomic,strong)UIButton * protocalBtn;
 @property (nonatomic,strong)NSString * securityCode;
-
+@property (nonatomic,strong)NSTimer * timer;
 
 @end
 
-@implementation XZRegistVC
+@implementation XZRegistVC{
+    int _countDownInt;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,6 +45,8 @@
     self.navView.hidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     self.mainView.hidden = YES;
+    _countDownInt = 59;
+    [self countDownBtnAction];
 }
 
 -(void)layoutViews{
@@ -69,35 +75,40 @@
     
     self.sendCodeBtn.frame = CGRectMake(SCREENWIDTH-20-80, self.codeTf.top-9, 80, 24);
     self.registBtn.frame = CGRectMake(20, self.codeTf.bottom+30, SCREENWIDTH-40, 45);
-    self.agreeProtocalBtn.frame = CGRectMake(30, self.registBtn.bottom+12, 12, 12);
+    self.agreeProtocalBtn.frame = CGRectMake(30, self.registBtn.bottom+8, 12, 12);
     self.agreeProtocalLab.frame = CGRectMake(self.agreeProtocalBtn.right+5, self.registBtn.bottom+8, 80, 12);
     [self.agreeProtocalLab sizeToFit];
-    self.protocalBtn.frame = CGRectMake(self.agreeProtocalLab.right+2, self.registBtn.bottom+12, 100, 12);
+    self.protocalBtn.frame = CGRectMake(self.agreeProtocalLab.right+2, self.registBtn.bottom+8, 78, 12);
     
     for (int i = 0; i<4; i++) {
         UIView * line = [[UIView alloc]initWithFrame:CGRectMake(20, self.userNoIv.bottom+5+i*60, SCREENWIDTH-40, 0.5)];
         line.backgroundColor = XZFS_HEX_RGB(@"#C9C9CA");
         [self.view addSubview:line];
     }
-    
-    
 }
+-(void)countDownBtnAction{
+    
+    __weak typeof(self)weakSelf = self;
+    [_sendCodeBtn countDownButtonHandler:^(CountDownButton*sender, NSInteger tag) {
+        __strong typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.userNoTf resignFirstResponder];
+        [strongSelf.userPwdTf resignFirstResponder];
+        [strongSelf.userNickTf resignFirstResponder];
+        
+        ValidateRule * rule = [[ValidateRule alloc]init];
+        BOOL isValidate = [rule isValidateMobile:strongSelf.userNoTf.text];
+        if (isValidate) {
+        [strongSelf sendSecurityCodeWithPhone:strongSelf.userNoTf.text];
+            NSLog(@"发送验证码");
+        }
+    }];
+}
+
 
 #pragma mark action
 -(void)clickLeft:(UIButton*)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
--(void)sendCode{
-    ValidateRule * rule = [[ValidateRule alloc]init];
-    BOOL isValidate = [rule isValidateMobile:self.userNoTf.text];
-    NSLog(@"isValidate = %d",isValidate);
-    if (isValidate) {
-        [self sendSecurityCodeWithPhone:self.userNoTf.text];
-    }
-    NSLog(@"发送验证码");
-}
-
 -(void)regist{
     ValidateRule * rule = [[ValidateRule alloc]init];
     BOOL isValidate = [rule validateResultWithView:self.view];
@@ -107,9 +118,7 @@
         }else{
             [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:NO message:@"验证码不正确"];
         }
-        
     }
-    
     NSLog(@"去注册");
 }
 
@@ -132,7 +141,6 @@
     XZLoginRegistService * securityService = [[XZLoginRegistService alloc]initWithServiceTag:XZGetSecurityTag];
     securityService.delegate = self;
     [securityService requestSecurityCodeWithPhoneNo:phoneNum cityCode:@"110000" type:@"1" view:self.view];
-    
 }
 
 
@@ -155,13 +163,27 @@
             NSDictionary * data = [dic objectForKey:@"data"];
             self.securityCode = [data objectForKey:@"vcode"];
             NSLog(@"successHandle = %@",succeedHandle);
+            
+            [_sendCodeBtn setTitleColor:XZFS_TEXTLIGHTGRAYCOLOR forState:UIControlStateNormal];
+            _sendCodeBtn.layer.borderColor = XZFS_TEXTLIGHTGRAYCOLOR.CGColor;
+            
+            _sendCodeBtn.enabled = NO;
+            [_sendCodeBtn startCountDownWithSecond:60];
+            [_sendCodeBtn countDownChanging:^NSString *(CountDownButton *countDownButton,NSUInteger second) {
+                NSString *title = [NSString stringWithFormat:@"剩余%zd秒",second];
+                return title;
+            }];
+            [_sendCodeBtn countDownFinished:^NSString *(CountDownButton *countDownButton, NSUInteger second) {
+                countDownButton.enabled = YES;
+                [countDownButton setTitleColor:XZFS_TEXTORANGECOLOR forState:UIControlStateNormal];
+                countDownButton.layer.borderColor = XZFS_TEXTORANGECOLOR.CGColor;
+                return @"点击重新获取";
+            }];
         }
             break;
         case XZRegistTag:{
             NSDictionary * dic = (NSDictionary*)succeedHandle;
             NSDictionary * data = [dic objectForKey:@"data"];
-            //            self.securityCode = [data objectForKey:@"vcode"];
-            NSLog(@"data = %@",data);
             if ([[dic objectForKey:@"statusCode"]isEqualToString:@"200"]) {
                 if ([[data objectForKey:@"affect"]intValue]>0) {
                     [JMSGUser registerWithUsername:KISDictionaryHaveKey(data, @"userCode") password:KISDictionaryHaveKey(data, @"userCode") completionHandler:^(id resultObject, NSError *error) {
@@ -190,8 +212,21 @@
 }
 
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
-    
+      XZLoginRegistService * currentService = (XZLoginRegistService*)service;
+    switch (currentService.serviceTag) {
+        case XZGetSecurityTag:{
+            NSError * error = (NSError*)failHandle;
+            if (error.code==508) {
+                NSLog(@"已注册");
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
+
 #pragma mark getter
 -(UIButton *)leftArrow{
     if (!_leftArrow) {
@@ -296,14 +331,14 @@
     return _codeTf;
 }
 
--(UIButton *)sendCodeBtn{
+-(CountDownButton *)sendCodeBtn{
     if (!_sendCodeBtn) {
-        _sendCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _sendCodeBtn = [CountDownButton buttonWithType:UIButtonTypeCustom];
         [_sendCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         [_sendCodeBtn setTitleColor:XZFS_HEX_RGB(@"#eb6000") forState:UIControlStateNormal];
         _sendCodeBtn.backgroundColor = XZFS_HEX_RGB(@"#ffffff");
         _sendCodeBtn.titleLabel.font = XZFS_S_FONT(12);
-        [_sendCodeBtn addTarget:self action:@selector(sendCode) forControlEvents:UIControlEventTouchUpInside];
+//        [_sendCodeBtn addTarget:self action:@selector(sendCode) forControlEvents:UIControlEventTouchUpInside];
         _sendCodeBtn.layer.masksToBounds = YES;
         _sendCodeBtn.layer.cornerRadius  = 5;
         _sendCodeBtn.layer.borderWidth = 1;
@@ -366,6 +401,10 @@
 
 
 #pragma mark ..
+
+-(void)dealloc{
+    NSLog(@"dealloc====");
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

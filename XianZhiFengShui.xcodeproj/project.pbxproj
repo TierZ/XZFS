@@ -139,6 +139,7 @@
 		D129AAAA1DBF142300DA2A6D /* XZMasterInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D129AAA91DBF142300DA2A6D /* XZMasterInfoModel.m */; };
 		D129AAAD1DBF35D200DA2A6D /* XZMasterInfoBaseCel.m in Sources */ = {isa = PBXBuildFile; fileRef = D129AAAC1DBF35D200DA2A6D /* XZMasterInfoBaseCel.m */; };
 		D129AAB01DBF583B00DA2A6D /* XZMasterDetailTable.m in Sources */ = {isa = PBXBuildFile; fileRef = D129AAAF1DBF583B00DA2A6D /* XZMasterDetailTable.m */; };
+		D12D94AA1E545923005FA904 /* CountDownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D12D94A91E545923005FA904 /* CountDownButton.m */; };
 		D12E9D0E1DE6D6E200C45B75 /* zuojiantou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D12E9CFB1DE6D6E200C45B75 /* zuojiantou@2x.png */; };
 		D12E9D0F1DE6D6E200C45B75 /* zuojiantou@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D12E9CFC1DE6D6E200C45B75 /* zuojiantou@3x.png */; };
 		D12E9D101DE6D6E200C45B75 /* faxian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D12E9CFE1DE6D6E200C45B75 /* faxian@2x.png */; };
@@ -943,6 +944,8 @@
 		D129AAAC1DBF35D200DA2A6D /* XZMasterInfoBaseCel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterInfoBaseCel.m; sourceTree = "<group>"; };
 		D129AAAE1DBF583B00DA2A6D /* XZMasterDetailTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterDetailTable.h; sourceTree = "<group>"; };
 		D129AAAF1DBF583B00DA2A6D /* XZMasterDetailTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterDetailTable.m; sourceTree = "<group>"; };
+		D12D94A81E545923005FA904 /* CountDownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountDownButton.h; sourceTree = "<group>"; };
+		D12D94A91E545923005FA904 /* CountDownButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountDownButton.m; sourceTree = "<group>"; };
 		D12E9CFB1DE6D6E200C45B75 /* zuojiantou@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zuojiantou@2x.png"; sourceTree = "<group>"; };
 		D12E9CFC1DE6D6E200C45B75 /* zuojiantou@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zuojiantou@3x.png"; sourceTree = "<group>"; };
 		D12E9CFE1DE6D6E200C45B75 /* faxian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "faxian@2x.png"; sourceTree = "<group>"; };
@@ -2190,6 +2193,8 @@
 				D1F2FB3B1DF02C1F00EFC19B /* UIButton+XZImageTitleSpacing.m */,
 				D11592F81DA8E0D1004A7B86 /* AppPushView */,
 				D11592FB1DA8E0D1004A7B86 /* LaunchImageAd */,
+				D12D94A81E545923005FA904 /* CountDownButton.h */,
+				D12D94A91E545923005FA904 /* CountDownButton.m */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -4487,6 +4492,7 @@
 				D195902A1DE3FFF100C06A05 /* MJPhotoLoadingView.m in Sources */,
 				D12F74D91DDEB8D0003E2A0B /* XZAddBankCardVC.m in Sources */,
 				D18CD1301E27680A00DBEFD4 /* XZMasterOrderVC.m in Sources */,
+				D12D94AA1E545923005FA904 /* CountDownButton.m in Sources */,
 				D1131A3B1DEE83BE00E1398D /* ThumbImageCollectionViewCell.m in Sources */,
 				D11592CF1DA8D3BC004A7B86 /* XZNavigationController.m in Sources */,
 				D11592D81DA8D477004A7B86 /* BaseViewController.m in Sources */,

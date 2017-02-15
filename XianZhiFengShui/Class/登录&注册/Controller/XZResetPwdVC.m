@@ -24,6 +24,7 @@
 @implementation XZResetPwdVC{
     UIView * _resetView;
     int _countDownInt;
+    NSTimeInterval clickTIme ;
 }
 
 - (void)viewDidLoad {
@@ -81,6 +82,8 @@
     BOOL isvalidate = [rule isValidateMobile:self.phoneTf.text];
     if (isvalidate) {
         [self.sendCodeBtn setEnabled:NO];
+      clickTIme =   [[NSDate date] timeIntervalSince1970];
+        NSLog(@"clickTime = %f",clickTIme);
         _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
         [self sendSecurityCode];
         NSLog(@"发送验证码");
@@ -104,11 +107,16 @@
 }
 #pragma mark private
 - (void)onTimer {
+    NSTimeInterval currentTime = [[NSDate date]timeIntervalSince1970];
+    NSLog(@"timespace = %f",currentTime-clickTIme);
+    
     if (_countDownInt > 0) {
+        _countDownInt =59-(currentTime-clickTIme);
+        NSLog(@"_countDownInt = %d",_countDownInt);
         [self.sendCodeBtn setTitleColor:XZFS_TEXTLIGHTGRAYCOLOR forState:UIControlStateNormal];
         self.sendCodeBtn.layer.borderColor = XZFS_TEXTLIGHTGRAYCOLOR.CGColor;
         [self.sendCodeBtn setTitle:[NSString stringWithFormat:@"%d秒重新获取",_countDownInt ] forState:UIControlStateDisabled];
-        _countDownInt--;
+//        _countDownInt--;
     } else {
         _countDownInt = 60;
         [_timer invalidate];

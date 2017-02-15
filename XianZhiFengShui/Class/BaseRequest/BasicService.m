@@ -169,7 +169,7 @@ static BasicService * shareService;
             if (isSuccess) {
                 block(resultDic);
             }else{
-                NSError *error;
+                NSError *error = [NSError errorWithDomain:@"" code:[[resultDic objectForKey:@"statusCode"]intValue] userInfo:[resultDic objectForKey:@"message"]];
                 errorBlock(error);
             }
             if (isOpenHUD == YES) {
