@@ -10,15 +10,17 @@
 #import "ValidateRule.h"
 #import "ValidateTextField.h"
 #import "XZLoginRegistService.h"
+#import "CountDownButton.h"
 
 @interface XZResetPwdVC ()
 @property (nonatomic,strong)ValidateTextField * phoneTf;//手机号
 @property (nonatomic,strong)ValidateTextField * pwdTf;//密码
 @property (nonatomic,strong)ValidateTextField * codeTf;//验证码
 @property (nonatomic,strong)UIButton * resetPwdBtn;//重置密码
-@property (nonatomic,strong)UIButton * sendCodeBtn;//发送验证码
+@property (nonatomic,strong)CountDownButton * sendCodeBtn;//发送验证码
 @property (nonatomic,strong)NSTimer * timer;
 @property (nonatomic,copy)NSString * securityCode;
+
 @end
 
 @implementation XZResetPwdVC{
@@ -69,6 +71,21 @@
     [_resetView addSubview:self.phoneTf];
     [_resetView addSubview:self.pwdTf];
     [_resetView addSubview:self.codeTf];
+    
+    __weak typeof(self)weakSelf = self;
+    [_sendCodeBtn countDownButtonHandler:^(CountDownButton*sender, NSInteger tag) {
+        __strong typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf.phoneTf resignFirstResponder];
+        [strongSelf.pwdTf resignFirstResponder];
+        [strongSelf.codeTf resignFirstResponder];
+        
+        ValidateRule * rule = [[ValidateRule alloc]init];
+        BOOL isValidate = [rule isValidateMobile:strongSelf.phoneTf.text];
+        if (isValidate) {
+            [strongSelf sendSecurityCode];
+            NSLog(@"发送验证码");
+        }
+    }];
 }
 
 -(void)setupResetBtn{
@@ -76,22 +93,21 @@
     [self.mainView addSubview:self.resetPwdBtn];
 }
 
-#pragma mark action
--(void)sendCode{
-    ValidateRule * rule = [[ValidateRule alloc]init];
-    BOOL isvalidate = [rule isValidateMobile:self.phoneTf.text];
-    if (isvalidate) {
-        [self.sendCodeBtn setEnabled:NO];
-      clickTIme =   [[NSDate date] timeIntervalSince1970];
-        NSLog(@"clickTime = %f",clickTIme);
-        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
-        [self sendSecurityCode];
-        NSLog(@"发送验证码");
-    }else{
-        [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:NO message:@"手机号格式不正确"];
-    }
- 
-}
+//#pragma mark action
+//-(void)sendCode{
+//    ValidateRule * rule = [[ValidateRule alloc]init];
+//    BOOL isvalidate = [rule isValidateMobile:self.phoneTf.text];
+//    if (isvalidate) {
+//        [self.sendCodeBtn setEnabled:NO];
+//      clickTIme =   [[NSDate date] timeIntervalSince1970];
+//        NSLog(@"clickTime = %f",clickTIme);
+//        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+//        [self sendSecurityCode];
+//        NSLog(@"发送验证码");
+//    }else{
+//        [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:NO message:@"手机号格式不正确"];
+//    }
+//}
 -(void)resetPwd{
     ValidateRule * rule = [[ValidateRule alloc]init];
     BOOL isvalidate = [rule validateResultWithView:_resetView];
@@ -105,29 +121,29 @@
     }
     
 }
-#pragma mark private
-- (void)onTimer {
-    NSTimeInterval currentTime = [[NSDate date]timeIntervalSince1970];
-    NSLog(@"timespace = %f",currentTime-clickTIme);
-    
-    if (_countDownInt > 0) {
-        _countDownInt =59-(currentTime-clickTIme);
-        NSLog(@"_countDownInt = %d",_countDownInt);
-        [self.sendCodeBtn setTitleColor:XZFS_TEXTLIGHTGRAYCOLOR forState:UIControlStateNormal];
-        self.sendCodeBtn.layer.borderColor = XZFS_TEXTLIGHTGRAYCOLOR.CGColor;
-        [self.sendCodeBtn setTitle:[NSString stringWithFormat:@"%d秒重新获取",_countDownInt ] forState:UIControlStateDisabled];
-//        _countDownInt--;
-    } else {
-        _countDownInt = 60;
-        [_timer invalidate];
-        _timer = nil;
-        [self.sendCodeBtn setTitle:@"60秒重新获取" forState:UIControlStateDisabled];
-        [self.sendCodeBtn setTitle:@"重发验证码" forState:UIControlStateNormal];
-        [self.sendCodeBtn setEnabled:YES];
-         [self.sendCodeBtn setTitleColor:XZFS_TEXTORANGECOLOR forState:UIControlStateNormal];
-        self.sendCodeBtn.layer.borderColor = XZFS_TEXTORANGECOLOR.CGColor;
-    }
-}
+//#pragma mark private
+//- (void)onTimer {
+//    NSTimeInterval currentTime = [[NSDate date]timeIntervalSince1970];
+//    NSLog(@"timespace = %f",currentTime-clickTIme);
+//    
+//    if (_countDownInt > 0) {
+//        _countDownInt =59-(currentTime-clickTIme);
+//        NSLog(@"_countDownInt = %d",_countDownInt);
+//        [self.sendCodeBtn setTitleColor:XZFS_TEXTLIGHTGRAYCOLOR forState:UIControlStateNormal];
+//        self.sendCodeBtn.layer.borderColor = XZFS_TEXTLIGHTGRAYCOLOR.CGColor;
+//        [self.sendCodeBtn setTitle:[NSString stringWithFormat:@"%d秒重新获取",_countDownInt ] forState:UIControlStateDisabled];
+////        _countDownInt--;
+//    } else {
+//        _countDownInt = 60;
+//        [_timer invalidate];
+//        _timer = nil;
+//        [self.sendCodeBtn setTitle:@"60秒重新获取" forState:UIControlStateDisabled];
+//        [self.sendCodeBtn setTitle:@"重发验证码" forState:UIControlStateNormal];
+//        [self.sendCodeBtn setEnabled:YES];
+//         [self.sendCodeBtn setTitleColor:XZFS_TEXTORANGECOLOR forState:UIControlStateNormal];
+//        self.sendCodeBtn.layer.borderColor = XZFS_TEXTORANGECOLOR.CGColor;
+//    }
+//}
 
 #pragma mark 网络
 /**
@@ -156,6 +172,23 @@
             NSDictionary * data = [dic objectForKey:@"data"];
             self.securityCode = [data objectForKey:@"vcode"];
             NSLog(@"successHandle1 = %@",succeedHandle);
+            
+            [_sendCodeBtn setTitleColor:XZFS_TEXTLIGHTGRAYCOLOR forState:UIControlStateNormal];
+            _sendCodeBtn.layer.borderColor = XZFS_TEXTLIGHTGRAYCOLOR.CGColor;
+            
+            _sendCodeBtn.enabled = NO;
+            [_sendCodeBtn startCountDownWithSecond:60];
+            [_sendCodeBtn countDownChanging:^NSString *(CountDownButton *countDownButton,NSUInteger second) {
+                NSString *title = [NSString stringWithFormat:@"剩余%zd秒",second];
+                return title;
+            }];
+            [_sendCodeBtn countDownFinished:^NSString *(CountDownButton *countDownButton, NSUInteger second) {
+                countDownButton.enabled = YES;
+                [countDownButton setTitleColor:XZFS_TEXTORANGECOLOR forState:UIControlStateNormal];
+                countDownButton.layer.borderColor = XZFS_TEXTORANGECOLOR.CGColor;
+                return @"点击重新获取";
+            }];
+            
         }
             break;
         case XZResetPwdTag:{
@@ -172,6 +205,23 @@
             break;
     }
 }
+
+-(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
+    XZLoginRegistService * currentService = (XZLoginRegistService*)service;
+    switch (currentService.serviceTag) {
+        case XZGetSecurityTag:{
+            NSError * error = (NSError*)failHandle;
+            if (error.code==508) {
+                NSLog(@"已注册");
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 
 #pragma mark getter
 
@@ -226,14 +276,14 @@
     return _codeTf;
 }
 
--(UIButton *)sendCodeBtn{
+-(CountDownButton *)sendCodeBtn{
     if (!_sendCodeBtn) {
-        _sendCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _sendCodeBtn = [CountDownButton buttonWithType:UIButtonTypeCustom];
         [_sendCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         [_sendCodeBtn setTitleColor:XZFS_HEX_RGB(@"#eb6000") forState:UIControlStateNormal];
         _sendCodeBtn.backgroundColor = XZFS_HEX_RGB(@"#ffffff");
         _sendCodeBtn.titleLabel.font = XZFS_S_FONT(12);
-        [_sendCodeBtn addTarget:self action:@selector(sendCode) forControlEvents:UIControlEventTouchUpInside];
+//        [_sendCodeBtn addTarget:self action:@selector(sendCode) forControlEvents:UIControlEventTouchUpInside];
         _sendCodeBtn.layer.masksToBounds = YES;
         _sendCodeBtn.layer.cornerRadius  = 5;
         _sendCodeBtn.layer.borderWidth = 1;

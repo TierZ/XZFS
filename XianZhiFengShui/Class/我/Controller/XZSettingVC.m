@@ -37,17 +37,17 @@
 
 #pragma mark action
 -(void)logOut{
-    [JMSGUser logout:^(id resultObject, NSError *error) {
-        if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            });
-            [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
-        }else{
+//    [JMSGUser logout:^(id resultObject, NSError *error) {
+//        if (error) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//            });
+//            [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:self.view];
+//        }else{
             SETUserdefault(@{}, @"userInfos");
             [self.navigationController popViewControllerAnimated:YES];
-        }
-    }];
+//        }
+//    }];
     
   
     NSLog(@"退出登录");

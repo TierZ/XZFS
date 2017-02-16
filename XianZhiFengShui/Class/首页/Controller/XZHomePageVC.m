@@ -160,6 +160,16 @@
 }
 
 -(void)clickRightButton{
+    
+    NSArray* item = nil;
+    NSArray * items = @[@"a",@"b", item ,@"c"];
+    NSLog(@"123123%@", items);
+    
+    NSString* key = nil;
+    NSString* value = nil;
+    NSLog(@"123123123%@", @{@"b":@"c",key:value, @"e":value});
+    
+    
     NSDictionary * dic = GETUserdefault(@"userInfos");
     BOOL isLogin = [[dic objectForKey:@"isLogin"]boolValue];
     if (isLogin) {
