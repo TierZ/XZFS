@@ -86,12 +86,7 @@ static Custom_tabbar *s_tabbar = NULL;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    
-//    [self database]; // add by lf 先创建它才能使用db
-
     [self showLoading];
-    
     
 }
 -(void)viewDidLayoutSubviews{
