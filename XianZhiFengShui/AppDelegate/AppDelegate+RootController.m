@@ -83,7 +83,6 @@
     Custom_tabbar *tabbarVC = [[ Custom_tabbar alloc ]init ];
     self. window .rootViewController = tabbarVC;
     [self.window makeKeyAndVisible];
-
 }
 
 #pragma mark  开机引导页

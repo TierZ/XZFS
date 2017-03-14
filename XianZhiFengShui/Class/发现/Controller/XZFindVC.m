@@ -184,7 +184,7 @@
 
 #pragma mark action
 -(void)titleSegChanged:(UISegmentedControl*)seg{
-    self.titleScroll.contentOffset =CGPointMake(seg.selectedSegmentIndex*SCREENWIDTH,0);
+    [self.titleScroll setContentOffset:CGPointMake(seg.selectedSegmentIndex*SCREENWIDTH,0) animated:YES];
 }
 
 #pragma mark delegate

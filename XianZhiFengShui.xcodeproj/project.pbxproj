@@ -197,6 +197,9 @@
 		D132980D1DDED0A500DD3C20 /* XZMyMasterWantedView.m in Sources */ = {isa = PBXBuildFile; fileRef = D132980C1DDED0A500DD3C20 /* XZMyMasterWantedView.m */; };
 		D13298101DDED0C200DD3C20 /* XZMyMasterFinishedView.m in Sources */ = {isa = PBXBuildFile; fileRef = D132980F1DDED0C200DD3C20 /* XZMyMasterFinishedView.m */; };
 		D14DFDEC1DC1F1FE00247A6F /* XZRefreshTable.m in Sources */ = {isa = PBXBuildFile; fileRef = D14DFDEB1DC1F1FE00247A6F /* XZRefreshTable.m */; };
+		D166830F1E778F9200F5A831 /* XZTheMasterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D166830E1E778F9200F5A831 /* XZTheMasterVC.m */; };
+		D16683121E778FCC00F5A831 /* XZTheLectureVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D16683111E778FCC00F5A831 /* XZTheLectureVC.m */; };
+		D16683151E77900F00F5A831 /* XZTheThemeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D16683141E77900F00F5A831 /* XZTheThemeVC.m */; };
 		D169213D1DD3038E00867011 /* XZMasterBasicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D169213C1DD3038E00867011 /* XZMasterBasicInfo.m */; };
 		D16921401DD303BC00867011 /* XZMasterIntroduce.m in Sources */ = {isa = PBXBuildFile; fileRef = D169213F1DD303BC00867011 /* XZMasterIntroduce.m */; };
 		D16921431DD303F900867011 /* XZMasterCertainInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D16921421DD303F900867011 /* XZMasterCertainInfo.m */; };
@@ -1018,6 +1021,12 @@
 		D132980F1DDED0C200DD3C20 /* XZMyMasterFinishedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMyMasterFinishedView.m; sourceTree = "<group>"; };
 		D14DFDEA1DC1F1FE00247A6F /* XZRefreshTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZRefreshTable.h; sourceTree = "<group>"; };
 		D14DFDEB1DC1F1FE00247A6F /* XZRefreshTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZRefreshTable.m; sourceTree = "<group>"; };
+		D166830D1E778F9200F5A831 /* XZTheMasterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZTheMasterVC.h; sourceTree = "<group>"; };
+		D166830E1E778F9200F5A831 /* XZTheMasterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZTheMasterVC.m; sourceTree = "<group>"; };
+		D16683101E778FCC00F5A831 /* XZTheLectureVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZTheLectureVC.h; sourceTree = "<group>"; };
+		D16683111E778FCC00F5A831 /* XZTheLectureVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZTheLectureVC.m; sourceTree = "<group>"; };
+		D16683131E77900F00F5A831 /* XZTheThemeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZTheThemeVC.h; sourceTree = "<group>"; };
+		D16683141E77900F00F5A831 /* XZTheThemeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZTheThemeVC.m; sourceTree = "<group>"; };
 		D169213B1DD3038E00867011 /* XZMasterBasicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterBasicInfo.h; sourceTree = "<group>"; };
 		D169213C1DD3038E00867011 /* XZMasterBasicInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMasterBasicInfo.m; sourceTree = "<group>"; };
 		D169213E1DD303BC00867011 /* XZMasterIntroduce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMasterIntroduce.h; sourceTree = "<group>"; };
@@ -2759,6 +2768,12 @@
 			children = (
 				D191C78F1DAB3FD000496906 /* XZFindVC.h */,
 				D191C7901DAB3FD000496906 /* XZFindVC.m */,
+				D166830D1E778F9200F5A831 /* XZTheMasterVC.h */,
+				D166830E1E778F9200F5A831 /* XZTheMasterVC.m */,
+				D16683101E778FCC00F5A831 /* XZTheLectureVC.h */,
+				D16683111E778FCC00F5A831 /* XZTheLectureVC.m */,
+				D16683131E77900F00F5A831 /* XZTheThemeVC.h */,
+				D16683141E77900F00F5A831 /* XZTheThemeVC.m */,
 				D1315B541DBA128D006254ED /* XZThemeListVC.h */,
 				D1315B551DBA128D006254ED /* XZThemeListVC.m */,
 				D129AA921DBEFB3800DA2A6D /* XZMasterDetailVC.h */,
@@ -4324,6 +4339,7 @@
 				84F9C4331DDCBAD3000EF201 /* XZMyBankCardCell.m in Sources */,
 				D19590591DE400B200C06A05 /* MBProgressHUD+Add.m in Sources */,
 				D128ACA31DC0A249002392E0 /* MFlowLayOut.m in Sources */,
+				D16683151E77900F00F5A831 /* XZTheThemeVC.m in Sources */,
 				D132980D1DDED0A500DD3C20 /* XZMyMasterWantedView.m in Sources */,
 				D195907B1DE409CF00C06A05 /* JCHATStringUtils.m in Sources */,
 				D180ADA91DFFC7B20043FB61 /* XZOpenProvinceDB.m in Sources */,
@@ -4568,6 +4584,7 @@
 				D11EAB341DC8786F0053B114 /* XZMessageDetailListCell.m in Sources */,
 				D19590841DE40E2400C06A05 /* JCHATAlertToSendImage.m in Sources */,
 				D1315B4F1DB9FFDE006254ED /* SDPhotoBrowser.m in Sources */,
+				D166830F1E778F9200F5A831 /* XZTheMasterVC.m in Sources */,
 				D1315B3F1DB9EE23006254ED /* MyCouponModel.m in Sources */,
 				D18FF4AD1E1F7C7000479E37 /* XZDYYCell.m in Sources */,
 				D1958FED1DE3F81600C06A05 /* JCHATMessageTableViewCell.m in Sources */,
@@ -4619,6 +4636,7 @@
 				D11D9F5B1DAB99C9006823F1 /* XZTheMasterModel.m in Sources */,
 				D1315B4E1DB9FFDE006254ED /* SDBrowserImageView.m in Sources */,
 				D113CC3E1DAF3FA80067A965 /* XZMyThemeVC.m in Sources */,
+				D16683121E778FCC00F5A831 /* XZTheLectureVC.m in Sources */,
 				D113CC211DAC8FF80067A965 /* XZTagView.m in Sources */,
 				D1131A381DEE83BE00E1398D /* JCHATPhotoBrowserCollectionViewCell.m in Sources */,
 				D1958FDC1DE3F81600C06A05 /* JCHATGroupSettingCtl.m in Sources */,
