@@ -14,6 +14,7 @@
 #import "XZFindService.h"
 #import "XZLectureDetailData.h"
 #import "XZLoginVC.h"
+#import "XZTheLectureVC.h"
 
 @interface XZFindVC ()<UIScrollViewDelegate>
 @property (nonatomic,strong)NSArray * titleArray;
@@ -34,6 +35,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self drawNaviTag];
     [self drawMainScroll];
+    
+
 }
 
 #pragma mark drawView
@@ -52,27 +55,15 @@
     
     self.mastView = [[XZTheMasterView alloc]initWithFrame:CGRectMake(0, 0, self.titleScroll.width, self.titleScroll.height) curVC:self];
     [self.titleScroll addSubview:self.mastView];
+    XZTheLectureVC * lectureVC = [[XZTheLectureVC alloc]init];
+    [self addChildViewController:lectureVC];
+    [self.titleScroll addSubview:lectureVC.view];
+    lectureVC.view.frame = CGRectMake(self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height);
 }
 
 
 
 #pragma mark 网络
-
-
-/**
- 请求讲座列表
-
- @param page <#page description#>
- */
--(void)requestLectureListWithPage:(int)page{
-    XZFindService * lectureService = [[XZFindService alloc]initWithServiceTag:XZLectureList];
-    lectureService.delegate = self;
-    NSDictionary * dic = GETUserdefault(@"userInfos");
-    NSString * userCodeStr = KISDictionaryHaveKey(dic, @"bizCode");
-    [lectureService lectureListWithPageNum:page PageSize:10 userCode:userCodeStr cityCode:@"110000" view: self.lectureView];
-}
-
-
 /**
  请求话题类型列表
 
@@ -83,57 +74,32 @@
     [themeService themeTypeListWithCityCode:@"110000" view:self.themeView];
 }
 
-
-/**
- 收藏/取消收藏 讲座
-
- @param type        类型（1收藏   0 取消收藏）
- @param lectureCode <#lectureCode description#>
- */
--(void)lectureCollectWithType:(NSString*)type lectureCode:(NSString*)lectureCode{
-    NSDictionary * dic = GETUserdefault(@"userInfos");
-    BOOL isLogin = [KISDictionaryHaveKey(dic, @"isLogin")boolValue];
-    if (!isLogin) {
-        [ToastManager showToastOnView:self.mainView position:CSToastPositionCenter flag:NO message:@"请先登录"];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];
-            nav.navigationBar.hidden = YES;
-            [self.navigationController presentViewController:nav animated:YES completion:nil];
-        });
-        return;
-    }
-    NSString * userCode = KISDictionaryHaveKey(dic, @"bizCode");
-    XZLectureDetailData * lectureCollectService = [[XZLectureDetailData alloc]initWithServiceTag:XZLectureCollection];
-    lectureCollectService.delegate = self;
-    [lectureCollectService collectLectureWithUsercode:userCode lectCode:lectureCode type:type view:self.mainView];
-}
-
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
     if ([service isKindOfClass:[XZFindService class]]) {
         XZFindService * findService = (XZFindService*)service;
         switch (findService.serviceTag) {
-            case XZLectureList:{
-                NSLog(@"successHandle= %@",succeedHandle);
-                NSArray * lectures = (NSArray*)succeedHandle;
-                if (self.lectureView.table.row==1) {
-                    [self.lectureView.data removeAllObjects];
-                }
-                [self.lectureView.data addObjectsFromArray:lectures];
-                [self.lectureView.table reloadData];
-                [self.lectureView.table endRefreshFooter];
-                [self.lectureView.table endRefreshHeader];
-                if (lectures.count<=0) {
-                    self.lectureView.table.mj_footer.hidden = YES;
-                }
-                if (self.lectureView.data.count<=0) {
-                    [self.lectureView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-                        //                    [self requestLectureListWithPage:1];
-                    }];
-                }else{
-                    [self.lectureView hideNoDataView];
-                }
-            }
-                break;
+//            case XZLectureList:{
+//                NSLog(@"successHandle= %@",succeedHandle);
+//                NSArray * lectures = (NSArray*)succeedHandle;
+//                if (self.lectureView.table.row==1) {
+//                    [self.lectureView.data removeAllObjects];
+//                }
+//                [self.lectureView.data addObjectsFromArray:lectures];
+//                [self.lectureView.table reloadData];
+//                [self.lectureView.table endRefreshFooter];
+//                [self.lectureView.table endRefreshHeader];
+//                if (lectures.count<=0) {
+//                    self.lectureView.table.mj_footer.hidden = YES;
+//                }
+//                if (self.lectureView.data.count<=0) {
+//                    [self.lectureView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
+//                        //                    [self requestLectureListWithPage:1];
+//                    }];
+//                }else{
+//                    [self.lectureView hideNoDataView];
+//                }
+//            }
+//                break;
             case XZThemeTypeList:{
                 NSLog(@"successHandle2= %@",succeedHandle);
                 NSArray * themes = (NSArray*)succeedHandle;
@@ -157,26 +123,27 @@
                 break;
         }
 
-    }else if ([service isKindOfClass:[XZLectureDetailData class]]){
-        NSLog(@"讲座收藏==%@",succeedHandle);
-        NSLog(@"讲座收藏有问题");
-        NSDictionary * dic = (NSDictionary*)succeedHandle;
-        if ([[dic objectForKey:@"statusCode"]intValue]==200) {
-            XZTheMasterModel * model = self.lectureView.data[self.selectIndex.row];
-            NSString * isCollect = model.collect;
-            
-            model.collect = isCollect?@"1":@"0";
-            [self.lectureView.table reloadData];
-        }
-        [ToastManager showToastOnView:self.lectureView position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
     }
+//    else if ([service isKindOfClass:[XZLectureDetailData class]]){
+//        NSLog(@"讲座收藏==%@",succeedHandle);
+//        NSLog(@"讲座收藏有问题");
+//        NSDictionary * dic = (NSDictionary*)succeedHandle;
+//        if ([[dic objectForKey:@"statusCode"]intValue]==200) {
+//            XZTheMasterModel * model = self.lectureView.data[self.selectIndex.row];
+//            NSString * isCollect = model.collect;
+//            
+//            model.collect = isCollect?@"1":@"0";
+//            [self.lectureView.table reloadData];
+//        }
+//        [ToastManager showToastOnView:self.lectureView position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
+//    }
     
 }
 
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
 //    [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:nil];
-    [self.lectureView.table endRefreshFooter];
-    [self.lectureView.table endRefreshHeader];
+//    [self.lectureView.table endRefreshFooter];
+//    [self.lectureView.table endRefreshHeader];
     
     [self.themeView.table endRefreshHeader];
     [self.themeView.table endRefreshFooter];
@@ -196,20 +163,7 @@
      __weak typeof(self)weakSelf = self;
     if (scrollView.contentOffset.x==SCREENWIDTH) {
         NSLog(@"请求讲座")
-        if (!self.lectureView) {
-            self.lectureView = [[XZFindTable alloc]initWithFrame:CGRectMake(self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height) style:XZFindLecture];
-            self.lectureView.currentVC = self;
-            [self.titleScroll addSubview:self.lectureView];
-           
-            [self.lectureView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
-                [weakSelf requestLectureListWithPage:page];
-            }];
-            [self.lectureView lectureListCollectionWithBlock:^(NSString *lectureCode, NSIndexPath *indexPath,NSString * isCollect) {
-                weakSelf.selectIndex = indexPath;
-                NSString * type = [isCollect intValue]>0?@"0":@"1";
-                [weakSelf lectureCollectWithType:type lectureCode:lectureCode];
-            }];
-        }
+        
     }else if (scrollView.contentOffset.x==SCREENWIDTH*2){
         NSLog(@"请求话题");
         if (!self.themeView) {
