@@ -14,7 +14,10 @@
 #import "XZFindService.h"
 #import "XZLectureDetailData.h"
 #import "XZLoginVC.h"
+
 #import "XZTheLectureVC.h"
+#import "XZTheMasterVC.h"
+#import "XZTheThemeVC.h"
 
 @interface XZFindVC ()<UIScrollViewDelegate>
 @property (nonatomic,strong)NSArray * titleArray;
@@ -22,10 +25,10 @@
 @property (nonatomic,strong)UIView * lineView;
 @property (nonatomic,strong)UIScrollView * titleScroll;
 
-@property (nonatomic,strong)XZTheMasterView * mastView;//大师
-@property (nonatomic,strong)XZFindTable * lectureView;//讲座
-@property (nonatomic,strong)XZFindTable * themeView;//话题
+@property (nonatomic,strong)XZTheLectureVC * lectureVC;
+@property (nonatomic,strong)XZTheThemeVC * themeVC;//话题
 @property (nonatomic,strong)NSIndexPath * selectIndex;
+
 @end
 
 @implementation XZFindVC
@@ -53,101 +56,12 @@
     self.titleScroll.contentSize = CGSizeMake(SCREENWIDTH*self.titleArray.count, self.titleScroll.height);
     self.titleScroll.contentOffset = CGPointMake(0, 0);
     
-    self.mastView = [[XZTheMasterView alloc]initWithFrame:CGRectMake(0, 0, self.titleScroll.width, self.titleScroll.height) curVC:self];
-    [self.titleScroll addSubview:self.mastView];
-    XZTheLectureVC * lectureVC = [[XZTheLectureVC alloc]init];
-    [self addChildViewController:lectureVC];
-    [self.titleScroll addSubview:lectureVC.view];
-    lectureVC.view.frame = CGRectMake(self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height);
+    XZTheMasterVC * masterVC = [[XZTheMasterVC alloc]init];
+    [self addChildViewController:masterVC];
+    [self.titleScroll addSubview:masterVC.view];
+    masterVC.view.frame = CGRectMake(0, 0, self.titleScroll.width, self.titleScroll.height);
 }
 
-
-
-#pragma mark 网络
-/**
- 请求话题类型列表
-
- */
--(void)requestThemeList{
-    XZFindService * themeService = [[XZFindService alloc]initWithServiceTag:XZThemeTypeList];
-    themeService.delegate = self;
-    [themeService themeTypeListWithCityCode:@"110000" view:self.themeView];
-}
-
--(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
-    if ([service isKindOfClass:[XZFindService class]]) {
-        XZFindService * findService = (XZFindService*)service;
-        switch (findService.serviceTag) {
-//            case XZLectureList:{
-//                NSLog(@"successHandle= %@",succeedHandle);
-//                NSArray * lectures = (NSArray*)succeedHandle;
-//                if (self.lectureView.table.row==1) {
-//                    [self.lectureView.data removeAllObjects];
-//                }
-//                [self.lectureView.data addObjectsFromArray:lectures];
-//                [self.lectureView.table reloadData];
-//                [self.lectureView.table endRefreshFooter];
-//                [self.lectureView.table endRefreshHeader];
-//                if (lectures.count<=0) {
-//                    self.lectureView.table.mj_footer.hidden = YES;
-//                }
-//                if (self.lectureView.data.count<=0) {
-//                    [self.lectureView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-//                        //                    [self requestLectureListWithPage:1];
-//                    }];
-//                }else{
-//                    [self.lectureView hideNoDataView];
-//                }
-//            }
-//                break;
-            case XZThemeTypeList:{
-                NSLog(@"successHandle2= %@",succeedHandle);
-                NSArray * themes = (NSArray*)succeedHandle;
-                [self.themeView.data addObjectsFromArray:themes];
-                [self.themeView.table reloadData];
-                [self.themeView.table endRefreshFooter];
-                [self.themeView.table endRefreshHeader];
-                if (themes.count<=0) {
-                    self.themeView.table.mj_footer.hidden = YES;
-                }
-                if (self.themeView.data.count<=0) {
-                    [self.themeView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-                        //                    [self requestThemeList];
-                    }];
-                }else{
-                    [self.themeView hideNoDataView];
-                }
-            }
-                break;
-            default:
-                break;
-        }
-
-    }
-//    else if ([service isKindOfClass:[XZLectureDetailData class]]){
-//        NSLog(@"讲座收藏==%@",succeedHandle);
-//        NSLog(@"讲座收藏有问题");
-//        NSDictionary * dic = (NSDictionary*)succeedHandle;
-//        if ([[dic objectForKey:@"statusCode"]intValue]==200) {
-//            XZTheMasterModel * model = self.lectureView.data[self.selectIndex.row];
-//            NSString * isCollect = model.collect;
-//            
-//            model.collect = isCollect?@"1":@"0";
-//            [self.lectureView.table reloadData];
-//        }
-//        [ToastManager showToastOnView:self.lectureView position:CSToastPositionCenter flag:YES message:[dic objectForKey:@"message"]];
-//    }
-    
-}
-
--(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
-//    [self.mainView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:nil];
-//    [self.lectureView.table endRefreshFooter];
-//    [self.lectureView.table endRefreshHeader];
-    
-    [self.themeView.table endRefreshHeader];
-    [self.themeView.table endRefreshFooter];
-}
 
 #pragma mark action
 -(void)titleSegChanged:(UISegmentedControl*)seg{
@@ -156,25 +70,28 @@
 
 #pragma mark delegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    self.titleSeg.selectedSegmentIndex = scrollView.contentOffset.x/SCREENWIDTH;
-  CGRect frame = self.lineView.frame;
+    float offsetX = scrollView.contentOffset.x/SCREENWIDTH;
+    self.titleSeg.selectedSegmentIndex = roundf(offsetX);
+    CGRect frame = self.lineView.frame;
     frame.origin.x = self.lineView.width*self.titleSeg.selectedSegmentIndex;
     self.lineView.frame = frame;
-     __weak typeof(self)weakSelf = self;
-    if (scrollView.contentOffset.x==SCREENWIDTH) {
-        NSLog(@"请求讲座")
-        
-    }else if (scrollView.contentOffset.x==SCREENWIDTH*2){
-        NSLog(@"请求话题");
-        if (!self.themeView) {
-            self.themeView = [[XZFindTable alloc]initWithFrame:CGRectMake(2*self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height) style:XZFindTheme];
-            self.themeView.currentVC = self;
-            [self.titleScroll addSubview:self.themeView];
-            [self.themeView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
-                [weakSelf requestThemeList];
-            }];
+    
+    if (offsetX==1) {
+        if (!self.lectureVC) {
+            self.lectureVC = [[XZTheLectureVC alloc]init];
+            [self addChildViewController:self.lectureVC];
+            [self.titleScroll addSubview:self.lectureVC.view];
+            self.lectureVC.view.frame = CGRectMake(self.titleScroll.width, 0, self.titleScroll.width, self.titleScroll.height);
+         }
+    }else if (offsetX==2){
+        if (!self.themeVC) {
+            self.themeVC = [[XZTheThemeVC alloc]init];
+            [self addChildViewController: self.themeVC];
+            [self.titleScroll addSubview: self.themeVC.view];
+            self.themeVC.view.frame = CGRectMake(self.titleScroll.width*2, 0, self.titleScroll.width, self.titleScroll.height);
         }
     }
+    
     
 }
 

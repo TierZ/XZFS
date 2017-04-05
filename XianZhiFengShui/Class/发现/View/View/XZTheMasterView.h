@@ -18,9 +18,9 @@ typedef enum : NSUInteger {
 
 #import <UIKit/UIKit.h>
 #import "XZFindService.h"
-@class  BaseViewController;
+@class  UIViewController;
 @interface XZTheMasterView : UIView<UIScrollViewDelegate,DataReturnDelegate>
--(instancetype)initWithFrame:(CGRect)frame curVC:(BaseViewController*)vc;
+-(instancetype)initWithFrame:(CGRect)frame curVC:(UIViewController*)vc;
 @property (nonatomic,assign)MasterSelect style;
-@property (nonatomic,weak)BaseViewController* curVC;
+@property (nonatomic,weak)UIViewController* curVC;
 @end

@@ -6,11 +6,10 @@
 //  Copyright © 2017年 XianZhiFengShui. All rights reserved.
 //
 
-#import "BaseContentController.h"
-
+#import <UIKit/UIKit.h>
 /**
  发现--大师
  */
-@interface XZTheMasterVC : BaseContentController
+@interface XZTheMasterVC : UIViewController
 
 @end

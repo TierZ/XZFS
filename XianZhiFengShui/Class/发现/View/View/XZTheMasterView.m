@@ -27,7 +27,7 @@
     NSArray * _segArray;
 }
 
--(instancetype)initWithFrame:(CGRect)frame curVC:(BaseViewController*)vc{
+-(instancetype)initWithFrame:(CGRect)frame curVC:(UIViewController*)vc{
     self = [super initWithFrame: frame];
     if (self) {
         _curVC = vc;
@@ -190,6 +190,7 @@
             break;
         default:
             serviceTag = 0;
+            orderType = 0;
             break;
     }
     if ((page==1&& masterTable.data.count<=0)||isrefresh) {

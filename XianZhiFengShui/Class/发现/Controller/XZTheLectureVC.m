@@ -12,7 +12,7 @@
 #import "XZLectureDetailData.h"
 #import "XZLoginVC.h"
 #import "XZTheMasterModel.h"
-@interface XZTheLectureVC ()
+@interface XZTheLectureVC ()<DataReturnDelegate>
 @property (nonatomic,strong)XZFindTable * lectureView;//讲座
 @property (nonatomic,strong)NSIndexPath * selectIndex;
 
@@ -67,7 +67,7 @@
     NSDictionary * dic = GETUserdefault(@"userInfos");
     BOOL isLogin = [KISDictionaryHaveKey(dic, @"isLogin")boolValue];
     if (!isLogin) {
-        [ToastManager showToastOnView:self.mainView position:CSToastPositionCenter flag:NO message:@"请先登录"];
+        [ToastManager showToastOnView:self.view position:CSToastPositionCenter flag:NO message:@"请先登录"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[[XZLoginVC alloc]init]];
             nav.navigationBar.hidden = YES;
@@ -78,14 +78,14 @@
     NSString * userCode = KISDictionaryHaveKey(dic, @"bizCode");
     XZLectureDetailData * lectureCollectService = [[XZLectureDetailData alloc]initWithServiceTag:XZLectureCollection];
     lectureCollectService.delegate = self;
-    [lectureCollectService collectLectureWithUsercode:userCode lectCode:lectureCode type:type view:self.mainView];
+    [lectureCollectService collectLectureWithUsercode:userCode lectCode:lectureCode type:type view:self.view];
 }
 
 #pragma mark 网络回调
 
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
     if ([service isKindOfClass:[XZFindService class]]) {
-        NSLog(@"successHandle= %@",succeedHandle);
+        NSLog(@"讲座啦啦啦successHandle= %@",succeedHandle);
         NSArray * lectures = (NSArray*)succeedHandle;
         if (self.lectureView.table.row==1) {
             [self.lectureView.data removeAllObjects];

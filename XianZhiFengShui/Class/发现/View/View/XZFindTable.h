@@ -30,7 +30,7 @@ typedef void(^LectureListCollectionBlock)(NSString * lectureCode,NSIndexPath * i
 - (instancetype)initWithFrame:(CGRect)frame style:(XZFindStyle)style;
 @property (nonatomic,strong)XZRefreshTable * table;
 @property (nonatomic,strong)NSMutableArray * data;
-@property (nonatomic,weak)BaseViewController * currentVC;
+@property (nonatomic,weak)UIViewController * currentVC;
 @property (nonatomic,assign)BOOL showLecturePrice;
 @property (nonatomic,copy)PointOfPraiseMasterBlock block;
 @property (nonatomic,copy)LectureListCollectionBlock lectureCollectBlock;

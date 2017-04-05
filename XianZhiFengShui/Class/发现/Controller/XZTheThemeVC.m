@@ -9,25 +9,49 @@
 #import "XZTheThemeVC.h"
 #import "XZFindTable.h"
 #import "XZFindService.h"
-@interface XZTheThemeVC ()
+@interface XZTheThemeVC ()<DataReturnDelegate>
 @property (nonatomic,strong)XZFindTable * themeView;//话题
-
+@property (nonatomic,strong)NSIndexPath * selectIndex;
 @end
 
 @implementation XZTheThemeVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupThemeView];
     // Do any additional setup after loading the view.
 }
 
 -(void)setupThemeView{
+    self.themeView = [[XZFindTable alloc]initWithFrame:self.view.bounds style:XZFindTheme];
+    self.themeView.currentVC = self;
+    [self.view addSubview:self.themeView];
+    self.themeView.sd_layout.spaceToSuperView(UIEdgeInsetsMake(0,0,0,0));
     
+    __weak typeof(self)weakSelf = self;
+    [self.themeView.table refreshListWithBlock:^(int page, BOOL isRefresh) {
+        __strong typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf requestThemeList];
+    }];
+
+
+}
+
+
+#pragma mark 网络
+/**
+ 请求话题类型列表
+ 
+ */
+-(void)requestThemeList{
+    XZFindService * themeService = [[XZFindService alloc]initWithServiceTag:XZThemeTypeList];
+    themeService.delegate = self;
+    [themeService themeTypeListWithCityCode:@"110000" view:self.themeView];
 }
 
 
 -(void)netSucceedWithHandle:(id)succeedHandle dataService:(id)service{
-    NSLog(@"successHandle2= %@",succeedHandle);
+    NSLog(@"话题啦啦啦successHandle2= %@",succeedHandle);
     NSArray * themes = (NSArray*)succeedHandle;
     [self.themeView.data addObjectsFromArray:themes];
     [self.themeView.table reloadData];
@@ -38,7 +62,7 @@
     }
     if (self.themeView.data.count<=0) {
         [self.themeView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-            //                    [self requestThemeList];
+            [self requestThemeList];
         }];
     }else{
         [self.themeView hideNoDataView];
@@ -47,7 +71,15 @@
 }
 
 -(void)netFailedWithHandle:(id)failHandle dataService:(id)service{
-
+    if ([service isKindOfClass:[XZFindService class]]) {
+        [self.themeView.table endRefreshFooter];
+        [self.themeView.table endRefreshHeader];
+        __weak typeof(self)weakSelf = self;
+        [self.themeView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
+            __strong typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf requestThemeList];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
