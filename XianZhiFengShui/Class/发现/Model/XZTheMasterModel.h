@@ -26,7 +26,7 @@
 @property (nonatomic,copy)NSString * collection;//收藏数
 @property (nonatomic,strong)NSArray * type;//服务类型
 @property (nonatomic,copy)NSString * summary;//介绍
-
+@property (nonatomic,assign)float masterHeight;
 @property (nonatomic,copy)NSString * service;//约见的项目内容
 @property (nonatomic,assign)BOOL isFinished;//约见大师 （yes 表示 已结束，no表示正在进行中）
 

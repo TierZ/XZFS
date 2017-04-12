@@ -110,7 +110,20 @@
         self.introduce.frame = frame1;
         
         self.height = self.introduce.bottom>self.photo.bottom?self.introduce.bottom+10:self.photo.bottom+10;
+        model.masterHeight = self.height;
     }
+}
+
++(float)cellHeightWithModel:(XZTheMasterModel*)model{
+    if (model.masterHeight>0) {
+        NSLog(@"直接去model里取");
+        return model.masterHeight;
+    }
+    XZTheMasterCell * cell = [[XZTheMasterCell alloc]init];
+    [cell refreshMasterCellWithModel:model];
+    NSLog(@"需要计算");
+
+    return cell.height;
 }
 
 - (void)awakeFromNib {

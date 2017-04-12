@@ -98,8 +98,11 @@
             self.lectureView.table.mj_footer.hidden = YES;
         }
         if (self.lectureView.data.count<=0) {
-            [self.lectureView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-                [self requestLectureListWithPage:1];
+            __weak typeof(self)weakSelf = self;
+            [self.lectureView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^(){
+                __strong typeof(weakSelf)strongSelf = weakSelf;
+            [strongSelf requestLectureListWithPage:1];
+            } btnBlock:^(NoDataType type) {
             }];
         }else{
             [self.lectureView hideNoDataView];
@@ -123,9 +126,10 @@
         [self.lectureView.table endRefreshFooter];
         [self.lectureView.table endRefreshHeader];
         __weak typeof(self)weakSelf = self;
-        [self.lectureView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
+        [self.lectureView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^(){
             __strong typeof(weakSelf)strongSelf = weakSelf;
             [strongSelf requestLectureListWithPage:1];
+        } btnBlock:^(NoDataType type) {
         }];
     }
 }

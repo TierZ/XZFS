@@ -182,7 +182,11 @@
     _serviceSummary.text = model.summary;
     
     [self setupAutoHeightWithBottomView:_bottomV bottomMargin:0];
+
 }
+
+
+
 
 #pragma mark action
 -(void)modefyService:(UIButton*)sender{

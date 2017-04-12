@@ -247,6 +247,9 @@
 		D174B9351E30BC580082074C /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B9331E30BC580082074C /* YYFPSLabel.m */; };
 		D174B9381E31B8390082074C /* XZMyMasterFinishedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B9371E31B8390082074C /* XZMyMasterFinishedVC.m */; };
 		D174B93B1E31B8650082074C /* XZMyMasterWantedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D174B93A1E31B8650082074C /* XZMyMasterWantedVC.m */; };
+		D1776EA31E9CCC9E00133C96 /* ZXDBaseTableCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1776EA21E9CCC9E00133C96 /* ZXDBaseTableCellModel.m */; };
+		D1776EA61E9CCDA400133C96 /* ZXDBaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1776EA51E9CCDA400133C96 /* ZXDBaseTableViewCell.m */; };
+		D1776EA91E9CD33300133C96 /* ZXDTableViewConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1776EA81E9CD33300133C96 /* ZXDTableViewConverter.m */; };
 		D180AD891DFE444E0043FB61 /* XZOrderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD881DFE444E0043FB61 /* XZOrderFooterView.m */; };
 		D180AD8C1DFE53D30043FB61 /* XZOrderHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD8B1DFE53D30043FB61 /* XZOrderHeaderView.m */; };
 		D180AD8F1DFE7AB20043FB61 /* XZShoppingCartHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D180AD8E1DFE7AB20043FB61 /* XZShoppingCartHeaderView.m */; };
@@ -1086,6 +1089,12 @@
 		D174B9371E31B8390082074C /* XZMyMasterFinishedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMyMasterFinishedVC.m; sourceTree = "<group>"; };
 		D174B9391E31B8650082074C /* XZMyMasterWantedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMyMasterWantedVC.h; sourceTree = "<group>"; };
 		D174B93A1E31B8650082074C /* XZMyMasterWantedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMyMasterWantedVC.m; sourceTree = "<group>"; };
+		D1776EA11E9CCC9E00133C96 /* ZXDBaseTableCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDBaseTableCellModel.h; sourceTree = "<group>"; };
+		D1776EA21E9CCC9E00133C96 /* ZXDBaseTableCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXDBaseTableCellModel.m; sourceTree = "<group>"; };
+		D1776EA41E9CCDA400133C96 /* ZXDBaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDBaseTableViewCell.h; sourceTree = "<group>"; };
+		D1776EA51E9CCDA400133C96 /* ZXDBaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXDBaseTableViewCell.m; sourceTree = "<group>"; };
+		D1776EA71E9CD33300133C96 /* ZXDTableViewConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXDTableViewConverter.h; sourceTree = "<group>"; };
+		D1776EA81E9CD33300133C96 /* ZXDTableViewConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXDTableViewConverter.m; sourceTree = "<group>"; };
 		D180AD871DFE444E0043FB61 /* XZOrderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZOrderFooterView.h; sourceTree = "<group>"; };
 		D180AD881DFE444E0043FB61 /* XZOrderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZOrderFooterView.m; sourceTree = "<group>"; };
 		D180AD8A1DFE53D30043FB61 /* XZOrderHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZOrderHeaderView.h; sourceTree = "<group>"; };
@@ -1899,6 +1908,7 @@
 		D113CC1E1DAC8F8A0067A965 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D1776EA01E9CCC7700133C96 /* BaseTableView */,
 				D180ADA61DFFC7400043FB61 /* 数据库操作 */,
 				D113CC1F1DAC8FF80067A965 /* XZTagView.h */,
 				D113CC201DAC8FF80067A965 /* XZTagView.m */,
@@ -2593,6 +2603,19 @@
 				D174B9331E30BC580082074C /* YYFPSLabel.m */,
 			);
 			path = FPSTool;
+			sourceTree = "<group>";
+		};
+		D1776EA01E9CCC7700133C96 /* BaseTableView */ = {
+			isa = PBXGroup;
+			children = (
+				D1776EA11E9CCC9E00133C96 /* ZXDBaseTableCellModel.h */,
+				D1776EA21E9CCC9E00133C96 /* ZXDBaseTableCellModel.m */,
+				D1776EA41E9CCDA400133C96 /* ZXDBaseTableViewCell.h */,
+				D1776EA51E9CCDA400133C96 /* ZXDBaseTableViewCell.m */,
+				D1776EA71E9CD33300133C96 /* ZXDTableViewConverter.h */,
+				D1776EA81E9CD33300133C96 /* ZXDTableViewConverter.m */,
+			);
+			path = BaseTableView;
 			sourceTree = "<group>";
 		};
 		D180ADA61DFFC7400043FB61 /* 数据库操作 */ = {
@@ -4417,6 +4440,7 @@
 				D19590A41DE40E6200C06A05 /* MASLayoutConstraint.m in Sources */,
 				D18FF4531E1CBB4600479E37 /* NSDictionary+HYBUnicodeReadable.m in Sources */,
 				D19590061DE3F81600C06A05 /* XHVoiceCommonHelper.m in Sources */,
+				D1776EA61E9CCDA400133C96 /* ZXDBaseTableViewCell.m in Sources */,
 				D1D6A2991E027ED100215CEA /* DataSigner.m in Sources */,
 				D19590081DE3F81600C06A05 /* XHVoiceRecordHUD.m in Sources */,
 				D18CD12D1E2630BA00DBEFD4 /* XZSearchResultVC.m in Sources */,
@@ -4442,6 +4466,7 @@
 				D18CD1301E27680A00DBEFD4 /* XZMasterOrderVC.m in Sources */,
 				D12D94AA1E545923005FA904 /* CountDownButton.m in Sources */,
 				D1131A3B1DEE83BE00E1398D /* ThumbImageCollectionViewCell.m in Sources */,
+				D1776EA31E9CCC9E00133C96 /* ZXDBaseTableCellModel.m in Sources */,
 				D11592CF1DA8D3BC004A7B86 /* XZNavigationController.m in Sources */,
 				D11592D81DA8D477004A7B86 /* BaseViewController.m in Sources */,
 				D11592D61DA8D477004A7B86 /* BaseContentController.m in Sources */,
@@ -4529,6 +4554,7 @@
 				D1D6A29B1E027ED100215CEA /* MD5DataSigner.m in Sources */,
 				D1F2FB401DF14B6E00EFC19B /* WTThirdPartyLoginManager.m in Sources */,
 				D18FF43A1E1B995E00479E37 /* XZPayVC.m in Sources */,
+				D1776EA91E9CD33300133C96 /* ZXDTableViewConverter.m in Sources */,
 				D1958FDA1DE3F81600C06A05 /* JCHATGroupDetailViewController.m in Sources */,
 				D1D6A2C11E0A1F4100215CEA /* WTShareManager.m in Sources */,
 				D1C2A8841DAB2DA200ADDAF1 /* ToastManager.m in Sources */,

@@ -175,7 +175,6 @@ static BasicService * shareService;
             if (isOpenHUD == YES) {
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 [BasicService stopActivityWithView:currentView];
-                //                currentView.hidden = YES;
             }
             [BasicService stopActivityWithView:currentView];
 
@@ -184,7 +183,6 @@ static BasicService * shareService;
             if (isOpenHUD == YES) {
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 [BasicService stopActivityWithView:currentView];
-                //                currentView.hidden = YES;
             }
             NSLog(@"error 内容 = %@",error);
             [BasicService stopActivityWithView:currentView];

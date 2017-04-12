@@ -80,7 +80,9 @@
         long rowIndex = idx / perRowItemCount;
         UIImageView *imageView = [_imageViewsArray objectAtIndex:idx];
         imageView.hidden = NO;
-        [imageView setImageWithURL:[NSURL URLWithString:obj] options:YYWebImageOptionProgressiveBlur];
+        NSLog(@"暂时本地图片，用的图片名字，后期通过图片url");
+//        [imageView setImageWithURL:[NSURL URLWithString:obj] options:YYWebImageOptionProgressiveBlur];
+        imageView.image = [UIImage imageNamed:obj];
         imageView.frame = CGRectMake(columnIndex * (itemW + margin), rowIndex * (itemH + margin), itemW, itemH);
     }];
     

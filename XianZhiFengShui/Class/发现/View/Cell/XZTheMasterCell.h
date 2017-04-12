@@ -18,4 +18,5 @@ typedef void(^AgreeMasterBlock)(XZTheMasterModel * model);
 -(void)refreshMasterCellWithModel:(XZTheMasterModel*)model;
 @property (nonatomic,copy)AgreeMasterBlock agreeBlock;
 -(void)agreeMasterWithBlock:(AgreeMasterBlock)block;
++(float)cellHeightWithModel:(XZTheMasterModel*)model;
 @end

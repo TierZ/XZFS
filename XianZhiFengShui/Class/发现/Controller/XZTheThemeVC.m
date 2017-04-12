@@ -61,8 +61,12 @@
         self.themeView.table.mj_footer.hidden = YES;
     }
     if (self.themeView.data.count<=0) {
-        [self.themeView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
-            [self requestThemeList];
+         __weak typeof(self)weakSelf = self;
+        [self.themeView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^(){
+            __strong typeof(weakSelf)strongSelf = weakSelf;
+         [strongSelf requestThemeList];
+        } btnBlock:^(NoDataType type) {
+           
         }];
     }else{
         [self.themeView hideNoDataView];
@@ -75,9 +79,10 @@
         [self.themeView.table endRefreshFooter];
         [self.themeView.table endRefreshHeader];
         __weak typeof(self)weakSelf = self;
-        [self.themeView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:nil btnBlock:^(NoDataType type) {
+        [self.themeView showNoDataViewWithType:NoDataTypeDefault backgroundBlock:^(){
             __strong typeof(weakSelf)strongSelf = weakSelf;
-            [strongSelf requestThemeList];
+         [strongSelf requestThemeList];
+        } btnBlock:^(NoDataType type) {
         }];
     }
 }

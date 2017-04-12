@@ -160,8 +160,8 @@ NSString * const FindThemeCellId = @"FindThemeCellId";
 -(float)cellHeightWithStyle:(XZFindStyle)style indexPath:(NSIndexPath *)indexPath{
     switch (style) {
         case XZFindMaster:{
-            UITableViewCell * cell = [self tableView:self.table cellForRowAtIndexPath:indexPath];
-            return cell.height;
+            XZTheMasterModel * model = self.data [indexPath.row];
+            return [XZTheMasterCell cellHeightWithModel:model];
         }
             break;
         case XZFindLecture:
